@@ -84,14 +84,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
         <div className="flex justify-between items-center w-full px-4 sm:px-6 lg:px-6 xl:px-10 max-w-[1680px] mx-auto h-20">
 
           {/* FRONT: Brand Emblem & Horizontal Navigation */}
-          <div className="flex items-center gap-4 lg:gap-5 xl:gap-8">
+          <div className="flex items-center gap-4 lg:gap-6 xl:gap-8">
             <button
               onClick={() => handleNavClick('home')}
               className="flex items-center gap-2 group text-left focus:outline-none transition-transform duration-300 active:scale-[0.99] shrink-0"
               aria-label="BOSKI LIMITED Home"
             >
               <span
-                className="text-[19px] sm:text-[22px] lg:text-[21px] xl:text-[24px] tracking-[0.14em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap"
+                className="text-[20px] sm:text-[23px] lg:text-[22px] xl:text-[25px] tracking-[0.14em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 BOSKI LIMITED
@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                 10. Currency (default GBP)
             */}
             <nav
-              className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5.5 text-[10.5px] xl:text-[11.5px] 2xl:text-[12px] font-medium uppercase tracking-[0.08em] xl:tracking-[0.12em] whitespace-nowrap"
+              className="hidden lg:flex items-center gap-3 xl:gap-4.5 2xl:gap-6 text-[13px] xl:text-[13.5px] 2xl:text-[14px] font-medium uppercase tracking-[0.06em] xl:tracking-[0.08em] whitespace-nowrap"
               aria-label="Main Desktop & Laptop Navigation"
             >
               {/* 1. Home */}
@@ -379,11 +379,11 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               >
                 <button
                   id="nav-currency-switcher"
-                  className="px-2 py-1 border border-[#c4c7c7] text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1.5 border border-[#c4c7c7] text-[12px] xl:text-[13px] text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-1 cursor-pointer"
                   aria-label={`Selected currency: ${currency.code}`}
                 >
                   <span className="font-semibold">{currency.symbol} {currency.code}</span>
-                  <span className="material-symbols-outlined text-[13px]">expand_more</span>
+                  <span className="material-symbols-outlined text-[14px]">expand_more</span>
                 </button>
 
                 {activeDropdown === 'currency' && (
