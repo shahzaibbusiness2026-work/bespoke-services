@@ -76,12 +76,24 @@ const MainLayout: React.FC = () => {
         <CollectionPage pageType="new-arrivals" />
       )}
 
+      {activePage === 'shop' && (
+        <CollectionPage pageType="shop" />
+      )}
+
       {activePage === 'bedding' && (
         <CollectionPage pageType="bedding" />
       )}
 
       {activePage === 'curtains' && (
         <CollectionPage pageType="curtains" />
+      )}
+
+      {activePage === 'towels' && (
+        <CollectionPage pageType="towels" />
+      )}
+
+      {activePage === 'throws-blankets' && (
+        <CollectionPage pageType="throws-blankets" />
       )}
 
       {activePage === 'throws' && (

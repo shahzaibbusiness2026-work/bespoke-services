@@ -22,14 +22,18 @@ interface Totals {
 export type PageView =
   | 'home'
   | 'new-arrivals'
+  | 'shop'
   | 'bedding'
   | 'curtains'
+  | 'towels'
+  | 'throws-blankets'
   | 'throws'
   | 'blankets'
   | 'bespoke'
   | 'trade'
   | 'canvas'
-  | 'account';
+  | 'account'
+  | 'wishlist';
 
 interface ShopContextType {
   activePage: PageView;
@@ -243,7 +247,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const saved = localStorage.getItem(STORAGE_KEYS.CURRENCY);
       if (saved && CURRENCIES[saved]) return CURRENCIES[saved];
     } catch {}
-    return CURRENCIES.USD;
+    return CURRENCIES.GBP;
   });
 
   const [orderHistory, setOrderHistory] = useState<OrderDetails[]>(() => {
