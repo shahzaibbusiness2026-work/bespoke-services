@@ -61,11 +61,13 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
   return (
     <>
       <header
-        className={`w-full top-0 sticky z-40 transition-all duration-300 ease-out bg-[#faf9f7]/95 backdrop-blur-md ${
+        id="main-sticky-navbar"
+        className={`w-full sticky top-0 z-40 transition-all duration-300 ease-out bg-[#faf9f7]/95 backdrop-blur-md ${
           isScrolled
-            ? 'border-b border-[#c4c7c7]/60 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] h-[74px]'
+            ? 'border-b border-[#c4c7c7] shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08)] h-[72px]'
             : 'border-b border-[#c4c7c7]/35 h-[80px]'
         }`}
+        style={{ position: 'sticky', top: 0, zIndex: 40 }}
       >
         <div className="flex justify-between items-center w-full px-3 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1720px] mx-auto h-full">
           
