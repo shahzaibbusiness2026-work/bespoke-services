@@ -64,7 +64,7 @@ export const InstagramFeed: React.FC = () => {
             Styled in Thoughtful Sanctuaries
           </h3>
           <p className="text-xs sm:text-sm text-neutral-600 font-light">
-            Tag <strong className="text-neutral-900 font-medium">@OrianaHome</strong> or <strong className="text-neutral-900 font-medium">#LinenAndLoft</strong> on Instagram to be featured in our seasonal bedroom galleries.
+            Tag <strong className="text-neutral-900 font-medium">@BoskiLimited</strong> or <strong className="text-neutral-900 font-medium">#BoskiLimited</strong> on Instagram to be featured in our seasonal bedroom galleries.
           </p>
         </div>
 

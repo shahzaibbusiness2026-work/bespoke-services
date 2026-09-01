@@ -67,17 +67,17 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             : 'border-b border-[#c4c7c7]/35 h-[80px]'
         }`}
       >
-        <div className="flex justify-between items-center w-full px-5 sm:px-8 lg:px-10 xl:px-12 max-w-[1720px] mx-auto h-full">
-
-          {/* LEFT: Timeless Brand Identity */}
+        <div className="flex justify-between items-center w-full px-3 sm:px-6 md:px-8 lg:px-10 xl:px-12 max-w-[1720px] mx-auto h-full">
+          
+          {/* LEFT: Brand Emblem (BOSKI LIMITED) */}
           <div className="flex items-center shrink-0">
             <button
               onClick={() => handleNavClick('home')}
-              className="flex items-center gap-2 group text-left focus:outline-none transition-transform duration-300 active:opacity-80"
+              className="text-left focus:outline-none cursor-pointer group"
               aria-label="BOSKI LIMITED Home"
             >
               <span
-                className="text-[21px] sm:text-[24px] lg:text-[25px] tracking-[0.18em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap"
+                className="text-[17px] sm:text-[22px] lg:text-[25px] tracking-[0.10em] sm:tracking-[0.16em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 BOSKI LIMITED

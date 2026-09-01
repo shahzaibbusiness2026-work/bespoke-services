@@ -32,7 +32,7 @@ export const HeroLinen: React.FC<HeroLinenProps> = ({ onSelectCategory }) => {
       <div className="absolute inset-0 w-full h-full">
         <img
           src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=2400&q=90"
-          alt="Elevate Your Everyday - Oriana Linen & Loft"
+          alt="Elevate Your Everyday - BOSKI LIMITED"
           className="w-full h-full object-cover object-center scale-105 animate-in fade-in duration-1000"
         />
         {/* Soft Vignette Overlay for Crisp Typography Contrast */}

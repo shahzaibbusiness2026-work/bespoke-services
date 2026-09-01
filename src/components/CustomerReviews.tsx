@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { REVIEWS, PRODUCTS } from '../data/products';
 import { Review } from '../types';
 import { useShop } from '../context/ShopContext';
-import { Star, CheckCircle, MessageSquarePlus, Sparkles, Filter, X, Send } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { ReviewTile } from './ReviewTile';
 
 export const CustomerReviews: React.FC = () => {
   const { showToast } = useShop();
@@ -56,15 +55,21 @@ export const CustomerReviews: React.FC = () => {
   };
 
   return (
-    <section id="reviews-section" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section
+      id="reviews-section"
+      className="py-24 px-5 md:px-12 lg:px-16 max-w-[1440px] mx-auto"
+      aria-label="Client Testimonials"
+    >
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-neutral-500 font-semibold mb-2">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>Client Testimonials</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl text-neutral-950 font-normal">
+          <p className="text-label-caps text-[#2b2d2c] uppercase tracking-widest font-semibold mb-3">
+            Client Testimonials
+          </p>
+          <h2
+            className="text-[34px] sm:text-[44px] text-[#000000] font-normal leading-tight"
+            style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+          >
             Voices of Connoisseurs
           </h2>
         </div>
@@ -72,297 +77,277 @@ export const CustomerReviews: React.FC = () => {
         <button
           id="write-review-trigger-btn"
           onClick={() => setIsWriteReviewOpen(true)}
-          className="mt-4 md:mt-0 px-6 py-3 bg-neutral-950 hover:bg-neutral-800 text-white rounded-full text-xs font-semibold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
+          className="px-7 py-3.5 bg-[#000000] hover:bg-[#252726] text-white text-label-caps uppercase tracking-[0.16em] transition-colors inline-flex items-center gap-2 cursor-pointer w-fit"
+          aria-label="Open form to write a review"
         >
-          <MessageSquarePlus className="w-4 h-4" />
+          <span className="material-symbols-outlined text-[18px]">rate_review</span>
           <span>Write a Review</span>
         </button>
       </div>
 
       {/* Aggregate Overview Box & Ratings Distribution */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200 shadow-sm mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 bg-white p-6 sm:p-10 border border-[#c4c7c7] shadow-sm mb-12">
         {/* Score Column */}
-        <div className="md:col-span-4 flex flex-col items-center justify-center text-center p-4 border-b md:border-b-0 md:border-r border-neutral-200">
-          <span className="font-serif text-5xl sm:text-6xl font-bold text-neutral-950">
-            4.93
+        <div className="md:col-span-4 flex flex-col items-center justify-center text-center p-4 border-b md:border-b-0 md:border-r border-[#e3e2e0]">
+          <span
+            className="text-6xl font-normal text-[#000000]"
+            style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+          >
+            4.96
           </span>
-          <div className="flex items-center gap-1 text-amber-400 my-2">
+          <div className="flex items-center gap-1 text-[#000000] my-3" aria-label="Rated 4.96 out of 5 stars">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 fill-amber-400" />
+              <span
+                key={i}
+                className="material-symbols-outlined text-[20px]"
+                style={{ fontVariationSettings: "'FILL' 1, 'wght' 400" }}
+              >
+                star
+              </span>
             ))}
           </div>
-          <span className="text-xs text-neutral-500 font-medium">
-            Based on 512 verified worldwide client reviews
+          <span className="text-body-sm text-[#2b2d2c] font-normal">
+            Based on 512 verified worldwide client experiences
           </span>
-          <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold">
-            <CheckCircle className="w-3.5 h-3.5" />
-            <span>99% Recommendation Rate</span>
+          <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 bg-[#f4f3f1] border border-[#c4c7c7] text-[#000000] text-label-caps uppercase tracking-wider text-[11px] font-medium">
+            <span className="material-symbols-outlined text-[15px] text-[#1b6b3e]">verified</span>
+            <span>99% Client Recommendation Rate</span>
           </div>
         </div>
 
         {/* Breakdown Progress Bars Column */}
-        <div className="md:col-span-8 flex flex-col justify-center space-y-2.5">
+        <div className="md:col-span-8 flex flex-col justify-center space-y-3">
           {[
-            { stars: 5, pct: 93, count: 476 },
-            { stars: 4, pct: 6, count: 31 },
+            { stars: 5, pct: 94, count: 481 },
+            { stars: 4, pct: 5, count: 26 },
             { stars: 3, pct: 1, count: 5 },
             { stars: 2, pct: 0, count: 0 },
             { stars: 1, pct: 0, count: 0 },
           ].map((row) => (
-            <div
+            <button
               key={row.stars}
+              type="button"
               onClick={() =>
                 setSelectedRatingFilter(selectedRatingFilter === row.stars ? null : row.stars)
               }
-              className={`flex items-center gap-3 text-xs cursor-pointer p-1.5 rounded-lg transition-colors ${
-                selectedRatingFilter === row.stars ? 'bg-amber-50' : 'hover:bg-neutral-50'
+              className={`flex items-center gap-3 text-body-sm cursor-pointer p-2 transition-colors w-full text-left ${
+                selectedRatingFilter === row.stars ? 'bg-[#f4f3f1] border border-[#000000]' : 'hover:bg-[#faf9f7]'
               }`}
+              aria-label={`Filter by ${row.stars} stars reviews, ${row.count} reviews`}
             >
-              <span className="w-12 font-medium text-neutral-700 flex items-center gap-1">
-                {row.stars} <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+              <span className="w-14 font-medium text-[#000000] flex items-center gap-1">
+                {row.stars}
+                <span
+                  className="material-symbols-outlined text-[15px]"
+                  style={{ fontVariationSettings: "'FILL' 1, 'wght' 400" }}
+                >
+                  star
+                </span>
               </span>
-              <div className="flex-1 h-2 rounded-full bg-neutral-100 overflow-hidden">
+              <div className="flex-1 h-2 bg-[#efeeec] overflow-hidden">
                 <div
-                  className="h-full bg-neutral-900 rounded-full transition-all duration-500"
+                  className="h-full bg-[#000000] transition-all duration-500"
                   style={{ width: `${row.pct}%` }}
                 />
               </div>
-              <span className="w-12 text-right text-neutral-500 font-medium">{row.pct}%</span>
-            </div>
+              <span className="w-12 text-right text-[#2b2d2c] font-medium">{row.pct}%</span>
+            </button>
           ))}
         </div>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={() => setSelectedRatingFilter(null)}
-            className={`px-3.5 py-1.5 text-xs rounded-full font-semibold transition-colors ${
+            className={`px-4 py-2 text-label-caps uppercase transition-colors cursor-pointer border ${
               selectedRatingFilter === null
-                ? 'bg-neutral-950 text-white'
-                : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000]'
             }`}
           >
             All Reviews ({reviewsList.length})
           </button>
           <button
             onClick={() => setSelectedRatingFilter(5)}
-            className={`px-3.5 py-1.5 text-xs rounded-full font-semibold transition-colors flex items-center gap-1 ${
+            className={`px-4 py-2 text-label-caps uppercase transition-colors cursor-pointer border flex items-center gap-1.5 ${
               selectedRatingFilter === 5
-                ? 'bg-neutral-950 text-white'
-                : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                ? 'bg-[#000000] text-white border-[#000000]'
+                : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000]'
             }`}
           >
-            5 Stars Only
+            <span>5 Stars Only</span>
+            <span
+              className="material-symbols-outlined text-[14px]"
+              style={{ fontVariationSettings: "'FILL' 1, 'wght' 400" }}
+            >
+              star
+            </span>
           </button>
         </div>
 
         {selectedRatingFilter && (
           <button
             onClick={() => setSelectedRatingFilter(null)}
-            className="text-xs text-neutral-500 hover:text-neutral-900 underline"
+            className="text-body-sm text-[#000000] font-medium underline hover:text-[#505252] cursor-pointer"
           >
-            Clear Filter
+            Clear Rating Filter
           </button>
         )}
       </div>
 
-      {/* Reviews Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Modular Reviews Grid using ReviewTile */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filteredReviews.map((rev) => (
-          <div
-            key={rev.id}
-            id={`review-card-${rev.id}`}
-            className="bg-white p-6 sm:p-7 rounded-2xl border border-neutral-200/90 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
-          >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1 text-amber-400">
-                  {[...Array(rev.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-400" />
-                  ))}
-                </div>
-                <span className="text-xs text-neutral-400">{rev.date}</span>
-              </div>
-
-              <div>
-                <h4 className="font-serif text-lg font-bold text-neutral-900 leading-snug">
-                  "{rev.title}"
-                </h4>
-                <p className="text-xs text-neutral-600 font-light leading-relaxed mt-2">
-                  {rev.comment}
-                </p>
-              </div>
-            </div>
-
-            <div className="pt-4 border-t border-neutral-100 flex items-center justify-between text-xs">
-              <div>
-                <div className="flex items-center gap-1.5 font-semibold text-neutral-900">
-                  <span>{rev.author}</span>
-                  {rev.verified && (
-                    <span className="flex items-center text-[10px] text-emerald-600 font-medium">
-                      <CheckCircle className="w-3 h-3 mr-0.5" /> Verified Client
-                    </span>
-                  )}
-                </div>
-                <span className="text-[11px] text-neutral-400">{rev.location}</span>
-              </div>
-
-              <div className="text-right">
-                <span className="text-[11px] font-medium text-neutral-700 block">
-                  {rev.productName}
-                </span>
-                {rev.fitRating && (
-                  <span className="text-[10px] text-neutral-400">
-                    Fit: <strong>{rev.fitRating}</strong>
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+          <ReviewTile key={rev.id} review={rev} />
         ))}
       </div>
 
       {/* Write a Review Modal */}
-      <AnimatePresence>
-        {isWriteReviewOpen && (
+      {isWriteReviewOpen && (
+        <div
+          id="write-review-modal-overlay"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="write-review-heading"
+        >
           <div
-            id="write-review-modal-overlay"
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            id="write-review-modal-content"
+            className="bg-[#faf9f7] w-full max-w-lg shadow-2xl border border-[#c4c7c7] p-6 sm:p-10 overflow-y-auto max-h-[90vh]"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              id="write-review-modal-content"
-              className="bg-[#FAF9F6] w-full max-w-lg rounded-3xl shadow-2xl border border-neutral-200 p-6 sm:p-8 overflow-hidden"
-            >
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-neutral-200">
-                <h3 className="font-serif text-2xl text-neutral-950 font-medium">
-                  Submit Client Review
-                </h3>
-                <button
-                  onClick={() => setIsWriteReviewOpen(false)}
-                  className="p-1 rounded-full text-neutral-400 hover:text-neutral-900"
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#c4c7c7]">
+              <h3
+                id="write-review-heading"
+                className="text-[24px] text-[#000000] font-normal"
+                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              >
+                Submit Client Experience
+              </h3>
+              <button
+                onClick={() => setIsWriteReviewOpen(false)}
+                className="w-9 h-9 flex items-center justify-center text-[#000000] hover:opacity-60 transition-opacity cursor-pointer"
+                aria-label="Close modal"
+              >
+                <span className="material-symbols-outlined text-[24px]">close</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleReviewSubmit} className="space-y-4 text-left">
+              <div>
+                <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                  Product / Piece
+                </label>
+                <select
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  className="w-full px-3 py-2.5 text-body-sm bg-white border border-[#c4c7c7] text-[#000000] outline-none cursor-pointer"
                 >
-                  <X className="w-5 h-5" />
-                </button>
+                  {PRODUCTS.map((p) => (
+                    <option key={p.id} value={p.name}>
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
-              <form onSubmit={handleReviewSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                    Select Garment / Object
-                  </label>
-                  <select
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-none focus:border-neutral-900"
-                  >
-                    {PRODUCTS.map((p) => (
-                      <option key={p.id} value={p.name}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                    Rating
-                  </label>
-                  <div className="flex items-center gap-2">
-                    {[1, 2, 3, 4, 5].map((num) => (
-                      <button
-                        type="button"
-                        key={num}
-                        onClick={() => setRating(num)}
-                        className="p-1"
+              <div>
+                <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                  Rating
+                </label>
+                <div className="flex items-center gap-1.5" role="radiogroup" aria-label="Select rating">
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <button
+                      type="button"
+                      key={num}
+                      onClick={() => setRating(num)}
+                      className="p-1 cursor-pointer focus:outline-none"
+                      aria-label={`${num} Stars`}
+                    >
+                      <span
+                        className="material-symbols-outlined text-[28px] text-[#000000]"
+                        style={{ fontVariationSettings: `'FILL' ${num <= rating ? 1 : 0}, 'wght' 300` }}
                       >
-                        <Star
-                          className={`w-6 h-6 transition-colors ${
-                            num <= rating ? 'fill-amber-400 text-amber-400' : 'text-neutral-300'
-                          }`}
-                        />
-                      </button>
-                    ))}
-                    <span className="text-xs font-bold text-neutral-700 ml-2">
-                      {rating} out of 5 Stars
-                    </span>
-                  </div>
+                        star
+                      </span>
+                    </button>
+                  ))}
+                  <span className="text-body-sm text-[#000000] font-medium ml-2">
+                    {rating} of 5 Stars
+                  </span>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                      Your Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Lady Vivienne"
-                      value={authorName}
-                      onChange={(e) => setAuthorName(e.target.value)}
-                      required
-                      className="w-full px-3 py-2 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-none focus:border-neutral-900"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                      City & Country
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Geneva, Switzerland"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-none focus:border-neutral-900"
-                    />
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                    Review Headline
+                  <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                    Your Name
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Supreme texture and exquisite packaging"
-                    value={reviewTitle}
-                    onChange={(e) => setReviewTitle(e.target.value)}
+                    placeholder="e.g. Lady Vivienne"
+                    value={authorName}
+                    onChange={(e) => setAuthorName(e.target.value)}
                     required
-                    className="w-full px-3 py-2 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-none focus:border-neutral-900"
+                    className="w-full px-3 py-2.5 text-body-sm bg-white border border-[#c4c7c7] text-[#000000] outline-none"
                   />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1">
-                    Your Experience
+                  <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                    City &amp; Country
                   </label>
-                  <textarea
-                    rows={3}
-                    placeholder="Describe the fabric quality, comfort, compliments received..."
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    required
-                    className="w-full px-3 py-2 text-xs bg-white border border-neutral-300 rounded-xl focus:outline-none focus:border-neutral-900 resize-none"
+                  <input
+                    type="text"
+                    placeholder="e.g. Cotswolds, UK"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="w-full px-3 py-2.5 text-body-sm bg-white border border-[#c4c7c7] text-[#000000] outline-none"
                   />
                 </div>
+              </div>
 
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 bg-neutral-950 hover:bg-neutral-800 text-white rounded-xl text-xs font-bold uppercase tracking-widest shadow-lg transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-4 h-4" />
-                    <span>Publish Review</span>
-                  </button>
-                </div>
-              </form>
-            </motion.div>
+              <div>
+                <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                  Review Headline
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Supreme texture and exquisite craftsmanship"
+                  value={reviewTitle}
+                  onChange={(e) => setReviewTitle(e.target.value)}
+                  required
+                  className="w-full px-3 py-2.5 text-body-sm bg-white border border-[#c4c7c7] text-[#000000] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-label-caps uppercase text-[#000000] mb-1 font-semibold">
+                  Your Experience
+                </label>
+                <textarea
+                  rows={3}
+                  placeholder="Describe the fabric breathability, drape, softness after laundering..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  required
+                  className="w-full px-3 py-2.5 text-body-sm bg-white border border-[#c4c7c7] text-[#000000] outline-none resize-none"
+                />
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-[#000000] hover:bg-[#252726] text-white text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center gap-2 cursor-pointer font-medium"
+                >
+                  <span className="material-symbols-outlined text-[18px]">send</span>
+                  <span>Publish Review</span>
+                </button>
+              </div>
+            </form>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
     </section>
   );
 };

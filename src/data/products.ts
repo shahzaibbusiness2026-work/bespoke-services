@@ -607,7 +607,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     title: 'Bespoke curtains made to perfection',
     date: 'November 14, 2023',
-    comment: 'Oriana Home’s bespoke drapery service is second to none. The Belgian linen filters afternoon daylight into our bedroom like a Renaissance painting. Heavyweight, beautifully weighted at the hem.',
+    comment: 'BOSKI LIMITED’s bespoke drapery service is second to none. The Belgian linen filters afternoon daylight into our bedroom like a Renaissance painting. Heavyweight, beautifully weighted at the hem.',
     verified: true,
     productName: 'Bespoke Belgian Linen Drapery Panels',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',

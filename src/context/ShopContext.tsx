@@ -109,18 +109,18 @@ interface ShopContextType {
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
 const STORAGE_KEYS = {
-  CART: 'oriana_cart_v2',
-  WISHLIST: 'oriana_wishlist_v2',
-  CURRENCY: 'oriana_currency_v2',
-  ORDERS: 'oriana_orders_v2',
-  USER: 'oriana_user_v2',
+  CART: 'boski_cart_v2',
+  WISHLIST: 'boski_wishlist_v2',
+  CURRENCY: 'boski_currency_v2',
+  ORDERS: 'boski_orders_v2',
+  USER: 'boski_user_v2',
 };
 
 const DEFAULT_VIP_USER: User = {
   id: 'usr-ll-4921',
   firstName: 'Eleanor',
   lastName: 'Vance',
-  email: 'eleanor.vance@oriana-linen.com',
+  email: 'eleanor.vance@boski-limited.com',
   phone: '+1 (617) 555-0192',
   vipTier: 'Diamond Concierge',
   pointsBalance: 3840,
@@ -163,7 +163,7 @@ const INITIAL_ORDER_HISTORY: OrderDetails[] = [
     customer: {
       firstName: 'Eleanor',
       lastName: 'Vance',
-      email: 'eleanor.vance@oriana-linen.com',
+      email: 'eleanor.vance@boski-limited.com',
       phone: '+1 (617) 555-0192',
       address: '142 Hill House Lane, Apt 3B',
       city: 'Boston',
@@ -482,7 +482,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
     }
     setIsAuthOpen(false);
-    showToast('Welcome back', 'You are now signed into your Oriana Home account', 'success');
+    showToast('Welcome back', 'You are now signed into your BOSKI LIMITED account', 'success');
     return true;
   };
 
@@ -500,7 +500,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
     setCurrentUser(newUser);
     setIsAuthOpen(false);
-    showToast('Account Created', `Welcome to Oriana Home, ${newUser.firstName}`, 'success');
+    showToast('Account Created', `Welcome to BOSKI LIMITED, ${newUser.firstName}`, 'success');
     return true;
   };
 
