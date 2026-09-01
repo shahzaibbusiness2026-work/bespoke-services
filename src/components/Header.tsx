@@ -23,7 +23,6 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
     setAuthMode,
     isMiniAccountOpen,
     setIsMiniAccountOpen,
-    orderHistory,
   } = useShop();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,7 +35,6 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
 
   const cartCount = cart.reduce((t, i) => t + i.quantity, 0);
   const wishlistCount = wishlist.length;
-  const recentOrder = orderHistory[0];
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 15);
@@ -83,45 +81,47 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             : 'border-b border-[#c4c7c7]/30'
         }`}
       >
-        <div className="flex justify-between items-center w-full px-4 sm:px-6 lg:px-8 xl:px-12 max-w-[1600px] mx-auto h-20">
+        <div className="flex justify-between items-center w-full px-4 sm:px-6 lg:px-6 xl:px-10 max-w-[1680px] mx-auto h-20">
 
           {/* FRONT: Brand Emblem & Horizontal Navigation */}
-          <div className="flex items-center gap-6 xl:gap-8">
+          <div className="flex items-center gap-4 lg:gap-5 xl:gap-8">
             <button
               onClick={() => handleNavClick('home')}
               className="flex items-center gap-2 group text-left focus:outline-none transition-transform duration-300 active:scale-[0.99] shrink-0"
               aria-label="BOSKI LIMITED Home"
             >
               <span
-                className="text-[20px] sm:text-[24px] lg:text-[25px] tracking-[0.14em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity"
+                className="text-[19px] sm:text-[22px] lg:text-[21px] xl:text-[24px] tracking-[0.14em] font-normal text-[#000000] uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 BOSKI LIMITED
               </span>
             </button>
 
-            {/* Desktop Horizontal Navigation in Exact Requested Order:
+            {/* Main Horizontal Navigation:
+                Shown on both Laptops and Desktops (lg:flex, hidden below 1024px)
+                Exact requested sequence:
                 1. Home
                 2. New Arrivals
                 3. Shop
                 4. Bedding (with dropdown)
                 5. Curtains (with dropdown)
                 6. Towels
-                7. Throws & Blankets
+                7. Throws and Blankets
                 8. My Wishlist
                 9. My Account
                 10. Currency (default GBP)
             */}
             <nav
-              className="hidden 2xl:flex items-center gap-5 xl:gap-6 text-label-caps"
-              aria-label="Main Desktop Navigation"
+              className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5.5 text-[10.5px] xl:text-[11.5px] 2xl:text-[12px] font-medium uppercase tracking-[0.08em] xl:tracking-[0.12em] whitespace-nowrap"
+              aria-label="Main Desktop & Laptop Navigation"
             >
               {/* 1. Home */}
               <button
                 id="nav-home"
                 onClick={() => handleNavClick('home')}
-                className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer ${
-                  activePage === 'home' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                className={`relative py-2 transition-all cursor-pointer ${
+                  activePage === 'home' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                 }`}
               >
                 Home
@@ -137,8 +137,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <button
                 id="nav-new-arrivals"
                 onClick={() => handleNavClick('new-arrivals')}
-                className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer ${
-                  activePage === 'new-arrivals' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                className={`relative py-2 transition-all cursor-pointer ${
+                  activePage === 'new-arrivals' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                 }`}
               >
                 New Arrivals
@@ -154,8 +154,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <button
                 id="nav-shop"
                 onClick={() => handleNavClick('shop')}
-                className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer ${
-                  activePage === 'shop' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                className={`relative py-2 transition-all cursor-pointer ${
+                  activePage === 'shop' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                 }`}
               >
                 Shop
@@ -176,14 +176,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                 <button
                   id="nav-bedding"
                   onClick={() => handleNavClick('bedding')}
-                  className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer flex items-center gap-1 ${
-                    activePage === 'bedding' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                  className={`relative py-2 transition-all cursor-pointer flex items-center gap-0.5 ${
+                    activePage === 'bedding' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                   }`}
                   aria-expanded={activeDropdown === 'bedding'}
                 >
                   <span>Bedding</span>
                   <span
-                    className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${
+                    className={`material-symbols-outlined text-[15px] transition-transform duration-200 ${
                       activeDropdown === 'bedding' ? 'rotate-180' : ''
                     }`}
                   >
@@ -199,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
 
                 {/* Bedding Dropdown Panel */}
                 {activeDropdown === 'bedding' && (
-                  <div className="absolute left-0 top-full mt-1 w-64 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-4 z-50 animate-fadeIn">
+                  <div className="absolute left-0 top-full mt-1 w-64 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-4 z-50 animate-fadeIn normal-case">
                     <div className="flex flex-col gap-1 text-body-sm">
                       <button
                         onClick={() => handleNavClick('bedding')}
@@ -239,14 +239,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                 <button
                   id="nav-curtains"
                   onClick={() => handleNavClick('curtains')}
-                  className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer flex items-center gap-1 ${
-                    activePage === 'curtains' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                  className={`relative py-2 transition-all cursor-pointer flex items-center gap-0.5 ${
+                    activePage === 'curtains' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                   }`}
                   aria-expanded={activeDropdown === 'curtains'}
                 >
                   <span>Curtains</span>
                   <span
-                    className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${
+                    className={`material-symbols-outlined text-[15px] transition-transform duration-200 ${
                       activeDropdown === 'curtains' ? 'rotate-180' : ''
                     }`}
                   >
@@ -262,7 +262,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
 
                 {/* Curtains Dropdown Panel */}
                 {activeDropdown === 'curtains' && (
-                  <div className="absolute left-0 top-full mt-1 w-64 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-4 z-50 animate-fadeIn">
+                  <div className="absolute left-0 top-full mt-1 w-64 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-4 z-50 animate-fadeIn normal-case">
                     <div className="flex flex-col gap-1 text-body-sm">
                       <button
                         onClick={() => handleNavClick('curtains')}
@@ -297,8 +297,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <button
                 id="nav-towels"
                 onClick={() => handleNavClick('towels')}
-                className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer ${
-                  activePage === 'towels' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                className={`relative py-2 transition-all cursor-pointer ${
+                  activePage === 'towels' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                 }`}
               >
                 Towels
@@ -314,11 +314,11 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <button
                 id="nav-throws-blankets"
                 onClick={() => handleNavClick('throws-blankets')}
-                className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer ${
-                  activePage === 'throws-blankets' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                className={`relative py-2 transition-all cursor-pointer ${
+                  activePage === 'throws-blankets' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                 }`}
               >
-                Throws and Blankets
+                Throws &amp; Blankets
                 <span
                   className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-[#000000] transition-all duration-300 ${
                     activePage === 'throws-blankets' ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100'
@@ -331,11 +331,11 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <button
                 id="nav-wishlist-link"
                 onClick={() => setIsWishlistOpen(true)}
-                className="relative py-2 tracking-[0.14em] text-[#2b2d2c] hover:text-[#000000] transition-all cursor-pointer flex items-center gap-1.5"
+                className="relative py-2 text-[#2b2d2c] hover:text-[#000000] transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <span>My Wishlist</span>
                 {wishlistCount > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-[#000000] text-white text-[10px] font-medium">
+                  <span className="px-1.5 py-0.2 rounded-full bg-[#000000] text-white text-[9.5px] font-medium">
                     {wishlistCount}
                   </span>
                 )}
@@ -357,8 +357,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                       handleNavClick('account');
                     }
                   }}
-                  className={`relative py-2 tracking-[0.14em] transition-all cursor-pointer flex items-center gap-1 ${
-                    activePage === 'account' ? 'text-[#000000] font-semibold' : 'text-[#2b2d2c] hover:text-[#000000]'
+                  className={`relative py-2 transition-all cursor-pointer flex items-center gap-1 ${
+                    activePage === 'account' ? 'text-[#000000] font-bold' : 'text-[#2b2d2c] hover:text-[#000000]'
                   }`}
                 >
                   <span>My Account</span>
@@ -379,15 +379,15 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               >
                 <button
                   id="nav-currency-switcher"
-                  className="px-2.5 py-1.5 border border-[#c4c7c7] text-label-caps text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-2 py-1 border border-[#c4c7c7] text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-1 cursor-pointer"
                   aria-label={`Selected currency: ${currency.code}`}
                 >
                   <span className="font-semibold">{currency.symbol} {currency.code}</span>
-                  <span className="material-symbols-outlined text-[14px]">expand_more</span>
+                  <span className="material-symbols-outlined text-[13px]">expand_more</span>
                 </button>
 
                 {activeDropdown === 'currency' && (
-                  <div className="absolute right-0 top-full mt-1 w-36 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl py-2 z-50 animate-fadeIn">
+                  <div className="absolute right-0 top-full mt-1 w-36 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl py-2 z-50 animate-fadeIn normal-case">
                     {Object.values(CURRENCIES).map((c) => (
                       <button
                         key={c.code}
@@ -409,19 +409,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             </nav>
           </div>
 
-          {/* Medium Screen Nav Summary (Viewports between 1024px and 1440px) */}
-          <nav className="hidden lg:flex 2xl:hidden items-center gap-4 text-label-caps">
-            <button onClick={() => handleNavClick('home')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Home</button>
-            <button onClick={() => handleNavClick('new-arrivals')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">New Arrivals</button>
-            <button onClick={() => handleNavClick('shop')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Shop</button>
-            <button onClick={() => handleNavClick('bedding')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Bedding</button>
-            <button onClick={() => handleNavClick('curtains')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Curtains</button>
-            <button onClick={() => handleNavClick('towels')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Towels</button>
-            <button onClick={() => handleNavClick('throws-blankets')} className="hover:text-[#000000] py-1 text-[#2b2d2c]">Throws</button>
-          </nav>
-
           {/* Trailing Utility Actions: 44x44px touch targets with 16px gap */}
-          <div className="flex items-center gap-4 text-[#1a1c1b]">
+          <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-[#1a1c1b]">
             {/* Quick Search */}
             <button
               id="search-btn"
@@ -451,10 +440,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </button>
 
-            {/* Mobile / Tablet Hamburger Toggle */}
+            {/* Mobile / Small Screen Hamburger Toggle
+                CRITICAL REQUIREMENT:
+                Hidden on Laptop and Desktop (lg:hidden, screen widths >= 1024px)
+                Only appears on Mobile and Tablet viewports (< 1024px)
+            */}
             <button
               id="mobile-menu-btn"
-              className="2xl:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-70 transition-opacity rounded-none focus:outline-none"
+              className="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-70 transition-opacity rounded-none focus:outline-none cursor-pointer"
               onClick={() => setIsSidebarOpen(true)}
               aria-label="Open navigation sidebar"
             >
@@ -467,7 +460,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
       </header>
 
       {/* Responsive Hamburger Sidebar Slide-Over Drawer
-          Accurately renders all items in requested order:
+          Rendered for Mobile and Tablet viewports (< 1024px)
+          Exact same order:
           1. Home
           2. New Arrivals
           3. Shop
