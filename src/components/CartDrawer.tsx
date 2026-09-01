@@ -35,24 +35,28 @@ export const CartDrawer: React.FC = () => {
   };
 
   return (
-    <>
-      {/* Overlay */}
-      {isCartOpen && (
-        <div
-          className="fixed inset-0 bg-[#000000]/20 backdrop-blur-sm z-50"
-          onClick={() => setIsCartOpen(false)}
-        />
-      )}
+    <div
+      className={`fixed inset-0 z-50 transition-all duration-300 ${
+        isCartOpen ? 'pointer-events-auto visible' : 'pointer-events-none invisible delay-300'
+      }`}
+    >
+      {/* Backdrop overlay with smooth fade */}
+      <div
+        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ease-out ${
+          isCartOpen ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={() => setIsCartOpen(false)}
+      />
 
-      {/* Drawer — exactly matches homepage/code.html SideNavBar */}
+      {/* Drawer Panel — with hardware-accelerated slide */}
       <div
         id="cart-drawer"
-        className={`fixed inset-y-0 right-0 z-[60] flex flex-col p-8 bg-[#faf9f7] h-full w-full md:w-[480px] border-l border-[#c4c7c7]/30 shadow-2xl transition-transform duration-500 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-10 flex flex-col p-6 sm:p-8 bg-[#faf9f7] h-full w-full max-w-[480px] border-l border-[#c4c7c7]/40 shadow-2xl transition-transform duration-300 ease-out will-change-transform ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-start mb-6 shrink-0">
           <div>
             <h2
               className="text-headline-sm text-[#000000]"
@@ -69,17 +73,30 @@ export const CartDrawer: React.FC = () => {
           <button
             id="close-cart-btn"
             onClick={() => setIsCartOpen(false)}
-            className="text-[#444748] hover:text-[#000000] transition-colors"
+            className="p-2 -mr-2 text-[#444748] hover:text-[#000000] transition-colors"
             aria-label="Close cart"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>close</span>
           </button>
         </div>
 
-        {/* Cart Items */}
-        <div className="flex-grow overflow-y-auto pr-2 scrollbar-hide space-y-6">
+        {/* Free shipping bar indicator */}
+        <div className="w-full bg-[#e3e2e0] h-1 mb-6 shrink-0">
+          <div
+            className="bg-[#000000] h-full transition-all duration-500"
+            style={{
+              width: `${Math.min(
+                100,
+                Math.round(((totals.freeShippingThreshold - totals.amountToFreeShipping) / totals.freeShippingThreshold) * 100)
+              )}%`,
+            }}
+          />
+        </div>
+
+        {/* Cart Items Scroll Container */}
+        <div className="flex-grow overflow-y-auto pr-1 space-y-6 scrollbar-thin">
           {cart.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-center gap-4">
+            <div className="flex flex-col items-center justify-center h-full text-center gap-4 py-12">
               <span
                 className="material-symbols-outlined text-6xl text-[#c4c7c7]"
                 style={{ fontVariationSettings: "'wght' 200" }}
@@ -93,11 +110,11 @@ export const CartDrawer: React.FC = () => {
                 Your bag is empty
               </h3>
               <p className="text-body-sm text-[#444748]">
-                Discover our curated linen collection.
+                Discover our curated natural linen collections.
               </p>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="mt-4 px-8 py-4 border border-[#c4c7c7] text-label-caps text-[#000000] hover:bg-[#f4f3f1] transition-colors"
+                className="mt-4 px-8 py-3.5 border border-[#c4c7c7] text-label-caps text-[#000000] hover:bg-[#f4f3f1] transition-colors"
               >
                 Browse Collection
               </button>
@@ -110,7 +127,7 @@ export const CartDrawer: React.FC = () => {
                 className="flex gap-4 border-b border-[#e3e2e0] pb-6"
               >
                 {/* Product Image */}
-                <div className="w-24 h-32 bg-[#efeeec] overflow-hidden shrink-0">
+                <div className="w-20 h-24 sm:w-24 sm:h-32 bg-[#efeeec] overflow-hidden shrink-0">
                   <img
                     src={item.selectedColor?.image || item.product.images[0]}
                     alt={item.product.name}
@@ -121,7 +138,7 @@ export const CartDrawer: React.FC = () => {
                 {/* Product Info */}
                 <div className="flex flex-col justify-between flex-grow min-w-0">
                   <div>
-                    <h3 className="text-body-md text-[#000000] font-semibold leading-snug">
+                    <h3 className="text-body-md text-[#000000] font-medium leading-snug truncate">
                       {item.product.name}
                     </h3>
                     <p className="text-body-sm text-[#444748] mt-1">
@@ -129,12 +146,12 @@ export const CartDrawer: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="flex justify-between items-end mt-2">
-                    {/* Quantity Controls — matches homepage reference */}
+                  <div className="flex justify-between items-end mt-3">
+                    {/* Quantity Controls */}
                     <div className="flex items-center border border-[#c4c7c7]">
                       <button
                         onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
-                        className="px-3 py-2 text-[#444748] hover:text-[#000000] transition-colors text-sm"
+                        className="px-2.5 py-1 text-[#444748] hover:text-[#000000] transition-colors text-sm"
                         aria-label="Decrease quantity"
                       >
                         -
@@ -144,13 +161,13 @@ export const CartDrawer: React.FC = () => {
                       </span>
                       <button
                         onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
-                        className="px-3 py-2 text-[#444748] hover:text-[#000000] transition-colors text-sm"
+                        className="px-2.5 py-1 text-[#444748] hover:text-[#000000] transition-colors text-sm"
                         aria-label="Increase quantity"
                       >
                         +
                       </button>
                     </div>
-                    <span className="text-body-md text-[#000000]">
+                    <span className="text-body-md text-[#000000] font-medium">
                       {formatPrice(item.product.price * item.quantity)}
                     </span>
                   </div>
@@ -170,11 +187,11 @@ export const CartDrawer: React.FC = () => {
 
         {/* Footer */}
         {cart.length > 0 && (
-          <div className="mt-8 pt-6 border-t border-[#e3e2e0] flex flex-col gap-4">
+          <div className="mt-4 pt-4 border-t border-[#e3e2e0] flex flex-col gap-3 shrink-0">
             {/* Promo Code */}
             {appliedPromo ? (
-              <div className="flex items-center justify-between bg-[#f4f3f1] px-3 py-2">
-                <span className="text-body-sm text-[#675d50]">
+              <div className="flex items-center justify-between bg-[#f4f3f1] px-3 py-2 border border-[#e3e2e0]">
+                <span className="text-body-sm text-[#675d50] font-medium">
                   {appliedPromo.code} — {appliedPromo.discountPercent}% off
                 </span>
                 <button onClick={removePromoCode} className="text-label-caps text-[#ba1a1a] hover:opacity-70">
@@ -185,15 +202,15 @@ export const CartDrawer: React.FC = () => {
               <div className="flex border-b border-[#c4c7c7] pb-1 gap-2">
                 <input
                   type="text"
-                  placeholder="Promo Code"
+                  placeholder="Promo Code (try LUXE20)"
                   value={promoInput}
                   onChange={(e) => setPromoInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handlePromoApply()}
-                  className="flex-grow bg-transparent text-body-sm text-[#000000] placeholder-[#444748]/50 focus:outline-none"
+                  className="flex-grow bg-transparent text-body-sm text-[#000000] placeholder-[#444748]/50 py-1 focus:outline-none"
                 />
                 <button
                   onClick={handlePromoApply}
-                  className="text-label-caps text-[#000000] hover:opacity-70"
+                  className="text-label-caps text-[#000000] hover:opacity-70 font-semibold"
                 >
                   Apply
                 </button>
@@ -202,50 +219,50 @@ export const CartDrawer: React.FC = () => {
             {promoError && <p className="text-label-caps text-[#ba1a1a]">{promoError}</p>}
 
             {/* Gift Wrap */}
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center gap-3 cursor-pointer py-1">
               <input
                 type="checkbox"
                 checked={appliedGiftWrap}
                 onChange={(e) => setAppliedGiftWrap(e.target.checked)}
-                className="w-4 h-4 accent-black"
+                className="w-4 h-4 accent-black cursor-pointer"
               />
-              <span className="text-body-sm text-[#444748]">Gift wrapping (+$15)</span>
+              <span className="text-body-sm text-[#444748]">Bespoke gift wrapping (+$15)</span>
             </label>
 
-            {/* Totals — matches homepage reference subtotal section */}
-            <div className="space-y-2">
+            {/* Totals */}
+            <div className="space-y-1.5 pt-1">
               {appliedPromo && (
-                <div className="flex justify-between items-center">
-                  <span className="text-body-sm text-[#444748]">Discount</span>
-                  <span className="text-body-sm text-[#675d50]">−{formatPrice(totals.discount)}</span>
+                <div className="flex justify-between items-center text-body-sm">
+                  <span className="text-[#444748]">Discount</span>
+                  <span className="text-[#675d50]">−{formatPrice(totals.discount)}</span>
                 </div>
               )}
               {totals.shipping > 0 && (
-                <div className="flex justify-between items-center">
-                  <span className="text-body-sm text-[#444748]">Shipping</span>
-                  <span className="text-body-sm text-[#000000]">{formatPrice(totals.shipping)}</span>
+                <div className="flex justify-between items-center text-body-sm">
+                  <span className="text-[#444748]">Shipping</span>
+                  <span className="text-[#000000]">{formatPrice(totals.shipping)}</span>
                 </div>
               )}
-              <div className="flex justify-between items-center pt-3 border-t border-[#e3e2e0]">
+              <div className="flex justify-between items-center pt-2 border-t border-[#e3e2e0]">
                 <span className="text-body-lg text-[#000000] font-bold">Subtotal</span>
                 <span className="text-body-lg text-[#000000] font-bold">{formatPrice(totals.total)}</span>
               </div>
             </div>
 
-            {/* Checkout Button — matches homepage reference */}
+            {/* Checkout Button */}
             <button
               id="checkout-now-btn"
               onClick={() => {
                 setIsCartOpen(false);
                 setIsCheckoutOpen(true);
               }}
-              className="w-full bg-[#000000] text-white py-4 px-8 text-label-caps uppercase tracking-wider hover:bg-[#2f3130] transition-colors duration-300 mt-2"
+              className="w-full bg-[#000000] text-white py-4 px-8 text-label-caps uppercase tracking-wider hover:bg-[#2f3130] transition-colors duration-200 mt-1"
             >
               Checkout Now
             </button>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };

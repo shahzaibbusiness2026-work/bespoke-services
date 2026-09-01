@@ -16,24 +16,28 @@ export const WishlistDrawer: React.FC = () => {
   const wishlistProducts = PRODUCTS.filter((p) => wishlist.includes(p.id));
 
   return (
-    <>
-      {/* Overlay */}
-      {isWishlistOpen && (
-        <div
-          className="fixed inset-0 bg-[#000000]/20 backdrop-blur-sm z-50"
-          onClick={() => setIsWishlistOpen(false)}
-        />
-      )}
+    <div
+      className={`fixed inset-0 z-50 transition-all duration-300 ${
+        isWishlistOpen ? 'pointer-events-auto visible' : 'pointer-events-none invisible delay-300'
+      }`}
+    >
+      {/* Smooth Backdrop Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ease-out ${
+          isWishlistOpen ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={() => setIsWishlistOpen(false)}
+      />
 
       {/* Drawer Panel */}
       <div
         id="wishlist-drawer"
-        className={`fixed inset-y-0 right-0 z-[60] w-full md:w-[480px] bg-[#faf9f7] flex flex-col border-l border-[#c4c7c7]/30 shadow-2xl transition-transform duration-500 ease-in-out ${
+        className={`fixed inset-y-0 right-0 z-10 w-full max-w-[480px] bg-[#faf9f7] flex flex-col border-l border-[#c4c7c7]/40 shadow-2xl transition-transform duration-300 ease-out will-change-transform ${
           isWishlistOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex justify-between items-start p-8 border-b border-[#e3e2e0]">
+        <div className="flex justify-between items-start p-6 sm:p-8 border-b border-[#e3e2e0] shrink-0">
           <div>
             <h2
               className="text-headline-sm text-[#000000]"
@@ -48,7 +52,7 @@ export const WishlistDrawer: React.FC = () => {
           <button
             id="close-wishlist-btn"
             onClick={() => setIsWishlistOpen(false)}
-            className="text-[#444748] hover:text-[#000000] transition-colors"
+            className="p-2 -mr-2 text-[#444748] hover:text-[#000000] transition-colors"
             aria-label="Close wishlist"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>close</span>
@@ -56,7 +60,7 @@ export const WishlistDrawer: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="flex-grow overflow-y-auto scrollbar-hide">
+        <div className="flex-grow overflow-y-auto scrollbar-thin">
           {wishlistProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full px-8 py-16 text-center">
               <span
@@ -90,7 +94,7 @@ export const WishlistDrawer: React.FC = () => {
                 >
                   {/* Product Image */}
                   <div
-                    className="w-24 h-28 bg-[#efeeec] overflow-hidden shrink-0 cursor-pointer"
+                    className="w-20 h-24 sm:w-24 sm:h-28 bg-[#efeeec] overflow-hidden shrink-0 cursor-pointer"
                     onClick={() => {
                       setSelectedProductForQuickView(product);
                       setIsWishlistOpen(false);
@@ -111,9 +115,9 @@ export const WishlistDrawer: React.FC = () => {
                           setSelectedProductForQuickView(product);
                           setIsWishlistOpen(false);
                         }}
-                        className="text-left"
+                        className="text-left w-full"
                       >
-                        <h3 className="text-body-md text-[#000000] hover:underline underline-offset-2 leading-snug">
+                        <h3 className="text-body-md text-[#000000] hover:underline underline-offset-2 leading-snug truncate">
                           {product.name}
                         </h3>
                         <p className="text-body-sm text-[#444748] mt-1 truncate">{product.subtitle}</p>
@@ -137,7 +141,7 @@ export const WishlistDrawer: React.FC = () => {
                             <div
                               key={c.name}
                               title={c.name}
-                              className="w-4 h-4 rounded-full border border-[#c4c7c7]"
+                              className="w-3.5 h-3.5 rounded-full border border-[#c4c7c7]"
                               style={{ backgroundColor: c.hex }}
                             />
                           ))}
@@ -153,7 +157,7 @@ export const WishlistDrawer: React.FC = () => {
                           addToCart(product, product.colors[0], product.sizes[0], 1);
                           toggleWishlist(product.id);
                         }}
-                        className="flex-grow py-2 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors"
+                        className="flex-grow py-2.5 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors"
                       >
                         Add to Bag
                       </button>
@@ -173,6 +177,6 @@ export const WishlistDrawer: React.FC = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
