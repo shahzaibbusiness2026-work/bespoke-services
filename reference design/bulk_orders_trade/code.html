@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oriana Home - Trade &amp; Hospitality</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600&amp;family=Libre+Caslon+Text:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#87837e",
+                      "surface": "#faf9f7",
+                      "surface-container-low": "#f4f3f1",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#cac6c0",
+                      "on-surface": "#1a1c1b",
+                      "tertiary": "#000000",
+                      "inverse-on-surface": "#f1f1ef",
+                      "on-primary-fixed": "#1c1b1b",
+                      "surface-container": "#efeeec",
+                      "on-surface-variant": "#444748",
+                      "tertiary-container": "#1d1b18",
+                      "surface-bright": "#faf9f7",
+                      "surface-container-high": "#e9e8e6",
+                      "primary-fixed": "#e5e2e1",
+                      "primary": "#000000",
+                      "surface-container-highest": "#e3e2e0",
+                      "secondary": "#675d50",
+                      "outline-variant": "#c4c7c7",
+                      "on-error-container": "#93000a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#4f4539",
+                      "on-tertiary-fixed-variant": "#494642",
+                      "on-error": "#ffffff",
+                      "background": "#faf9f7",
+                      "surface-variant": "#e3e2e0",
+                      "secondary-fixed-dim": "#d3c4b4",
+                      "on-primary-fixed-variant": "#474746",
+                      "inverse-primary": "#c8c6c5",
+                      "primary-container": "#1c1b1b",
+                      "inverse-surface": "#2f3130",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#221a10",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#efe0cf",
+                      "on-tertiary-fixed": "#1d1b18",
+                      "surface-dim": "#dadad8",
+                      "on-primary-container": "#858383",
+                      "outline": "#747878",
+                      "surface-tint": "#5f5e5e",
+                      "secondary-fixed": "#efe0cf",
+                      "on-secondary-container": "#6e6355",
+                      "on-background": "#1a1c1b",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#e7e2dc",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "margin-mobile": "20px",
+                      "container-max": "1440px",
+                      "section-gap": "120px",
+                      "gutter": "32px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Libre Caslon Text"
+                      ],
+                      "headline-lg-mobile": [
+                              "Libre Caslon Text"
+                      ],
+                      "display-lg": [
+                              "Libre Caslon Text"
+                      ],
+                      "body-lg": [
+                              "DM Sans"
+                      ],
+                      "body-sm": [
+                              "DM Sans"
+                      ],
+                      "headline-sm": [
+                              "Libre Caslon Text"
+                      ],
+                      "body-md": [
+                              "DM Sans"
+                      ],
+                      "label-caps": [
+                              "DM Sans"
+                      ],
+                      "headline-lg": [
+                              "Libre Caslon Text"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "44px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "72px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Subtle input styling for modern editorial look */
+        input[type="text"], input[type="email"], select, textarea {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid var(--tw-colors-outline-variant);
+            border-radius: 0;
+            padding: 12px 0;
+            box-shadow: none !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-bottom: 1px solid var(--tw-colors-primary);
+            box-shadow: none !important;
+            border-radius: 0;
+        }
+        
+        /* Disable scrollbar for minimal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf9f7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e3e2e0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c4c7c7;
+        }
+      </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-surface z-50 transition-all duration-300 ease-in-out border-b border-outline-variant/30">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto h-20">
+<!-- Mobile Menu Icon (Placeholder for functionality) -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Navigation Links -->
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shop All</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Bedding</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Curtains</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Dining</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Lifestyle</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Our Story</a>
+</nav>
+<!-- Brand Logo -->
+<a class="font-headline-md text-headline-md text-primary tracking-widest absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none" href="#">
+                Oriana Home
+            </a>
+<!-- Trailing Icons -->
+<div class="flex gap-4 items-center">
+<button class="text-primary hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-primary hover:opacity-70 transition-opacity hidden md:block">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="text-primary hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto relative overflow-hidden flex flex-col md:flex-row items-center gap-gutter min-h-[70vh]">
+<div class="w-full md:w-5/12 z-10 flex flex-col items-start gap-8">
+<h1 class="font-display-lg text-display-lg text-primary max-w-lg leading-tight">Trade &amp; Hospitality</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">Partner with Oriana Home for large-scale projects and exclusive trade benefits. Elevate your spaces with our meticulously crafted collections designed for enduring quality and quiet luxury.</p>
+<a class="mt-4 px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps hover:bg-inverse-surface transition-colors duration-300 inline-block" href="#application">Apply for Trade Account</a>
+</div>
+<div class="w-full md:w-7/12 h-[500px] md:h-[700px] relative">
+<!-- Using a high-quality lifestyle image placeholder to represent 'Hospitality/Trade' context -->
+<div class="w-full h-full bg-cover bg-center bg-no-repeat absolute inset-0" data-alt="A meticulously designed modern living room in a luxury boutique hotel. The space features minimal, high-end furniture in warm ivory and sand tones, bathed in soft, natural light coming from large floor-to-ceiling windows. The aesthetic is 'quiet luxury' with textured linens, delicate wireframe light fixtures, and perfect editorial composition. The lighting emphasizes a pristine, light-mode palette." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjONdF1g0VBzg43UCJmXVOfsB_HWQ0zB9U1TbHLd9qqMt7mWtmUJ9SvcwQaDxbEaUiMZ44Pf2j8faS8UcVhf2Li8L3ZsGVtmFOXSdfc3il23XC0AEn7oYNgBC-N7CBhWdyZLpq0TAv98KoP7TStqJyBXHvyZ9ViwOt-YD7yk7AwnWR02FXGIuVh8bBtmpGrFhhv2J7ohcYdjs9Qq3pfrLPJ93SMWxadn_8N5Er2R5tmhrmfucs-BTt')"></div>
+<!-- Subtle overlay for editorial feel -->
+<div class="absolute inset-0 bg-surface/10 pointer-events-none"></div>
+</div>
+</section>
+<!-- Benefits Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto bg-surface-container-low border-y border-outline-variant/30">
+<div class="mb-24 md:mb-32">
+<h2 class="font-headline-lg text-headline-lg text-primary text-center">Program Benefits</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-24 relative">
+<!-- Benefit 1 -->
+<div class="flex flex-col items-center text-center gap-6 group">
+<div class="w-16 h-16 rounded-full border border-outline-variant flex items-center justify-center bg-surface group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="sell">sell</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Exclusive Pricing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Access tiered trade discounts across all Oriana Home collections, scaled to accommodate large-volume hospitality and residential projects.</p>
+</div>
+<!-- Benefit 2 -->
+<div class="flex flex-col items-center text-center gap-6 group">
+<div class="w-16 h-16 rounded-full border border-outline-variant flex items-center justify-center bg-surface group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="support_agent">support_agent</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Dedicated Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Work directly with a designated trade specialist who manages your orders from quotation through delivery and post-installation support.</p>
+</div>
+<!-- Benefit 3 -->
+<div class="flex flex-col items-center text-center gap-6 group">
+<div class="w-16 h-16 rounded-full border border-outline-variant flex items-center justify-center bg-surface group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
+<span class="material-symbols-outlined text-3xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Custom Manufacturing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Collaborate with our design team for bespoke dimensions, unique fabrications, and customized finishes tailored specifically for your commercial spaces.</p>
+</div>
+</div>
+</section>
+<!-- Application Form Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto flex flex-col md:flex-row gap-gutter" id="application">
+<div class="w-full md:w-5/12 pr-0 md:pr-16 flex flex-col gap-8">
+<h2 class="font-headline-lg text-headline-lg text-primary">Trade Application</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Please provide your details below to initiate the review process for an Oriana Home Trade Account. Our team typically responds within 2-3 business days.</p>
+<div class="mt-8 space-y-6">
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="mail">mail</span>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Email</p>
+<p class="font-body-md text-body-md text-primary">trade@orianahome.com</p>
+</div>
+</div>
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary mt-1" data-icon="call">call</span>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Phone</p>
+<p class="font-body-md text-body-md text-primary">+1 (800) 555-0199</p>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full md:w-7/12 mt-12 md:mt-0">
+<form class="flex flex-col gap-8">
+<!-- Form Row 1 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="companyName">Company Name *</label>
+<input class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant" id="companyName" name="companyName" required="" type="text"/>
+</div>
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="contactPerson">Contact Person *</label>
+<input class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant" id="contactPerson" name="contactPerson" required="" type="text"/>
+</div>
+</div>
+<!-- Form Row 2 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="email">Business Email *</label>
+<input class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant" id="email" name="email" required="" type="email"/>
+</div>
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="phone">Phone Number</label>
+<input class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant" id="phone" name="phone" type="text"/>
+</div>
+</div>
+<!-- Form Row 3 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="profId">Professional ID / Website *</label>
+<input class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant" id="profId" name="profId" placeholder="e.g. Resale Certificate, AIA Number, or URL" required="" type="text"/>
+</div>
+<div class="flex flex-col relative pt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="volume">Estimated Order Volume</label>
+<select class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant cursor-pointer" id="volume" name="volume">
+<option class="text-on-surface-variant" disabled="" selected="" value="">Select an option</option>
+<option value="tier1">$5,000 - $25,000</option>
+<option value="tier2">$25,000 - $100,000</option>
+<option value="tier3">$100,000+</option>
+</select>
+</div>
+</div>
+<!-- Form Row 4 (Textarea) -->
+<div class="flex flex-col relative pt-4 mt-4">
+<label class="font-label-caps text-label-caps text-on-surface-variant absolute top-0 left-0 transition-all" for="projectDetails">Project Details (Optional)</label>
+<textarea class="w-full font-body-md text-body-md text-primary bg-transparent focus:ring-0 focus:border-primary border-outline-variant resize-none" id="projectDetails" name="projectDetails" placeholder="Briefly describe your upcoming projects..." rows="4"></textarea>
+</div>
+<!-- Submit Button -->
+<div class="mt-8 flex justify-end">
+<button class="px-10 py-4 bg-primary text-on-primary font-label-caps text-label-caps hover:bg-inverse-surface transition-colors duration-300" type="submit">Submit Application</button>
+</div>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-low border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="col-span-1 flex flex-col gap-4">
+<span class="font-headline-sm text-headline-sm text-primary">Oriana Home</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 max-w-[250px]">Refining everyday living through quiet luxury and enduring design.</p>
+</div>
+<!-- Links Column 1 -->
+<div class="col-span-1 flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Customer Care</span>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping &amp; Returns</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+</div>
+<!-- Links Column 2 -->
+<div class="col-span-1 flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Company</span>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Sustainability</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a>
+</div>
+<!-- Newsletter / Copyright Column -->
+<div class="col-span-1 flex flex-col justify-between h-full">
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-2">Newsletter</span>
+<div class="flex border-b border-outline-variant pb-2">
+<input class="w-full bg-transparent border-none p-0 focus:ring-0 font-body-sm text-body-sm placeholder-on-surface-variant" placeholder="Email Address" type="email"/>
+<button class="text-primary hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="mt-auto pt-8">
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© 2024 Oriana Home. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple form interaction script to handle label floating effect if desired (optional based on strict minimalism, keeping it simple here)
+        const inputs = document.querySelectorAll('input, textarea, select');
+        
+        inputs.forEach(input => {
+            // Optional JS for advanced interactions
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label').classList.remove('text-primary');
+            });
+        });
+    </script>
+</body></html>

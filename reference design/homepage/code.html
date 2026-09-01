@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linen &amp; Loft - Premium Home Textiles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&amp;family=Libre+Caslon+Text:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e7e2dc",
+                        "secondary-container": "#efe0cf",
+                        "background": "#faf9f7",
+                        "on-secondary-fixed-variant": "#4f4539",
+                        "tertiary-fixed-dim": "#cac6c0",
+                        "on-tertiary-container": "#87837e",
+                        "outline": "#747878",
+                        "surface-bright": "#faf9f7",
+                        "on-surface-variant": "#444748",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#000000",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e9e8e6",
+                        "secondary-fixed": "#efe0cf",
+                        "surface-container": "#efeeec",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3130",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-low": "#f4f3f1",
+                        "primary": "#000000",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-tint": "#5f5e5e",
+                        "primary-container": "#1c1b1b",
+                        "secondary": "#675d50",
+                        "tertiary-container": "#1d1b18",
+                        "surface-variant": "#e3e2e0",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e3e2e0",
+                        "on-background": "#1a1c1b",
+                        "on-surface": "#1a1c1b",
+                        "surface-dim": "#dadad8",
+                        "on-secondary-fixed": "#221a10",
+                        "on-tertiary-fixed-variant": "#494642",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface": "#faf9f7",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f1f1ef",
+                        "secondary-fixed-dim": "#d3c4b4",
+                        "on-secondary-container": "#6e6355",
+                        "on-primary-container": "#858383",
+                        "on-tertiary-fixed": "#1d1b18"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "64px",
+                        "gutter": "32px",
+                        "unit": "8px",
+                        "section-gap": "120px",
+                        "container-max": "1440px",
+                        "margin-mobile": "20px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["DM Sans"],
+                        "headline-sm": ["Libre Caslon Text"],
+                        "label-caps": ["DM Sans"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-sm": ["DM Sans"],
+                        "body-md": ["DM Sans"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "headline-md": ["Libre Caslon Text"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { lineHeight: "28px", letterSpacing: "0em", fontWeight: "400" }],
+                        "headline-sm": ["24px", { lineHeight: "32px", letterSpacing: "0.02em", fontWeight: "400" }],
+                        "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.15em", fontWeight: "600" }],
+                        "headline-lg-mobile": ["36px", { lineHeight: "44px", letterSpacing: "0.01em", fontWeight: "400" }],
+                        "headline-lg": ["48px", { lineHeight: "56px", letterSpacing: "0.01em", fontWeight: "400" }],
+                        "body-sm": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", letterSpacing: "0.01em", fontWeight: "400" }],
+                        "display-lg": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "400" }],
+                        "headline-md": ["32px", { lineHeight: "40px", letterSpacing: "0.02em", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .nav-link {
+                @apply relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[1px] after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden selection:bg-surface-tint selection:text-white">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-background/95 backdrop-blur-sm border-b border-outline-variant transition-transform duration-300" id="main-nav">
+<!-- Navigation Links (Left) -->
+<nav class="hidden md:flex items-center space-x-8 font-body-md text-body-md text-on-surface-variant">
+<a class="nav-link text-primary font-bold" href="#">New Arrivals</a>
+<a class="nav-link hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Bedding</a>
+<a class="nav-link hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Curtains</a>
+<a class="nav-link hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Throws</a>
+<a class="nav-link hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Blankets</a>
+<a class="nav-link hover:text-primary transition-colors duration-300 cursor-pointer" href="#">Shop</a>
+</nav>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden flex items-center text-primary p-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">menu</span>
+</button>
+<!-- Brand Logo (Center) -->
+<div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center h-full">
+<a class="flex items-center justify-center h-full" href="#">
+<img alt="LINEN &amp; LOFT Logo" class="h-10 w-auto object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Ay5QqI5b1WDKFl9YevViR1s5ivdLanq7P9hbIg2E6vugpKWSTsPKZjxJFPt6-vWfRiijAtwybellXvMtMmndiVt15O6OKi3eVqyOvOa0N3ww66v3G39FQxAM-PT3T4z4SpzjDJH92x0UUN7vr96Bo2hCH8ip_J2rRlW4GiFev5kAwUIJJa6zFKPnJQ-DVd_KPjgMA7hWbmmUmUpaIJ2ZBQZO3jcKZw5AL4th-QzybvyPjxE8UIi1"/>
+</a>
+</div>
+<!-- Trailing Icons (Right) -->
+<div class="flex items-center space-x-6 text-on-surface-variant">
+<button class="hover:text-primary transition-colors duration-300 cursor-pointer hover:opacity-70">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">search</span>
+</button>
+<button class="hidden md:block hover:text-primary transition-colors duration-300 cursor-pointer hover:opacity-70">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">favorite</span>
+</button>
+<button class="hidden md:block hover:text-primary transition-colors duration-300 cursor-pointer hover:opacity-70">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">person</span>
+</button>
+<button class="hover:text-primary transition-colors duration-300 cursor-pointer hover:opacity-70 relative group" id="cart-toggle">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-surface-tint text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</button>
+<button class="hidden md:block hover:text-primary transition-colors duration-300 cursor-pointer hover:opacity-70">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0, 'wght' 300;">payments</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar (Drawer - Hidden by default) -->
+<div class="fixed inset-y-0 right-0 z-[60] flex flex-col p-8 bg-surface-bright h-full w-full md:w-[400px] border-l border-outline-variant translate-x-full transition-transform duration-500 ease-in-out shadow-2xl" id="cart-drawer">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Your Bag</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Free shipping on orders over $200</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors" id="close-cart">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">close</span>
+</button>
+</div>
+<div class="flex-grow overflow-y-auto pr-4 scrollbar-hide space-y-6">
+<!-- Cart Item 1 -->
+<div class="flex gap-4 border-b border-surface-variant pb-6">
+<div class="w-24 h-32 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist overhead shot of a folded linen duvet cover in warm ivory, resting on a textured concrete surface. Soft, diffused daylight creates gentle highlights and shadows, emphasizing the natural weave of the premium fabric. Minimalist luxury aesthetic with high contrast and sharp details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyzMwy1cYUP1cJhXbiab4KC7SXZ9rfaPZAoldahADNvLlzYOwmtOeVC_P4hIPHc58bl9MEpArKv4WTwQ5Kwp9u4QfoJQGGqoq8l2aiJGUzOPAtU17GEl5yNQJ7WwmSFngDisNVPtNUsohg0JWymhtwoTiU7dOsFrrZK7e3CSyLWFGDSSkIFYkn910ngXeeGvYfvahl5FrahnJHCiGDEnkwinrwSPqV0dcvV_xChKdbBdy4rVqZVqZc"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Signature Linen Duvet</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Warm Ivory / Queen</p>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex items-center border border-outline-variant">
+<button class="px-2 py-1 text-on-surface-variant hover:text-primary">-</button>
+<span class="px-2 font-body-sm text-body-sm">1</span>
+<button class="px-2 py-1 text-on-surface-variant hover:text-primary">+</button>
+</div>
+<span class="font-body-md text-body-md text-primary">$240</span>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="flex gap-4 border-b border-surface-variant pb-6">
+<div class="w-24 h-32 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up studio shot of a fringed alpaca throw blanket in soft taupe draped elegantly over a mid-century modern wooden chair. The lighting is moody and cinematic, highlighting the soft texture and subtle variations in the yarn. Premium, minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0XGhVcGZd5pLpy-CiCaZ9cuRYjrSmMbEcRrvRENdEdVjHWF4rRkSOSYyyZwObcKrp7ifrFQvCD2ugKdthgeHVHS5huABsnv-IOUNway-b7R0qKwuiJ1JeCIm8aR9wGeplyFTMJkGO9vXIVneoi7TYUvyC09fVk4FxzW12eQ1lrhT-9ZtlTUJS-n-kNKijDHvIAqOn-6asnB5MlFRrPcmQ64T5LNXTyWS_kJgP0EcRHDYADXnHPF1S"/>
+</div>
+<div class="flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-body-md text-body-md text-primary font-semibold">Alpaca Fringe Throw</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Soft Taupe</p>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex items-center border border-outline-variant">
+<button class="px-2 py-1 text-on-surface-variant hover:text-primary">-</button>
+<span class="px-2 font-body-sm text-body-sm">1</span>
+<button class="px-2 py-1 text-on-surface-variant hover:text-primary">+</button>
+</div>
+<span class="font-body-md text-body-md text-primary">$180</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<span class="font-body-lg text-body-lg text-primary font-bold">Subtotal</span>
+<span class="font-body-lg text-body-lg text-primary font-bold">$420</span>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 px-8 font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-tint transition-colors duration-300">
+                Checkout Now
+            </button>
+</div>
+</div>
+<!-- Drawer Overlay -->
+<div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" id="drawer-overlay"></div>
+<!-- Main Content -->
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" data-alt="A high-end interior lifestyle photograph of a minimalist, sun-drenched bedroom featuring premium linen bedding in soft ivory and warm sand tones. The bed is unmade yet perfectly styled, exuding quiet luxury. Morning sunlight streams through sheer curtains, casting soft geometric shadows across the crisp sheets and a textured wool rug. The overall aesthetic is warm, editorial, and highly tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRjytGAfmcCCTS7sr0_si4OS1CFRIioogyMiozjzGBB5Bg0J7vsLLTe1hRhgswF21n4uJlN7fWG_lYs4omT_ANdEgq6_TQtW-negEEUKngTLdjejM1kup8Xh5xWIt9vTGzMR3RV7cvsHyRxoIBODOwhGWK5XS7e9D_Ts3VOkNx1qL0wKEUDk_wPpVEKuiWcYLYe5Lasi_bWLooTV3mD_danEXKjZEzeW2LoFx9hdQCgF_E78tNikV6"/>
+<div class="absolute inset-0 bg-black/10"></div> <!-- Subtle overlay for text contrast -->
+</div>
+<div class="relative z-10 text-center px-6 max-w-3xl mx-auto flex flex-col items-center">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white drop-shadow-md mb-6 leading-tight">Elevate Your Everyday</h1>
+<p class="font-body-lg text-body-lg text-white/90 drop-shadow mb-10 max-w-xl">Thoughtfully designed textiles for beautifully lived-in spaces. Experience the quiet luxury of natural fibers.</p>
+<div class="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto">
+<a class="bg-surface-container-lowest text-primary py-4 px-8 font-label-caps text-label-caps uppercase tracking-widest hover:bg-surface-container-low transition-colors duration-300 border border-transparent inline-flex justify-center" href="#">Shop New Arrivals</a>
+<a class="bg-transparent text-white py-4 px-8 font-label-caps text-label-caps uppercase tracking-widest hover:bg-white/10 transition-colors duration-300 border border-white inline-flex justify-center backdrop-blur-sm" href="#">Explore Collection</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter bg-surface-container-lowest border-t border-outline-variant">
+<div class="md:col-span-4 mb-8 md:mb-0">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-4">LINEN &amp; LOFT</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">Elevating everyday living through thoughtfully designed, sustainably sourced textiles.</p>
+</div>
+<div class="md:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+<div>
+<h3 class="font-label-caps text-label-caps text-primary mb-6">Shop</h3>
+<ul class="space-y-4 font-body-sm text-body-sm">
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Bedding</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Curtains</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Throws</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Blankets</a></li>
+</ul>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-primary mb-6">Support</h3>
+<ul class="space-y-4 font-body-sm text-body-sm">
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Customer Care</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Account</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Shipping &amp; Returns</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">FAQ</a></li>
+</ul>
+</div>
+<div class="col-span-2 sm:col-span-1 mt-8 sm:mt-0">
+<h3 class="font-label-caps text-label-caps text-primary mb-6">Legal</h3>
+<ul class="space-y-4 font-body-sm text-body-sm">
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">About</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Privacy</a></li>
+<li><a class="text-secondary hover:text-primary hover:underline underline-offset-4 transition-all duration-200" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+<div class="md:col-span-12 mt-16 pt-8 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 LINEN &amp; LOFT. All rights reserved.</p>
+<div class="flex space-x-4">
+<!-- Social placeholders -->
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">public</span></a>
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined" style="font-variation-settings: 'wght' 300;">mail</span></a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+        // Drawer Logic
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const closeCart = document.getElementById('close-cart');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+        
+        function openDrawer() {
+            cartDrawer.classList.remove('translate-x-full');
+            drawerOverlay.classList.remove('hidden');
+            // Small delay to allow display block to apply before fading in
+            setTimeout(() => {
+                drawerOverlay.classList.remove('opacity-0');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeDrawer() {
+            cartDrawer.classList.add('translate-x-full');
+            drawerOverlay.classList.add('opacity-0');
+            setTimeout(() => {
+                drawerOverlay.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        cartToggle.addEventListener('click', openDrawer);
+        closeCart.addEventListener('click', closeDrawer);
+        drawerOverlay.addEventListener('click', closeDrawer);
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('main-nav');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            // Hide on scroll down, show on scroll up
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            // Add shadow when scrolled
+            if (currentScroll > 10) {
+                navbar.classList.add('shadow-sm');
+                navbar.classList.replace('bg-background/95', 'bg-surface-container-lowest/95');
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.classList.replace('bg-surface-container-lowest/95', 'bg-background/95');
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body></html>

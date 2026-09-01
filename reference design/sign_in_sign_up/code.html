@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oriana Home - Sign In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#87837e",
+                        "surface": "#faf9f7",
+                        "surface-container-low": "#f4f3f1",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#cac6c0",
+                        "on-surface": "#1a1c1b",
+                        "tertiary": "#000000",
+                        "inverse-on-surface": "#f1f1ef",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-container": "#efeeec",
+                        "on-surface-variant": "#444748",
+                        "tertiary-container": "#1d1b18",
+                        "surface-bright": "#faf9f7",
+                        "surface-container-high": "#e9e8e6",
+                        "primary-fixed": "#e5e2e1",
+                        "primary": "#000000",
+                        "surface-container-highest": "#e3e2e0",
+                        "secondary": "#675d50",
+                        "outline-variant": "#c4c7c7",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#4f4539",
+                        "on-tertiary-fixed-variant": "#494642",
+                        "on-error": "#ffffff",
+                        "background": "#faf9f7",
+                        "surface-variant": "#e3e2e0",
+                        "secondary-fixed-dim": "#d3c4b4",
+                        "on-primary-fixed-variant": "#474746",
+                        "inverse-primary": "#c8c6c5",
+                        "primary-container": "#1c1b1b",
+                        "inverse-surface": "#2f3130",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#221a10",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#efe0cf",
+                        "on-tertiary-fixed": "#1d1b18",
+                        "surface-dim": "#dadad8",
+                        "on-primary-container": "#858383",
+                        "outline": "#747878",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-fixed": "#efe0cf",
+                        "on-secondary-container": "#6e6355",
+                        "on-background": "#1a1c1b",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e7e2dc",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max": "1440px",
+                        "section-gap": "120px",
+                        "gutter": "32px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "display-lg": ["Libre Caslon Text"],
+                        "body-lg": ["DM Sans"],
+                        "body-sm": ["DM Sans"],
+                        "headline-sm": ["Libre Caslon Text"],
+                        "body-md": ["DM Sans"],
+                        "label-caps": ["DM Sans"],
+                        "headline-lg": ["Libre Caslon Text"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "display-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "0.01em", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #1a1c1b;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Suppressed TopNavBar based on relevance rule (Linear/Transactional) -->
+<main class="flex-grow flex flex-col md:flex-row h-screen">
+<!-- Left Side: Editorial Image -->
+<div class="hidden md:block w-1/2 h-full relative bg-surface-container-low">
+<div class="absolute inset-0 bg-cover bg-center w-full h-full" data-alt="A serene, soft-lit bedroom showcasing premium minimalist bedding in warm ivory and sand tones. Sunlight filters gently through sheer curtains, casting delicate shadows across the crisp linen textures. The room exudes quiet luxury and editorial pacing, with a modern, architectural feel and generous negative space." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCzgdI3l7Zes4RvwjYatcx_vFf16EfF6n2T9Tc3qLLYSZRhXdoIp9DhV-tcZHQsi_j3BavMGJyWwXzoC56bMh5fENglfijOVhQdXCMi-Ivj6-iCyu3HEvC0Xz5go2pVCScx6bzpO6AzlN0wYe5svMZMq98y9gyjQxnGHZHvQF5XhRM_53if-ZWSpFnyeX4H9ZGlnArQVUIc31I0mC21BB4CHW7bFKTJZ-kST6m-g9SG27YjvI8iuMic')"></div>
+<!-- Subtle Brand Overlay -->
+<div class="absolute top-margin-desktop left-margin-desktop text-on-primary">
+<h1 class="font-headline-md text-headline-md tracking-widest text-on-tertiary">Oriana Home</h1>
+</div>
+</div>
+<!-- Right Side: Form Canvas -->
+<div class="w-full md:w-1/2 h-full flex flex-col justify-center px-margin-mobile md:px-margin-desktop lg:px-[120px] bg-surface relative">
+<!-- Mobile Brand -->
+<div class="md:hidden w-full pt-margin-mobile pb-8 text-center">
+<h1 class="font-headline-md text-headline-md tracking-widest text-primary">Oriana Home</h1>
+</div>
+<div class="w-full max-w-[480px] mx-auto">
+<!-- Toggle Header -->
+<div class="flex items-center space-x-8 mb-12 border-b border-surface-variant">
+<button class="font-headline-sm text-headline-sm pb-4 border-b border-primary text-primary transition-all duration-300" id="btn-signin">Sign In</button>
+<button class="font-headline-sm text-headline-sm pb-4 border-b border-transparent text-on-surface-variant hover:text-primary transition-all duration-300" id="btn-signup">Create Account</button>
+</div>
+<!-- Form Area -->
+<div class="relative overflow-hidden min-h-[400px]" id="form-container">
+<!-- Sign In Form -->
+<form class="absolute w-full top-0 left-0 transition-transform duration-500 ease-in-out transform translate-x-0 flex flex-col gap-8" id="form-signin">
+<div class="flex flex-col gap-1 group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signin-email">Email Address</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signin-email" placeholder="Enter your email" type="email"/>
+</div>
+<div class="flex flex-col gap-1 group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signin-password">Password</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signin-password" placeholder="Enter your password" type="password"/>
+</div>
+<div class="flex justify-between items-center pt-2">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary border-b border-transparent hover:border-primary transition-all" href="#">Forgot Password?</a>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-4 mt-4 hover:bg-surface-tint transition-colors duration-300" type="button">Sign In</button>
+<!-- Social Login Divider -->
+<div class="relative flex py-6 items-center">
+<div class="flex-grow border-t border-surface-variant"></div>
+<span class="flex-shrink-0 mx-4 font-label-caps text-label-caps text-on-surface-variant">Or continue with</span>
+<div class="flex-grow border-t border-surface-variant"></div>
+</div>
+<!-- Social Buttons -->
+<div class="flex gap-4">
+<button class="flex-1 flex justify-center items-center gap-2 border border-surface-variant bg-transparent hover:border-primary py-3 transition-colors duration-300" type="button">
+<span class="font-body-sm text-body-sm text-primary">Google</span>
+</button>
+<button class="flex-1 flex justify-center items-center gap-2 border border-surface-variant bg-transparent hover:border-primary py-3 transition-colors duration-300" type="button">
+<span class="font-body-sm text-body-sm text-primary">Apple</span>
+</button>
+</div>
+</form>
+<!-- Sign Up Form (Hidden initially) -->
+<form class="absolute w-full top-0 left-0 transition-transform duration-500 ease-in-out transform translate-x-full flex flex-col gap-8 opacity-0 pointer-events-none" id="form-signup">
+<div class="flex gap-4 w-full">
+<div class="flex flex-col gap-1 group w-1/2">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signup-fname">First Name</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signup-fname" placeholder="First" type="text"/>
+</div>
+<div class="flex flex-col gap-1 group w-1/2">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signup-lname">Last Name</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signup-lname" placeholder="Last" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1 group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signup-email">Email Address</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signup-email" placeholder="Enter your email" type="email"/>
+</div>
+<div class="flex flex-col gap-1 group">
+<label class="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors" for="signup-password">Password</label>
+<input class="w-full bg-transparent border-0 border-b border-surface-variant focus:border-primary py-2 px-0 font-body-md text-body-md text-primary placeholder-on-surface-variant/50 transition-colors" id="signup-password" placeholder="Create a password" type="password"/>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-4 mt-8 hover:bg-surface-tint transition-colors duration-300" type="button">Create Account</button>
+</form>
+</div>
+</div>
+</div>
+</main>
+<!-- Suppressed Footer based on relevance rule (Linear/Transactional) -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnSignIn = document.getElementById('btn-signin');
+            const btnSignUp = document.getElementById('btn-signup');
+            const formSignIn = document.getElementById('form-signin');
+            const formSignUp = document.getElementById('form-signup');
+
+            const activeClass = ['border-primary', 'text-primary'];
+            const inactiveClass = ['border-transparent', 'text-on-surface-variant'];
+
+            btnSignIn.addEventListener('click', () => {
+                // Style buttons
+                btnSignIn.classList.remove(...inactiveClass);
+                btnSignIn.classList.add(...activeClass);
+                btnSignUp.classList.remove(...activeClass);
+                btnSignUp.classList.add(...inactiveClass);
+
+                // Animate forms
+                formSignIn.classList.remove('-translate-x-full', 'opacity-0', 'pointer-events-none');
+                formSignIn.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                
+                formSignUp.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                formSignUp.classList.add('translate-x-full', 'opacity-0', 'pointer-events-none');
+            });
+
+            btnSignUp.addEventListener('click', () => {
+                // Style buttons
+                btnSignUp.classList.remove(...inactiveClass);
+                btnSignUp.classList.add(...activeClass);
+                btnSignIn.classList.remove(...activeClass);
+                btnSignIn.classList.add(...inactiveClass);
+
+                // Animate forms
+                formSignUp.classList.remove('translate-x-full', 'opacity-0', 'pointer-events-none');
+                formSignUp.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                
+                formSignIn.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+                formSignIn.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
+            });
+        });
+    </script>
+</body></html>

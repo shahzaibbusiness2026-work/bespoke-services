@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+/* =====================================================
+   ATELIER HOME / LINEN & LOFT DESIGN SYSTEM
+   Fonts: Libre Caslon Text (serif) + DM Sans (body)
+   Shape: Strictly 0px border-radius everywhere
+   Palette: Warm ivory, charcoal, natural sand tones
+   ===================================================== */
+
+@theme {
+  /* --- Fonts --- */
+  --font-display: "Libre Caslon Text", Georgia, serif;
+  --font-serif: "Libre Caslon Text", Georgia, serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* --- Atelier Home Color Palette --- */
+  --color-surface: #faf9f7;
+  --color-background: #faf9f7;
+  --color-surface-bright: #faf9f7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f4f3f1;
+  --color-surface-container: #efeeec;
+  --color-surface-container-high: #e9e8e6;
+  --color-surface-container-highest: #e3e2e0;
+  --color-surface-variant: #e3e2e0;
+  --color-surface-dim: #dadad8;
+  --color-on-surface: #1a1c1b;
+  --color-on-background: #1a1c1b;
+  --color-on-surface-variant: #444748;
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1c1b1b;
+  --color-on-primary-container: #858383;
+  --color-primary-fixed: #e5e2e1;
+  --color-primary-fixed-dim: #c8c6c5;
+  --color-on-primary-fixed: #1c1b1b;
+  --color-on-primary-fixed-variant: #474746;
+  --color-inverse-primary: #c8c6c5;
+  --color-secondary: #675d50;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #efe0cf;
+  --color-on-secondary-container: #6e6355;
+  --color-secondary-fixed: #efe0cf;
+  --color-secondary-fixed-dim: #d3c4b4;
+  --color-on-secondary-fixed: #221a10;
+  --color-on-secondary-fixed-variant: #4f4539;
+  --color-tertiary: #000000;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #1d1b18;
+  --color-on-tertiary-container: #87837e;
+  --color-tertiary-fixed: #e7e2dc;
+  --color-tertiary-fixed-dim: #cac6c0;
+  --color-on-tertiary-fixed: #1d1b18;
+  --color-on-tertiary-fixed-variant: #494642;
+  --color-outline: #747878;
+  --color-outline-variant: #c4c7c7;
+  --color-inverse-surface: #2f3130;
+  --color-inverse-on-surface: #f1f1ef;
+  --color-surface-tint: #5f5e5e;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* --- Typography Scale (Matching reference code.html exactly) --- */
+  --text-display-lg: 64px;
+  --text-display-lg--line-height: 72px;
+  --text-display-lg--letter-spacing: -0.02em;
+
+  --text-headline-lg: 48px;
+  --text-headline-lg--line-height: 56px;
+  --text-headline-lg--letter-spacing: 0.01em;
+
+  --text-headline-lg-mobile: 36px;
+  --text-headline-lg-mobile--line-height: 44px;
+  --text-headline-lg-mobile--letter-spacing: 0.01em;
+
+  --text-headline-md: 32px;
+  --text-headline-md--line-height: 40px;
+  --text-headline-md--letter-spacing: 0.02em;
+
+  --text-headline-sm: 24px;
+  --text-headline-sm--line-height: 32px;
+  --text-headline-sm--letter-spacing: 0.02em;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--letter-spacing: 0em;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--letter-spacing: 0.01em;
+
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-body-sm--letter-spacing: 0.01em;
+
+  --text-label-caps: 12px;
+  --text-label-caps--line-height: 16px;
+  --text-label-caps--letter-spacing: 0.15em;
+
+  /* --- Spacing Tokens --- */
+  --spacing-unit: 8px;
+  --spacing-gutter: 32px;
+  --spacing-margin-desktop: 64px;
+  --spacing-margin-mobile: 20px;
+  --spacing-section-gap: 120px;
+  --spacing-container-max: 1440px;
+
+  /* --- Border Radius: Strictly 0px per design system --- */
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-full: 9999px; /* Only for circular swatches/avatars */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    background-color: #faf9f7;
+    color: #1a1c1b;
+  }
+
+  body {
+    background-color: #faf9f7;
+    color: #1a1c1b;
+    font-family: "DM Sans", -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Material Symbols global config */
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+  }
+}
+
+@layer utilities {
+  /* Serif headline font */
+  .font-serif { font-family: "Libre Caslon Text", Georgia, serif; }
+  .font-display { font-family: "Libre Caslon Text", Georgia, serif; }
+  .font-sans { font-family: "DM Sans", -apple-system, sans-serif; }
+
+  /* Typography utilities matching reference exactly */
+  .text-display-lg {
+    font-family: "Libre Caslon Text", Georgia, serif;
+    font-size: 64px;
+    line-height: 72px;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  .text-headline-lg {
+    font-family: "Libre Caslon Text", Georgia, serif;
+    font-size: 48px;
+    line-height: 56px;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+
+  .text-headline-lg-mobile {
+    font-family: "Libre Caslon Text", Georgia, serif;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+
+  .text-headline-md {
+    font-family: "Libre Caslon Text", Georgia, serif;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  .text-headline-sm {
+    font-family: "Libre Caslon Text", Georgia, serif;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  .text-body-lg {
+    font-family: "DM Sans", sans-serif;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    font-weight: 400;
+  }
+
+  .text-body-md {
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+
+  .text-body-sm {
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.01em;
+    font-weight: 400;
+  }
+
+  .text-label-caps {
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* Nav link underline animation */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: #000000;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  /* Input style: bottom border only */
+  .input-minimal {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #c4c7c7;
+    border-radius: 0;
+    padding: 8px 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 16px;
+    color: #1a1c1b;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-minimal:focus {
+    border-bottom-color: #000000;
+    outline: none;
+    box-shadow: none;
+  }
+  .input-minimal::placeholder {
+    color: rgba(68, 71, 72, 0.4);
+  }
+
+  /* Product card hover */
+  .product-img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .product-card:hover .product-img {
+    transform: scale(1.02);
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #faf9f7;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c7c7;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #747878;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Élégance Atelier - Luxury E-Commerce",
+  "description": "A pixel-perfect luxury e-commerce fashion and lifestyle shopping experience with curated collections, interactive lookbooks, product filters, quick view, slide-over cart, AR view in room, client authentication, and seamless checkout.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
