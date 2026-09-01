@@ -55,7 +55,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
             className="group relative overflow-hidden bg-white text-[#000000] py-4 px-9 text-label-caps uppercase tracking-[0.2em] transition-all duration-300 hover:bg-[#f4f3f1] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2"
           >
             <span>Shop New Arrivals</span>
-            <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform duration-300">
+            <span className="material-symbols-outlined text-[16px] btn-cta-arrow" style={{ fontVariationSettings: "'wght' 300" }}>
               arrow_forward
             </span>
           </button>
@@ -69,7 +69,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = () => {
             className="group bg-transparent text-white py-4 px-9 text-label-caps uppercase tracking-[0.2em] hover:bg-white/15 transition-all duration-300 border border-white/80 backdrop-blur-sm active:scale-[0.98] flex items-center justify-center gap-2"
           >
             <span>Explore Bedding</span>
-            <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform duration-300">
+            <span className="material-symbols-outlined text-[16px] btn-cta-arrow" style={{ fontVariationSettings: "'wght' 300" }}>
               arrow_forward
             </span>
           </button>

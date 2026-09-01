@@ -25,9 +25,9 @@
   --color-surface-container-highest: #e3e2e0;
   --color-surface-variant: #e3e2e0;
   --color-surface-dim: #dadad8;
-  --color-on-surface: #1a1c1b;
-  --color-on-background: #1a1c1b;
-  --color-on-surface-variant: #444748;
+  --color-on-surface: #121313;
+  --color-on-background: #121313;
+  --color-on-surface-variant: #2b2d2c;
   --color-primary: #000000;
   --color-on-primary: #ffffff;
   --color-primary-container: #1c1b1b;
@@ -37,14 +37,14 @@
   --color-on-primary-fixed: #1c1b1b;
   --color-on-primary-fixed-variant: #474746;
   --color-inverse-primary: #c8c6c5;
-  --color-secondary: #675d50;
+  --color-secondary: #3d3b38;
   --color-on-secondary: #ffffff;
   --color-secondary-container: #efe0cf;
-  --color-on-secondary-container: #6e6355;
+  --color-on-secondary-container: #423b32;
   --color-secondary-fixed: #efe0cf;
   --color-secondary-fixed-dim: #d3c4b4;
   --color-on-secondary-fixed: #221a10;
-  --color-on-secondary-fixed-variant: #4f4539;
+  --color-on-secondary-fixed-variant: #383127;
   --color-tertiary: #000000;
   --color-on-tertiary: #ffffff;
   --color-tertiary-container: #1d1b18;
@@ -53,7 +53,7 @@
   --color-tertiary-fixed-dim: #cac6c0;
   --color-on-tertiary-fixed: #1d1b18;
   --color-on-tertiary-fixed-variant: #494642;
-  --color-outline: #747878;
+  --color-outline: #5c6060;
   --color-outline-variant: #c4c7c7;
   --color-inverse-surface: #2f3130;
   --color-inverse-on-surface: #f1f1ef;
@@ -315,6 +315,17 @@ html {
 
 .animate-fadeIn {
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Micro-interaction: Senior Developer Button Arrow Translate (4px) */
+.btn-cta-arrow {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .btn-cta-arrow,
+.group\/btn:hover .btn-cta-arrow,
+button:hover .btn-cta-arrow,
+a:hover .btn-cta-arrow {
+  transform: translateX(4px);
 }
 
 /* Custom scrollbar */

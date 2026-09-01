@@ -13,6 +13,7 @@ import { BespokeServicesPage } from './components/BespokeServicesPage';
 import { TradeHospitalityPage } from './components/TradeHospitalityPage';
 import { TheCanvasPage } from './components/TheCanvasPage';
 import { CollectionPage } from './components/CollectionPage';
+import { NewsletterSubscription } from './components/NewsletterSubscription';
 
 // Modals & Drawers
 import { ProductDetailModal } from './components/ProductDetailModal';
@@ -202,6 +203,9 @@ const MainLayout: React.FC = () => {
           )}
         </main>
       )}
+
+      {/* Refined Single Subscription Component with Multi-State Validation */}
+      <NewsletterSubscription />
 
       {/* Global Footer */}
       <Footer />
