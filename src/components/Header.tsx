@@ -307,13 +307,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
           </nav>
 
           {/* RIGHT: Luxury Utilities Cluster (Search, Wishlist, User Profile with Currency, Shopping Bag) */}
+          {/* RIGHT: Utilities Cluster — On Desktop (>=1024px) icons display here. On Mobile (<1024px), every icon button is cleanly housed in the hamburger menu */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 text-[#1a1c1b]">
             
-            {/* 1. Quick Search */}
+            {/* 1. Quick Search (Desktop >=1024px) */}
             <button
               id="search-btn"
               onClick={() => setIsSearchOpen(true)}
-              className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
+              className="hidden lg:flex w-11 h-11 min-w-[44px] min-h-[44px] items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
               aria-label="Search collection"
             >
               <span className="material-symbols-outlined text-[21px]" style={{ fontVariationSettings: "'wght' 300" }}>
@@ -321,11 +322,11 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               </span>
             </button>
 
-            {/* 2. Wishlist Icon */}
+            {/* 2. Wishlist Icon (Desktop >=1024px) */}
             <button
               id="wishlist-btn"
               onClick={() => setIsWishlistOpen(true)}
-              className="relative w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
+              className="hidden lg:flex relative w-11 h-11 min-w-[44px] min-h-[44px] items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
               aria-label={wishlistCount > 0 ? `My Wishlist, ${wishlistCount} items saved` : "My Wishlist, empty"}
             >
               <span className="material-symbols-outlined text-[21px]" style={{ fontVariationSettings: "'wght' 300" }}>
@@ -338,9 +339,9 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </button>
 
-            {/* 3. User Profile Icon with Integrated Currency Switcher */}
+            {/* 3. User Profile Icon with Integrated Currency Switcher (Desktop >=1024px) */}
             <div
-              className="relative"
+              className="relative hidden lg:block"
               onMouseEnter={() => handleMouseEnter('account')}
               onMouseLeave={handleMouseLeave}
             >
@@ -476,11 +477,11 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </div>
 
-            {/* 4. Shopping Bag */}
+            {/* 4. Shopping Bag (Desktop >=1024px) */}
             <button
               id="cart-btn"
               onClick={() => setIsCartOpen(true)}
-              className="relative w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
+              className="hidden lg:flex relative w-11 h-11 min-w-[44px] min-h-[44px] items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
               aria-label={cartCount > 0 ? `Shopping bag, ${cartCount} items` : "Shopping bag, empty"}
             >
               <span className="material-symbols-outlined text-[21px]" style={{ fontVariationSettings: "'wght' 300" }}>
@@ -493,14 +494,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </button>
 
-            {/* 5. Mobile / Tablet Hamburger Toggle (Hidden on Laptop & Desktop >= 1024px) */}
+            {/* 5. Mobile & Tablet Hamburger Button (<1024px) — Sole Action on Mobile for Maximum Space */}
             <button
               id="mobile-menu-btn"
               className="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-70 transition-opacity focus:outline-none cursor-pointer"
               onClick={() => setIsSidebarOpen(true)}
-              aria-label="Open navigation sidebar"
+              aria-label="Open navigation menu with search, cart, wishlist, and account"
             >
-              <span className="material-symbols-outlined text-[26px]" style={{ fontVariationSettings: "'wght' 300" }}>
+              <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'wght' 300" }}>
                 menu
               </span>
             </button>
@@ -531,7 +532,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
           }`}
         >
           {/* Sidebar Top Header */}
-          <div className="flex justify-between items-center p-6 border-b border-[#c4c7c7] shrink-0">
+          <div className="flex justify-between items-center p-5 border-b border-[#c4c7c7] shrink-0">
             <span
               className="text-[20px] font-normal tracking-[0.14em] text-[#000000] uppercase"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
@@ -541,9 +542,85 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer"
-              aria-label="Close navigation sidebar"
+              aria-label="Close navigation menu"
             >
               <span className="material-symbols-outlined text-[24px]">close</span>
+            </button>
+          </div>
+
+          {/* Quick Utility Icon Cluster in Mobile Hamburger Menu: Search, Wishlist, Bag, Profile */}
+          <div className="grid grid-cols-4 gap-2 px-5 py-3.5 border-b border-[#c4c7c7] bg-[#f4f3f1] shrink-0">
+            {/* Quick Search */}
+            <button
+              id="mobile-drawer-search-btn"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                setIsSearchOpen(true);
+              }}
+              className="flex flex-col items-center justify-center py-2 px-1 bg-white border border-[#c4c7c7] text-[#000000] hover:bg-[#efeeec] transition-colors cursor-pointer"
+              aria-label="Search collections"
+            >
+              <span className="material-symbols-outlined text-[21px]">search</span>
+              <span className="text-[10px] uppercase font-medium tracking-wider mt-1">Search</span>
+            </button>
+
+            {/* Quick Wishlist */}
+            <button
+              id="mobile-drawer-wishlist-btn"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                setIsWishlistOpen(true);
+              }}
+              className="relative flex flex-col items-center justify-center py-2 px-1 bg-white border border-[#c4c7c7] text-[#000000] hover:bg-[#efeeec] transition-colors cursor-pointer"
+              aria-label="View saved wishlist"
+            >
+              <span className="material-symbols-outlined text-[21px]">favorite</span>
+              <span className="text-[10px] uppercase font-medium tracking-wider mt-1">Wishlist</span>
+              {wishlistCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+
+            {/* Quick Bag */}
+            <button
+              id="mobile-drawer-cart-btn"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                setIsCartOpen(true);
+              }}
+              className="relative flex flex-col items-center justify-center py-2 px-1 bg-white border border-[#c4c7c7] text-[#000000] hover:bg-[#efeeec] transition-colors cursor-pointer"
+              aria-label="View shopping bag"
+            >
+              <span className="material-symbols-outlined text-[21px]">shopping_bag</span>
+              <span className="text-[10px] uppercase font-medium tracking-wider mt-1">Bag</span>
+              {cartCount > 0 && (
+                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Quick Account */}
+            <button
+              id="mobile-drawer-account-btn"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                if (!currentUser) {
+                  setIsAuthOpen(true);
+                  setAuthMode('login');
+                } else {
+                  handleNavClick('account');
+                }
+              }}
+              className="flex flex-col items-center justify-center py-2 px-1 bg-white border border-[#c4c7c7] text-[#000000] hover:bg-[#efeeec] transition-colors cursor-pointer"
+              aria-label="User Account"
+            >
+              <span className="material-symbols-outlined text-[21px]">person</span>
+              <span className="text-[10px] uppercase font-medium tracking-wider mt-1 truncate max-w-[55px]">
+                {currentUser ? 'Profile' : 'Sign In'}
+              </span>
             </button>
           </div>
 
@@ -711,7 +788,30 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               </button>
             </div>
 
-            {/* 8. My Wishlist */}
+            {/* 8. Shopping Bag */}
+            <div className="pt-2">
+              <button
+                onClick={() => {
+                  setIsSidebarOpen(false);
+                  setIsCartOpen(true);
+                }}
+                className="w-full text-left py-3 text-body-lg flex justify-between items-center text-[#2b2d2c]"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
+                  <span>Shopping Bag</span>
+                </div>
+                {cartCount > 0 ? (
+                  <span className="px-2 py-0.5 rounded-full bg-[#000000] text-white text-xs font-semibold">
+                    {cartCount} {cartCount === 1 ? 'item' : 'items'}
+                  </span>
+                ) : (
+                  <span className="text-body-sm text-[#8e908f]">Empty</span>
+                )}
+              </button>
+            </div>
+
+            {/* 9. My Wishlist */}
             <div className="pt-2">
               <button
                 onClick={() => {
