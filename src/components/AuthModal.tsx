@@ -53,10 +53,10 @@ export const AuthModal: React.FC = () => {
           <div className="absolute inset-0 bg-black/20" />
           <div className="absolute top-8 left-8 z-10">
             <span
-              className="text-[28px] leading-[36px] text-white tracking-widest"
+              className="text-[28px] leading-[36px] text-white tracking-widest uppercase"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif", fontWeight: 400 }}
             >
-              LINEN &amp; LOFT
+              BOSKI LIMITED
             </span>
           </div>
           <div className="absolute bottom-8 left-8 right-8 z-10 text-white/90">

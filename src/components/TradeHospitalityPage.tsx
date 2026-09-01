@@ -52,7 +52,7 @@ export const TradeHospitalityPage: React.FC = () => {
             Trade &amp; Hospitality
           </h1>
           <p className="text-body-lg text-[#444748] max-w-md">
-            Partner with LINEN &amp; LOFT for large-scale projects and exclusive trade benefits. Elevate your spaces with our meticulously crafted collections designed for enduring quality and quiet luxury.
+            Partner with BOSKI LIMITED for large-scale projects and exclusive trade benefits. Elevate your spaces with our meticulously crafted collections designed for enduring quality and quiet luxury.
           </p>
           <a
             href="#application"
@@ -86,7 +86,7 @@ export const TradeHospitalityPage: React.FC = () => {
             {
               icon: 'sell',
               title: 'Exclusive Pricing',
-              desc: 'Access tiered trade discounts across all LINEN & LOFT collections, scaled to accommodate large-volume hospitality and residential projects.',
+              desc: 'Access tiered trade discounts across all BOSKI LIMITED collections, scaled to accommodate large-volume hospitality and residential projects.',
             },
             {
               icon: 'support_agent',
@@ -137,7 +137,7 @@ export const TradeHospitalityPage: React.FC = () => {
               <span className="material-symbols-outlined text-[#000000] mt-1" style={{ fontVariationSettings: "'wght' 200" }}>mail</span>
               <div>
                 <p className="text-label-caps text-[#444748] mb-1">Email</p>
-                <p className="text-body-md text-[#000000]">trade@linenandloft.com</p>
+                <p className="text-body-md text-[#000000]">trade@boskilimited.com</p>
               </div>
             </div>
             <div className="flex gap-4 items-start">

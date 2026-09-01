@@ -19,7 +19,17 @@ interface Totals {
   amountToFreeShipping: number;
 }
 
-export type PageView = 'home' | 'bespoke' | 'trade' | 'canvas' | 'account';
+export type PageView =
+  | 'home'
+  | 'new-arrivals'
+  | 'bedding'
+  | 'curtains'
+  | 'throws'
+  | 'blankets'
+  | 'bespoke'
+  | 'trade'
+  | 'canvas'
+  | 'account';
 
 interface ShopContextType {
   activePage: PageView;

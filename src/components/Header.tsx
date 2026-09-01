@@ -32,8 +32,8 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
   const recentOrder = orderHistory[0];
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 15);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -42,126 +42,128 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
     setIsMiniAccountOpen(true);
   };
   const handleMouseLeaveProfile = () => {
-    hoverTimeoutRef.current = setTimeout(() => setIsMiniAccountOpen(false), 250);
+    hoverTimeoutRef.current = setTimeout(() => setIsMiniAccountOpen(false), 200);
   };
 
-  const navLinks = [
-    { label: 'New Arrivals', page: 'home' as PageView, category: 'all' },
-    { label: 'Bedding', page: 'home' as PageView, category: 'sheets' },
-    { label: 'Curtains', page: 'home' as PageView, category: 'curtains' },
-    { label: 'Throws', page: 'home' as PageView, category: 'throws' },
-    { label: 'Blankets', page: 'home' as PageView, category: 'blankets' },
-    { label: 'Our Story', page: 'canvas' as PageView },
+  const navLinks: { label: string; page: PageView; category?: string }[] = [
+    { label: 'New Arrivals', page: 'new-arrivals', category: 'all' },
+    { label: 'Bedding', page: 'bedding', category: 'sheets' },
+    { label: 'Curtains', page: 'curtains', category: 'curtains' },
+    { label: 'Throws', page: 'throws', category: 'throws' },
+    { label: 'Blankets', page: 'blankets', category: 'blankets' },
+    { label: 'Bespoke Services', page: 'bespoke' },
+    { label: 'Trade & Hospitality', page: 'trade' },
+    { label: 'The Canvas', page: 'canvas' },
   ];
 
-  const handleNavClick = (link: typeof navLinks[0]) => {
-    setActivePage(link.page);
-    if (link.category && onSelectCategory) onSelectCategory(link.category);
+  const handleNavClick = (page: PageView, category?: string) => {
+    setActivePage(page);
+    if (category && onSelectCategory) onSelectCategory(category);
     setIsMobileMenuOpen(false);
-    if (link.page === 'home' && link.category && link.category !== 'all') {
-      setTimeout(() => {
-        document.getElementById('catalog-section')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <header
-      className={`w-full top-0 sticky z-50 transition-all duration-300 ease-in-out bg-[#faf9f7] ${
-        isScrolled ? 'border-b border-[#c4c7c7]/50' : 'border-b border-[#c4c7c7]/30'
+      className={`w-full top-0 sticky z-40 transition-all duration-500 ease-out bg-[#faf9f7]/95 backdrop-blur-md ${
+        isScrolled
+          ? 'border-b border-[#c4c7c7]/50 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)]'
+          : 'border-b border-[#c4c7c7]/30'
       }`}
     >
-      <div className="flex justify-between items-center w-full px-5 md:px-16 max-w-[1440px] mx-auto h-20">
+      <div className="flex justify-between items-center w-full px-5 md:px-12 lg:px-16 max-w-[1480px] mx-auto h-20">
 
-        {/* Mobile Menu Button */}
-        <button
-          id="mobile-menu-btn"
-          className="md:hidden text-[#1a1c1b] hover:opacity-70 transition-opacity p-1"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Menu"
-        >
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>
-            {isMobileMenuOpen ? 'close' : 'menu'}
-          </span>
-        </button>
+        {/* FRONT: Brand Emblem & Name */}
+        <div className="flex items-center gap-6 lg:gap-10">
+          <button
+            onClick={() => handleNavClick('home')}
+            className="flex items-center gap-2 group text-left focus:outline-none transition-transform duration-300 active:scale-[0.99]"
+            aria-label="BOSKI LIMITED Home"
+          >
+            <span
+              className="text-[22px] sm:text-[26px] tracking-[0.14em] font-normal text-[#000000] uppercase group-hover:opacity-70 transition-opacity"
+              style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+            >
+              BOSKI LIMITED
+            </span>
+          </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-8 items-center">
-          {navLinks.map((link) => (
+          {/* Desktop Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-7">
+            {navLinks.map((link) => {
+              const isActive = activePage === link.page;
+              return (
+                <button
+                  key={link.label}
+                  id={`nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  onClick={() => handleNavClick(link.page, link.category)}
+                  className={`relative py-2 text-label-caps tracking-[0.15em] transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? 'text-[#000000] font-semibold'
+                      : 'text-[#444748] hover:text-[#000000]'
+                  }`}
+                >
+                  {link.label}
+                  {/* Subtle editorial underline animation */}
+                  <span
+                    className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-[#000000] transition-all duration-300 ease-out ${
+                      isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100'
+                    }`}
+                    style={{ transformOrigin: 'left' }}
+                  />
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Medium Screen Nav (Tablets) */}
+        <nav className="hidden md:flex xl:hidden items-center gap-5">
+          {navLinks.slice(0, 5).map((link) => (
             <button
               key={link.label}
-              id={`nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
-              onClick={() => handleNavClick(link)}
-              className={`nav-link text-label-caps text-[#444748] hover:text-[#000000] transition-colors duration-300 ${
-                activePage === link.page && (link.page !== 'home' || link.label === 'New Arrivals')
-                  ? 'text-[#000000]'
-                  : ''
+              onClick={() => handleNavClick(link.page, link.category)}
+              className={`text-label-caps transition-colors ${
+                activePage === link.page ? 'text-[#000000] font-bold' : 'text-[#444748] hover:text-[#000000]'
               }`}
             >
               {link.label}
             </button>
           ))}
-          <button
-            id="nav-bespoke"
-            onClick={() => { setActivePage('bespoke'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className={`nav-link text-label-caps text-[#444748] hover:text-[#000000] transition-colors duration-300 ${activePage === 'bespoke' ? 'text-[#000000]' : ''}`}
-          >
-            Bespoke Services
-          </button>
-          <button
-            id="nav-trade"
-            onClick={() => { setActivePage('trade'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className={`nav-link text-label-caps text-[#444748] hover:text-[#000000] transition-colors duration-300 ${activePage === 'trade' ? 'text-[#000000]' : ''}`}
-          >
-            Trade
-          </button>
         </nav>
 
-        {/* Brand Logo — center */}
-        <button
-          onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 focus:outline-none"
-          aria-label="LINEN & LOFT — Home"
-        >
-          <span
-            className="text-headline-md text-[#000000] tracking-widest whitespace-nowrap"
-            style={{ fontFamily: "'Libre Caslon Text', Georgia, serif", fontSize: '28px', letterSpacing: '0.1em' }}
-          >
-            LINEN &amp; LOFT
-          </span>
-        </button>
-
-        {/* Right Action Icons */}
-        <div className="flex gap-4 md:gap-5 items-center">
-
-          {/* Search */}
+        {/* Trailing Utility Actions */}
+        <div className="flex items-center gap-4 sm:gap-6 text-[#1a1c1b]">
+          {/* Search Trigger */}
           <button
             id="search-btn"
             onClick={() => setIsSearchOpen(true)}
-            className="text-[#1a1c1b] hover:opacity-70 transition-opacity"
-            aria-label="Search"
+            className="p-1 text-[#1a1c1b] hover:opacity-60 transition-opacity flex items-center justify-center cursor-pointer"
+            aria-label="Search Collection"
           >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>search</span>
+            <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
+              search
+            </span>
           </button>
 
-          {/* Wishlist */}
+          {/* Wishlist Trigger */}
           <button
             id="wishlist-btn"
             onClick={() => setIsWishlistOpen(true)}
-            className="text-[#1a1c1b] hover:opacity-70 transition-opacity relative hidden md:block"
+            className="relative p-1 text-[#1a1c1b] hover:opacity-60 transition-opacity flex items-center justify-center cursor-pointer"
             aria-label="Wishlist"
           >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>favorite</span>
+            <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
+              favorite
+            </span>
             {wishlistCount > 0 && (
-              <span className="absolute -top-1 -right-1.5 bg-[#000000] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-1 -right-1.5 w-4 h-4 rounded-full bg-[#000000] text-white text-[10px] font-medium flex items-center justify-center animate-scaleIn">
                 {wishlistCount}
               </span>
             )}
           </button>
 
-          {/* Account / Profile with dropdown */}
+          {/* Account Profile Trigger with Mini-Overlay */}
           <div
             className="relative"
             onMouseEnter={handleMouseEnterProfile}
@@ -170,206 +172,167 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             <button
               id="account-btn"
               onClick={() => {
-                if (currentUser) {
+                if (!currentUser) {
+                  setIsAuthOpen(true);
+                  setAuthMode('login');
+                } else {
                   setActivePage('account');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                  setAuthMode('login');
-                  setIsAuthOpen(true);
                 }
               }}
-              className="text-[#1a1c1b] hover:opacity-70 transition-opacity"
-              aria-label="Account"
+              className="p-1 text-[#1a1c1b] hover:opacity-60 transition-opacity flex items-center justify-center cursor-pointer"
+              aria-label="User Account"
             >
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>person</span>
+              <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
+                person
+              </span>
             </button>
 
-            {/* Mini Account Overlay — matches user_profile_card reference */}
+            {/* Mini Account Overlay Menu */}
             {isMiniAccountOpen && (
               <div
-                id="mini-account-overlay"
-                className="absolute right-0 top-full mt-4 w-[380px] bg-[#faf9f7] border border-[#c4c7c7]/30 shadow-2xl opacity-100 visible transition-all duration-300 z-50 text-left"
-                style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.12)' }}
+                id="mini-account-dropdown"
+                className="absolute right-0 top-full mt-2 w-72 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-6 z-50 animate-fadeIn"
               >
                 {currentUser ? (
                   <>
-                    {/* Header */}
-                    <div className="p-8 border-b border-[#c4c7c7]/20">
-                      <h2 className="text-headline-sm text-[#1a1c1b] mb-1">
-                        Welcome, {currentUser.firstName}
-                      </h2>
-                      <p className="text-body-sm text-[#444748]">{currentUser.email}</p>
+                    <div className="border-b border-[#c4c7c7]/40 pb-4 mb-4">
+                      <p className="text-body-md text-[#000000] font-semibold">{currentUser.firstName} {currentUser.lastName}</p>
+                      <p className="text-body-sm text-[#444748] truncate">{currentUser.email}</p>
+                      <span className="inline-block mt-2 px-2 py-0.5 bg-[#f4f3f1] border border-[#c4c7c7] text-label-caps text-[#675d50]">
+                        {currentUser.vipTier} Member
+                      </span>
                     </div>
 
-                    {/* Recent Order */}
-                    <div className="p-8 border-b border-[#c4c7c7]/20 bg-[#f4f3f1]/50">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-label-caps text-[#1a1c1b]">Recent Order</span>
-                        <span className="text-label-caps text-[#675d50]">
-                          #{recentOrder?.orderId || 'OH-9482'}
-                        </span>
-                      </div>
-                      <p className="text-body-sm text-[#444748] mb-4">
-                        {recentOrder?.items[0]?.product.name || 'Linen Duvet Cover - Ivory'}
-                      </p>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full border border-[#675d50] flex items-center justify-center shrink-0">
-                          <span className="material-symbols-outlined text-[16px] text-[#675d50]" style={{ fontVariationSettings: "'wght' 300" }}>local_shipping</span>
+                    {recentOrder && (
+                      <div className="border-b border-[#c4c7c7]/40 pb-4 mb-4">
+                        <p className="text-label-caps text-[#444748] mb-1">Recent Order</p>
+                        <div className="flex justify-between items-center text-body-sm mb-2">
+                          <span className="font-medium text-[#000000]">#{recentOrder.orderId}</span>
+                          <span className="text-[#675d50] text-xs font-semibold">{recentOrder.status}</span>
                         </div>
-                        <div className="flex-grow">
-                          <div className="w-full bg-[#efeeec] h-1 mb-1">
-                            <div className="bg-[#675d50] h-1 w-2/3" />
-                          </div>
-                          <span className="text-label-caps text-[#675d50] opacity-70">
-                            {recentOrder?.status || 'In Transit — Expected Tomorrow'}
-                          </span>
+                        <div className="w-full bg-[#efeeec] h-1">
+                          <div
+                            className="bg-[#000000] h-1 transition-all duration-300"
+                            style={{ width: recentOrder.status === 'Processing' ? '33%' : recentOrder.status === 'Shipped' ? '66%' : '100%' }}
+                          />
                         </div>
                       </div>
-                    </div>
+                    )}
 
-                    {/* Navigation */}
-                    <nav className="py-4">
-                      {[
-                        { label: 'Overview', icon: 'dashboard', page: 'account' as PageView },
-                        { label: 'Orders', icon: 'inventory_2', page: 'account' as PageView },
-                        { label: 'Wishlist', icon: 'favorite_border', page: 'account' as PageView, badge: wishlistCount > 0 ? `${wishlistCount} Items` : undefined },
-                        { label: 'Settings', icon: 'settings', page: 'account' as PageView },
-                      ].map((item) => (
-                        <button
-                          key={item.label}
-                          onClick={() => { setActivePage(item.page); setIsMiniAccountOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                          className="flex items-center gap-4 px-8 py-3 text-[#1a1c1b] hover:bg-[#f4f3f1] transition-colors w-full text-left group"
-                        >
-                          <span className="material-symbols-outlined text-[#444748] group-hover:text-[#1a1c1b]" style={{ fontVariationSettings: "'wght' 200" }}>{item.icon}</span>
-                          <span className="text-body-md flex-grow">{item.label}</span>
-                          {item.badge && (
-                            <span className="text-label-caps bg-[#675d50]/10 text-[#675d50] px-2 py-0.5 rounded-full">{item.badge}</span>
-                          )}
-                        </button>
-                      ))}
-                    </nav>
-
-                    {/* Sign Out */}
-                    <div className="p-6 border-t border-[#c4c7c7]/20 bg-[#f4f3f1]/30">
+                    <div className="space-y-2">
                       <button
-                        id="mini-signout-btn"
+                        onClick={() => { setActivePage('account'); setIsMiniAccountOpen(false); }}
+                        className="w-full text-left text-body-sm text-[#000000] hover:underline py-1"
+                      >
+                        Order History
+                      </button>
+                      <button
+                        onClick={() => { setActivePage('account'); setIsMiniAccountOpen(false); }}
+                        className="w-full text-left text-body-sm text-[#000000] hover:underline py-1"
+                      >
+                        Saved Addresses
+                      </button>
+                      <button
                         onClick={() => { logout(); setIsMiniAccountOpen(false); }}
-                        className="w-full py-3 text-label-caps text-[#1a1c1b] border border-[#c4c7c7] hover:bg-[#efeeec] transition-colors"
+                        className="w-full text-left text-body-sm text-[#ba1a1a] hover:underline py-1 pt-2 border-t border-[#c4c7c7]/30"
                       >
                         Sign Out
                       </button>
                     </div>
                   </>
                 ) : (
-                  <>
-                    <div className="p-8 border-b border-[#c4c7c7]/20">
-                      <h2 className="text-headline-sm text-[#1a1c1b] mb-2">Welcome</h2>
-                      <p className="text-body-sm text-[#444748]">Sign in to access your account, orders, and wishlist.</p>
-                    </div>
-                    <div className="p-8 space-y-4">
-                      <button
-                        id="mini-signin-btn"
-                        onClick={() => { setAuthMode('login'); setIsAuthOpen(true); setIsMiniAccountOpen(false); }}
-                        className="w-full py-4 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors"
-                      >
-                        Sign In
-                      </button>
-                      <button
-                        id="mini-create-account-btn"
-                        onClick={() => { setAuthMode('signup'); setIsAuthOpen(true); setIsMiniAccountOpen(false); }}
-                        className="w-full py-4 border border-[#c4c7c7] text-[#000000] text-label-caps hover:bg-[#f4f3f1] transition-colors"
-                      >
-                        Create Account
-                      </button>
-                    </div>
-                  </>
+                  <div className="space-y-4">
+                    <p className="text-body-sm text-[#444748]">
+                      Sign in for order tracking, saved addresses, and private vault drops.
+                    </p>
+                    <button
+                      onClick={() => { setIsAuthOpen(true); setAuthMode('login'); setIsMiniAccountOpen(false); }}
+                      className="w-full py-2.5 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors text-center"
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      onClick={() => { setIsAuthOpen(true); setAuthMode('signup'); setIsMiniAccountOpen(false); }}
+                      className="w-full py-2.5 border border-[#c4c7c7] text-[#000000] text-label-caps hover:bg-[#f4f3f1] transition-colors text-center"
+                    >
+                      Create Account
+                    </button>
+                  </div>
                 )}
               </div>
             )}
           </div>
 
-          {/* Payments / Trade */}
-          <button
-            id="payments-btn"
-            onClick={() => { setActivePage('trade'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="text-[#1a1c1b] hover:opacity-70 transition-opacity hidden md:block"
-            aria-label="Trade & Payments"
-          >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>payments</span>
-          </button>
-
-          {/* Shopping Bag */}
+          {/* Cart Bag Trigger */}
           <button
             id="cart-btn"
             onClick={() => setIsCartOpen(true)}
-            className="text-[#1a1c1b] hover:opacity-70 transition-opacity relative"
+            className="relative p-1 text-[#1a1c1b] hover:opacity-60 transition-opacity flex items-center justify-center cursor-pointer"
             aria-label="Shopping Bag"
           >
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>shopping_bag</span>
+            <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
+              shopping_bag
+            </span>
             {cartCount > 0 && (
-              <span
-                id="cart-count-badge"
-                className="absolute -top-1 -right-2 bg-[#000000] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold"
-              >
+              <span className="absolute -top-1 -right-1.5 w-4 h-4 rounded-full bg-[#000000] text-white text-[10px] font-medium flex items-center justify-center animate-scaleIn">
                 {cartCount}
               </span>
             )}
           </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            id="mobile-menu-btn"
+            className="xl:hidden text-[#1a1c1b] hover:opacity-70 transition-opacity p-1 ml-1"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Menu"
+          >
+            <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: "'wght' 300" }}>
+              {isMobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-[#faf9f7] border-t border-[#c4c7c7]/30">
-          <nav className="px-5 py-6 space-y-1">
+        <div
+          id="mobile-menu-overlay"
+          className="xl:hidden bg-[#faf9f7] border-b border-[#c4c7c7] px-6 py-8 flex flex-col gap-6 animate-fadeIn"
+        >
+          <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <button
                 key={link.label}
-                onClick={() => handleNavClick(link)}
-                className="block w-full text-left py-3 text-body-md text-[#444748] hover:text-[#000000] transition-colors border-b border-[#efeeec]"
+                onClick={() => handleNavClick(link.page, link.category)}
+                className={`text-left text-body-lg py-2 border-b border-[#c4c7c7]/20 flex justify-between items-center ${
+                  activePage === link.page ? 'text-[#000000] font-semibold' : 'text-[#444748]'
+                }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </button>
             ))}
-            <button
-              onClick={() => { setActivePage('bespoke'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0 }); }}
-              className="block w-full text-left py-3 text-body-md text-[#444748] hover:text-[#000000] transition-colors border-b border-[#efeeec]"
-            >
-              Bespoke Services
-            </button>
-            <button
-              onClick={() => { setActivePage('trade'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0 }); }}
-              className="block w-full text-left py-3 text-body-md text-[#444748] hover:text-[#000000] transition-colors border-b border-[#efeeec]"
-            >
-              Trade &amp; Hospitality
-            </button>
-            <div className="pt-4 flex gap-4 items-center">
+          </div>
+
+          <div className="pt-4 flex flex-col gap-3">
+            {!currentUser ? (
               <button
-                onClick={() => { setIsWishlistOpen(true); setIsMobileMenuOpen(false); }}
-                className="flex items-center gap-2 text-body-sm text-[#444748]"
+                onClick={() => { setIsAuthOpen(true); setIsMobileMenuOpen(false); }}
+                className="w-full py-3.5 bg-[#000000] text-white text-label-caps uppercase tracking-wider"
               >
-                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'wght' 300" }}>favorite</span>
-                Wishlist {wishlistCount > 0 && `(${wishlistCount})`}
+                Sign In / Join
               </button>
-              {currentUser ? (
-                <button
-                  onClick={() => { setActivePage('account'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0 }); }}
-                  className="flex items-center gap-2 text-body-sm text-[#444748]"
-                >
-                  <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'wght' 300" }}>person</span>
-                  {currentUser.firstName}
-                </button>
-              ) : (
-                <button
-                  onClick={() => { setIsAuthOpen(true); setIsMobileMenuOpen(false); }}
-                  className="flex items-center gap-2 text-body-sm text-[#444748]"
-                >
-                  <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'wght' 300" }}>person</span>
-                  Sign In
-                </button>
-              )}
-            </div>
-          </nav>
+            ) : (
+              <button
+                onClick={() => { setActivePage('account'); setIsMobileMenuOpen(false); }}
+                className="w-full py-3.5 border border-[#c4c7c7] text-[#000000] text-label-caps uppercase tracking-wider"
+              >
+                My Account
+              </button>
+            )}
+          </div>
         </div>
       )}
     </header>
