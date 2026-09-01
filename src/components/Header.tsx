@@ -304,45 +304,9 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             </button>
           </nav>
 
-          {/* RIGHT: Luxury Utilities Cluster (Currency, Search, Wishlist, User Profile Icon, Shopping Bag) */}
-          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 text-[#1a1c1b]">
+          {/* RIGHT: Luxury Utilities Cluster (Search, Wishlist, User Profile with Currency, Shopping Bag) */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3 text-[#1a1c1b]">
             
-            {/* Currency Selector (Default GBP) */}
-            <div
-              className="relative hidden sm:block mr-1"
-              onMouseEnter={() => handleMouseEnter('currency')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <button
-                id="nav-currency-switcher"
-                className="px-2.5 py-1.5 border border-[#c4c7c7] text-[12px] font-semibold text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-1 cursor-pointer bg-transparent"
-                aria-label={`Selected currency: ${currency.code}`}
-              >
-                <span>{currency.symbol} {currency.code}</span>
-                <span className="material-symbols-outlined text-[14px]">expand_more</span>
-              </button>
-
-              {activeDropdown === 'currency' && (
-                <div className="absolute right-0 top-full mt-2 w-36 bg-[#faf9f7] border border-[#c4c7c7] shadow-lg py-1.5 z-50 animate-fadeIn">
-                  {Object.values(CURRENCIES).map((c) => (
-                    <button
-                      key={c.code}
-                      onClick={() => {
-                        setCurrency(c);
-                        setActiveDropdown(null);
-                      }}
-                      className={`w-full text-left px-3.5 py-2 text-body-sm flex justify-between items-center transition-colors ${
-                        currency.code === c.code ? 'bg-[#000000] text-white font-semibold' : 'text-[#2b2d2c] hover:bg-[#efeeec]'
-                      }`}
-                    >
-                      <span>{c.code}</span>
-                      <span>{c.symbol}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* 1. Quick Search */}
             <button
               id="search-btn"
@@ -372,7 +336,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </button>
 
-            {/* 3. User Profile Icon (Replaces "My Account" text button) */}
+            {/* 3. User Profile Icon with Integrated Currency Switcher */}
             <div
               className="relative"
               onMouseEnter={() => handleMouseEnter('account')}
@@ -389,7 +353,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                   }
                 }}
                 className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
-                aria-label={currentUser ? `Account: ${currentUser.name}` : "Sign In to My Account"}
+                aria-label={currentUser ? `Account: ${currentUser.name}` : "Sign In & Settings"}
               >
                 <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
                   person
@@ -398,34 +362,64 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
 
               {/* User Profile Dropdown Flyout */}
               {activeDropdown === 'account' && (
-                <div className="absolute right-0 top-full mt-2 w-56 bg-[#faf9f7] border border-[#c4c7c7] shadow-lg py-3 px-3 z-50 animate-fadeIn">
+                <div className="absolute right-0 top-full mt-2 w-64 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl p-4 z-50 animate-fadeIn normal-case">
                   {currentUser ? (
-                    <div className="flex flex-col gap-2">
-                      <div className="border-b border-[#c4c7c7]/50 pb-2">
+                    <div className="flex flex-col gap-3">
+                      <div className="border-b border-[#c4c7c7]/50 pb-2.5">
                         <p className="text-body-sm font-semibold text-[#000000]">{currentUser.name}</p>
-                        <p className="text-[11px] text-[#505252] truncate">{currentUser.email}</p>
+                        <p className="text-[11.5px] text-[#505252] truncate">{currentUser.email}</p>
                         <span className="inline-block mt-1 px-2 py-0.5 bg-[#000000] text-white text-[9.5px] uppercase tracking-wider font-semibold">
                           VIP Atelier Member
                         </span>
                       </div>
+
                       <button
                         onClick={() => handleNavClick('account')}
-                        className="text-left py-1.5 text-body-sm text-[#2b2d2c] hover:text-[#000000] transition-colors"
+                        className="text-left py-1 text-body-sm text-[#2b2d2c] hover:text-[#000000] transition-colors flex items-center justify-between"
                       >
-                        Client Dashboard &amp; Orders
+                        <span>Client Dashboard &amp; Orders</span>
+                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
                       </button>
-                      <button
-                        onClick={() => {
-                          logout();
-                          setActiveDropdown(null);
-                        }}
-                        className="text-left py-1.5 text-body-sm text-[#c0392b] hover:underline transition-colors"
-                      >
-                        Sign Out
-                      </button>
+
+                      {/* Currency Selection inside User Profile */}
+                      <div className="border-t border-[#c4c7c7]/50 pt-3">
+                        <label className="text-[11px] font-semibold text-[#505252] uppercase tracking-wider block mb-2">
+                          Currency (Default GBP)
+                        </label>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {Object.values(CURRENCIES).map((c) => (
+                            <button
+                              key={c.code}
+                              onClick={() => {
+                                setCurrency(c);
+                                setActiveDropdown(null);
+                              }}
+                              className={`py-1.5 px-1 text-[11px] border text-center transition-all cursor-pointer font-medium ${
+                                currency.code === c.code
+                                  ? 'border-[#000000] bg-[#000000] text-white font-bold'
+                                  : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] bg-white'
+                              }`}
+                            >
+                              {c.symbol} {c.code}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[#c4c7c7]/50 pt-2">
+                        <button
+                          onClick={() => {
+                            logout();
+                            setActiveDropdown(null);
+                          }}
+                          className="text-left py-1 text-body-sm text-[#c0392b] hover:underline transition-colors"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3">
                       <p className="text-body-sm text-[#2b2d2c] font-light">
                         Sign in to access your atelier orders, bespoke measurements &amp; wishlist.
                       </p>
@@ -435,7 +429,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                           setAuthMode('login');
                           setActiveDropdown(null);
                         }}
-                        className="w-full py-2 bg-[#000000] text-white text-label-caps uppercase tracking-wider hover:bg-[#252726] transition-colors"
+                        className="w-full py-2.5 bg-[#000000] text-white text-label-caps uppercase tracking-wider hover:bg-[#252726] transition-colors"
                       >
                         Sign In
                       </button>
@@ -449,6 +443,31 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                       >
                         Create Account
                       </button>
+
+                      {/* Currency Selection inside User Profile when logged out */}
+                      <div className="border-t border-[#c4c7c7]/50 pt-3">
+                        <label className="text-[11px] font-semibold text-[#505252] uppercase tracking-wider block mb-2">
+                          Currency (Default GBP)
+                        </label>
+                        <div className="grid grid-cols-3 gap-1.5">
+                          {Object.values(CURRENCIES).map((c) => (
+                            <button
+                              key={c.code}
+                              onClick={() => {
+                                setCurrency(c);
+                                setActiveDropdown(null);
+                              }}
+                              className={`py-1.5 px-1 text-[11px] border text-center transition-all cursor-pointer font-medium ${
+                                currency.code === c.code
+                                  ? 'border-[#000000] bg-[#000000] text-white font-bold'
+                                  : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] bg-white'
+                              }`}
+                            >
+                              {c.symbol} {c.code}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
