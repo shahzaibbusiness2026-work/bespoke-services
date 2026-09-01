@@ -58,13 +58,13 @@ const SLIDES: Slide[] = [
   },
 ];
 
-const AUTOPLAY_INTERVAL = 5000;
+const AUTOPLAY_INTERVAL = 2000;
 
 export const HeroSlider: React.FC = () => {
   const { setActivePage } = useShop();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatic slide rotation every 5 seconds - reliable, uninterrupted
+  // Automatic slide rotation every 2 seconds - reliable, uninterrupted
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
@@ -93,7 +93,7 @@ export const HeroSlider: React.FC = () => {
         return (
           <div
             key={slide.id}
-            className={`absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out will-change-[opacity] ${
+            className={`absolute inset-0 z-0 transition-opacity duration-500 ease-in-out will-change-[opacity] ${
               isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
             aria-hidden={!isActive}
