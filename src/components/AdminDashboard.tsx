@@ -428,17 +428,17 @@ export const AdminDashboard: React.FC = () => {
   // --- UN-AUTHENTICATED ADMIN LOGIN WALL ---
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-[#1a1c1b] flex items-center justify-center p-6 text-white">
-        <div className="bg-[#242625] border border-[#383838] w-full max-w-md p-8 shadow-2xl">
-          <div className="text-center mb-8">
-            <div className="w-12 h-12 bg-[#1a1c1b] border border-[#d7c7b3]/40 flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-6 h-6 text-[#d7c7b3]" />
+      <div className="min-h-screen bg-[#1a1c1b] flex items-center justify-center p-3.5 sm:p-6 text-white">
+        <div className="bg-[#242625] border border-[#383838] w-full max-w-md p-5 sm:p-8 shadow-2xl">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 bg-[#1a1c1b] border border-[#d7c7b3]/40 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-[#d7c7b3]" />
             </div>
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#d7c7b3] font-mono block mb-1">
               Restricted Portal
             </span>
             <h1
-              className="text-2xl font-normal uppercase tracking-wider text-white"
+              className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-white"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               Atelier Administrator
@@ -526,21 +526,21 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#faf9f7] text-[#1a1c1b]">
       {/* Top Admin Header */}
-      <header className="bg-[#1a1c1b] text-white border-b border-[#383838] px-6 py-4 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <header className="bg-[#1a1c1b] text-white border-b border-[#383838] px-3 sm:px-6 py-2.5 sm:py-4 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
             <span
-              className="text-xl uppercase tracking-widest text-white"
+              className="text-sm sm:text-xl uppercase tracking-widest text-white truncate"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               BOSKI LIMITED
             </span>
-            <span className="text-[10px] bg-[#d7c7b3] text-[#1a1c1b] px-2 py-0.5 font-mono uppercase tracking-wider font-semibold">
-              Master Admin
+            <span className="text-[9px] sm:text-[10px] bg-[#d7c7b3] text-[#1a1c1b] px-1.5 sm:px-2 py-0.5 font-mono uppercase tracking-wider font-semibold shrink-0">
+              Admin
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             <a
               href="/"
               onClick={(e) => {
@@ -549,177 +549,180 @@ export const AdminDashboard: React.FC = () => {
                   setActivePage('home');
                 }
               }}
-              className="text-body-xs text-[#d7c7b3] hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="text-[11px] sm:text-body-xs text-[#d7c7b3] hover:text-white flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer py-1"
+              title="View Storefront"
             >
-              <span>View Storefront</span>
+              <span className="hidden sm:inline">View Storefront</span>
+              <span className="sm:hidden font-mono">Store</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
             <div className="h-4 w-px bg-[#383838]" />
             <button
               onClick={logout}
-              className="text-body-xs text-white/70 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="text-[11px] sm:text-body-xs text-white/70 hover:text-white flex items-center gap-1 sm:gap-1.5 transition-colors py-1"
+              title="Sign Out"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
+              <span className="hidden sm:inline">Sign Out</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Main Workspace Navigation Tabs */}
-      <div className="bg-[#efeeec] border-b border-[#c4c7c7] px-6">
-        <div className="max-w-7xl mx-auto flex gap-1 overflow-x-auto">
+      {/* Main Workspace Navigation Tabs — Horizontally Scrollable on Mobile */}
+      <div className="bg-[#efeeec] border-b border-[#c4c7c7] px-2 sm:px-6">
+        <div className="max-w-7xl mx-auto flex gap-1 overflow-x-auto py-1 scrollbar-none">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`px-5 py-3 text-label-caps uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
               activeTab === 'overview'
                 ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
                 : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4" />
+            <LayoutDashboard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Overview</span>
           </button>
 
           <button
             onClick={() => setActiveTab('products')}
-            className={`px-5 py-3 text-label-caps uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
               activeTab === 'products'
                 ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
                 : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
             }`}
           >
-            <Package className="w-4 h-4" />
+            <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Products ({products.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('upload')}
-            className={`px-5 py-3 text-label-caps uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
               activeTab === 'upload'
                 ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
                 : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
             }`}
           >
-            <Upload className="w-4 h-4" />
-            <span>Image Upload & CDN</span>
+            <Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span>Media ({mediaList.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('categories')}
-            className={`px-5 py-3 text-label-caps uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
               activeTab === 'categories'
                 ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
                 : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
             }`}
           >
-            <Layers className="w-4 h-4" />
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Categories ({categories.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('inquiries')}
-            className={`px-5 py-3 text-label-caps uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
               activeTab === 'inquiries'
                 ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
                 : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
             }`}
           >
-            <Inbox className="w-4 h-4" />
+            <Inbox className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span>Inquiries ({inquiries.length})</span>
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto p-6 md:p-8">
+      <main className="max-w-7xl mx-auto p-3 sm:p-6 md:p-8">
         {/* --- TAB 1: OVERVIEW --- */}
         {activeTab === 'overview' && (
-          <div className="space-y-8 animate-fadeIn">
+          <div className="space-y-6 sm:space-y-8 animate-fadeIn">
             <div>
               <span className="text-[10px] uppercase tracking-[0.25em] text-[#8c9a86] font-mono block mb-1">
                 Executive Console
               </span>
               <h2
-                className="text-3xl font-normal uppercase tracking-wider text-[#1a1c1b]"
+                className="text-2xl sm:text-3xl font-normal uppercase tracking-wider text-[#1a1c1b]"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 Atelier Operations Summary
               </h2>
             </div>
 
-            {/* KPI Metric Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white border border-[#c4c7c7] p-6">
-                <span className="text-label-caps text-[#444748] block mb-1">Total Products</span>
+            {/* KPI Metric Cards — 2 cols on mobile, 4 on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
+                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Total Products</span>
                 <span
-                  className="text-4xl text-[#1a1c1b] font-normal"
+                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   {products.length}
                 </span>
-                <span className="text-body-xs text-[#8c9a86] block mt-2 font-mono">
+                <span className="text-[11px] sm:text-body-xs text-[#8c9a86] block mt-1.5 font-mono">
                   {products.filter((p) => p.inStock).length} In Stock
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-6">
-                <span className="text-label-caps text-[#444748] block mb-1">Active Categories</span>
+              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
+                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Categories</span>
                 <span
-                  className="text-4xl text-[#1a1c1b] font-normal"
+                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   {categories.length}
                 </span>
-                <span className="text-body-xs text-[#444748] block mt-2 font-mono">
-                  Master loom textiles
+                <span className="text-[11px] sm:text-body-xs text-[#444748] block mt-1.5 font-mono">
+                  Active taxonomies
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-6">
-                <span className="text-label-caps text-[#444748] block mb-1">Incoming Inquiries</span>
+              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
+                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Inquiries</span>
                 <span
-                  className="text-4xl text-[#1a1c1b] font-normal"
+                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   {inquiries.length}
                 </span>
-                <span className="text-body-xs text-[#d7c7b3] font-mono block mt-2">
-                  {inquiries.filter((i) => i.status === 'pending').length} Pending review
+                <span className="text-[11px] sm:text-body-xs text-[#d7c7b3] font-mono block mt-1.5">
+                  {inquiries.filter((i) => i.status === 'pending').length} Pending
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-6">
-                <span className="text-label-caps text-[#444748] block mb-1">Media Assets</span>
+              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
+                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Media Assets</span>
                 <span
-                  className="text-4xl text-[#1a1c1b] font-normal"
+                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   {mediaList.length}
                 </span>
-                <span className="text-body-xs text-[#8c9a86] block mt-2 font-mono">
-                  CDN hosted images
+                <span className="text-[11px] sm:text-body-xs text-[#8c9a86] block mt-1.5 font-mono">
+                  CDN hosted
                 </span>
               </div>
             </div>
 
             {/* Quick Actions Bar */}
-            <div className="bg-[#efeeec] border border-[#c4c7c7] p-6 flex flex-wrap items-center justify-between gap-4">
+            <div className="bg-[#efeeec] border border-[#c4c7c7] p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-title-md font-normal uppercase text-[#1a1c1b]">
+                <h3 className="text-base sm:text-title-md font-normal uppercase text-[#1a1c1b]">
                   Quick Atelier Actions
                 </h3>
-                <p className="text-body-xs text-[#444748] font-light">
+                <p className="text-body-xs text-[#444748] font-light mt-0.5">
                   Directly dispatch additions to the production catalog and media repository.
                 </p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2.5 w-full sm:w-auto">
                 <button
                   onClick={() => {
                     resetForm();
                     setIsCreateModalOpen(true);
                   }}
-                  className="px-5 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center gap-2"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
                 >
                   <Plus className="w-4 h-4 text-[#d7c7b3]" />
                   <span>Create Product</span>
@@ -727,7 +730,7 @@ export const AdminDashboard: React.FC = () => {
 
                 <button
                   onClick={() => setActiveTab('upload')}
-                  className="px-5 py-2.5 bg-white border border-[#1a1c1b] text-[#1a1c1b] text-label-caps tracking-widest uppercase hover:bg-[#faf9f7] transition-colors flex items-center gap-2"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-white border border-[#1a1c1b] text-[#1a1c1b] text-label-caps tracking-widest uppercase hover:bg-[#faf9f7] transition-colors flex items-center justify-center gap-2"
                 >
                   <Upload className="w-4 h-4" />
                   <span>Upload Image</span>
@@ -746,7 +749,7 @@ export const AdminDashboard: React.FC = () => {
                   Catalog Inventory
                 </span>
                 <h2
-                  className="text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
+                  className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   Product Management ({filteredProducts.length})
@@ -758,16 +761,16 @@ export const AdminDashboard: React.FC = () => {
                   resetForm();
                   setIsCreateModalOpen(true);
                 }}
-                className="px-6 py-3 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center gap-2 self-start"
+                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
               >
                 <Plus className="w-4 h-4 text-[#d7c7b3]" />
                 <span>Add New Product</span>
               </button>
             </div>
 
-            {/* Filter & Search Bar */}
-            <div className="bg-white border border-[#c4c7c7] p-4 flex flex-col md:flex-row gap-4 justify-between">
-              <div className="relative flex-1 max-w-md">
+            {/* Filter & Search Bar — Stacked on Mobile */}
+            <div className="bg-white border border-[#c4c7c7] p-3 sm:p-4 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-between">
+              <div className="relative flex-1">
                 <Search className="w-4 h-4 text-[#444748] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
@@ -778,12 +781,12 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
-              <div className="flex items-center gap-3">
-                <label className="text-label-caps text-[#444748]">Category:</label>
+              <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                <label className="text-label-caps text-[#444748] shrink-0">Category:</label>
                 <select
                   value={productFilterCategory}
                   onChange={(e) => setProductFilterCategory(e.target.value)}
-                  className="border border-[#c4c7c7] px-3 py-2 text-body-sm text-[#1a1c1b] bg-white outline-none"
+                  className="w-full sm:w-auto border border-[#c4c7c7] px-3 py-2 text-body-sm text-[#1a1c1b] bg-white outline-none"
                 >
                   <option value="all">All Categories</option>
                   {categories.map((c) => (
@@ -795,8 +798,88 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
 
-            {/* Products Table */}
-            <div className="bg-white border border-[#c4c7c7] overflow-x-auto">
+            {/* Mobile Product Cards View (Visible only on screens < md) */}
+            <div className="md:hidden space-y-3">
+              {filteredProducts.map((p) => (
+                <div key={p.id} className="bg-white border border-[#c4c7c7] p-3.5 space-y-3">
+                  <div className="flex gap-3 items-start">
+                    <img
+                      src={p.images[0] || 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af'}
+                      alt={p.name}
+                      className="w-16 h-16 object-cover border border-[#c4c7c7] shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-[#efeeec] text-[#444748] truncate">
+                          {p.category}
+                        </span>
+                        {p.featured && (
+                          <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 bg-[#d7c7b3]/30 border border-[#d7c7b3] text-[#1a1c1b] shrink-0">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+                      <h4 className="font-medium text-[#1a1c1b] text-sm mt-1 truncate">{p.name}</h4>
+                      <p className="text-[11px] text-[#444748] line-clamp-1">{p.subtitle}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-[#efeeec] text-xs">
+                    <div>
+                      <span className="font-mono font-medium text-sm text-[#1a1c1b]">${p.price}</span>
+                      {p.originalPrice && (
+                        <span className="text-[11px] text-[#444748]/50 line-through ml-1.5">
+                          ${p.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[11px] font-mono text-[#444748]">
+                      {p.stockCount} units
+                    </span>
+                  </div>
+
+                  {/* Touch Action Buttons */}
+                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#efeeec]">
+                    <button
+                      onClick={() => handleToggleStatus(p.id, 'inStock')}
+                      className={`px-3 py-1.5 text-[11px] uppercase font-mono tracking-wider border transition-colors flex-1 text-center ${
+                        p.inStock
+                          ? 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                          : 'bg-red-50 border-red-300 text-red-700'
+                      }`}
+                    >
+                      {p.inStock ? '✓ In Stock' : '✕ Out of Stock'}
+                    </button>
+
+                    <button
+                      onClick={() => openEditModal(p)}
+                      className="px-3 py-1.5 bg-[#efeeec] hover:bg-[#e3e2e0] text-[#1a1c1b] text-xs flex items-center justify-center gap-1 border border-[#c4c7c7] transition-colors"
+                      title="Edit Product"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                      <span>Edit</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleDeleteProduct(p.id, p.name)}
+                      className="p-2 hover:bg-red-50 text-[#444748] hover:text-red-600 border border-[#c4c7c7] transition-colors"
+                      title="Delete Product"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {filteredProducts.length === 0 && (
+                <div className="p-6 text-center text-[#444748] bg-white border border-[#c4c7c7] text-sm">
+                  No products match your search query.
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Products Table (Visible on screens >= md) */}
+            <div className="hidden md:block bg-white border border-[#c4c7c7] overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#efeeec] border-b border-[#c4c7c7] text-label-caps text-[#444748]">
@@ -909,12 +992,12 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Uploader Box */}
-            <div className="bg-white border-2 border-dashed border-[#c4c7c7] p-8 text-center">
+            <div className="bg-white border-2 border-dashed border-[#c4c7c7] p-4 sm:p-8 text-center">
               <div className="max-w-md mx-auto space-y-4">
                 <div className="w-12 h-12 bg-[#efeeec] flex items-center justify-center mx-auto">
                   <Upload className="w-6 h-6 text-[#1a1c1b]" />
                 </div>
-                <h3 className="text-title-md uppercase tracking-wider text-[#1a1c1b]">
+                <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b]">
                   Upload Atelier Imagery
                 </h3>
                 <p className="text-body-xs text-[#444748] font-light">
@@ -929,10 +1012,10 @@ export const AdminDashboard: React.FC = () => {
                   className="hidden"
                 />
 
-                <div className="flex justify-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 pt-2">
                   <label
                     htmlFor="image-file-input"
-                    className="px-6 py-2.5 bg-[#efeeec] hover:bg-[#e3e2e0] text-[#1a1c1b] text-label-caps tracking-widest uppercase cursor-pointer transition-colors border border-[#c4c7c7]"
+                    className="w-full sm:w-auto px-6 py-2.5 bg-[#efeeec] hover:bg-[#e3e2e0] text-[#1a1c1b] text-label-caps tracking-widest uppercase cursor-pointer transition-colors border border-[#c4c7c7] text-center"
                   >
                     Select File
                   </label>
@@ -942,7 +1025,7 @@ export const AdminDashboard: React.FC = () => {
                       type="button"
                       onClick={handleUploadImage}
                       disabled={isUploading}
-                      className="px-6 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center gap-2"
+                      className="w-full sm:w-auto px-6 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
                     >
                       <Check className="w-4 h-4 text-[#d7c7b3]" />
                       <span>{isUploading ? 'Uploading...' : 'Confirm Upload'}</span>
@@ -956,9 +1039,9 @@ export const AdminDashboard: React.FC = () => {
                     <img
                       src={uploadPreview}
                       alt="Preview"
-                      className="w-48 h-36 object-cover mx-auto border border-[#c4c7c7]"
+                      className="w-40 h-28 sm:w-48 sm:h-36 object-cover mx-auto border border-[#c4c7c7]"
                     />
-                    <span className="text-body-xs font-mono text-[#444748] mt-1 block">
+                    <span className="text-body-xs font-mono text-[#444748] mt-1 block truncate">
                       {uploadFile?.name} ({Math.round((uploadFile?.size || 0) / 1024)} KB)
                     </span>
                   </div>
@@ -968,10 +1051,10 @@ export const AdminDashboard: React.FC = () => {
 
             {/* Media Gallery */}
             <div>
-              <h3 className="text-title-md uppercase tracking-wider text-[#1a1c1b] mb-4">
+              <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b] mb-3 sm:mb-4">
                 Media Library ({mediaList.length} Images)
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-4">
                 {mediaList.map((media) => (
                   <div
                     key={media.filename}
@@ -999,7 +1082,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 ))}
                 {mediaList.length === 0 && (
-                  <div className="col-span-full p-8 text-center text-[#444748] bg-white border border-[#c4c7c7]">
+                  <div className="col-span-full p-8 text-center text-[#444748] bg-white border border-[#c4c7c7] text-sm">
                     No images uploaded yet. Upload your first product photograph above.
                   </div>
                 )}
@@ -1016,7 +1099,7 @@ export const AdminDashboard: React.FC = () => {
                 Taxonomy & Groupings
               </span>
               <h2
-                className="text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
+                className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 Category Management
@@ -1024,11 +1107,11 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Add Category Form */}
-            <form onSubmit={handleCreateCategory} className="bg-white border border-[#c4c7c7] p-6 max-w-xl">
-              <h3 className="text-title-md uppercase tracking-wider text-[#1a1c1b] mb-4">
+            <form onSubmit={handleCreateCategory} className="bg-white border border-[#c4c7c7] p-4 sm:p-6 max-w-xl">
+              <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b] mb-3 sm:mb-4">
                 Add New Category
               </h3>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input
                   type="text"
                   required
@@ -1039,7 +1122,7 @@ export const AdminDashboard: React.FC = () => {
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center gap-2"
+                  className="w-full sm:w-auto px-6 py-2 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
                 >
                   <Plus className="w-4 h-4 text-[#d7c7b3]" />
                   <span>Create</span>
@@ -1048,28 +1131,28 @@ export const AdminDashboard: React.FC = () => {
             </form>
 
             {/* Categories Table */}
-            <div className="bg-white border border-[#c4c7c7] max-w-2xl overflow-hidden">
+            <div className="bg-white border border-[#c4c7c7] max-w-2xl overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-[#efeeec] border-b border-[#c4c7c7] text-label-caps text-[#444748]">
-                    <th className="p-4">Category Name</th>
-                    <th className="p-4">Active Items</th>
-                    <th className="p-4 text-right">Actions</th>
+                    <th className="p-3 sm:p-4">Category Name</th>
+                    <th className="p-3 sm:p-4">Active Items</th>
+                    <th className="p-3 sm:p-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#efeeec] text-body-sm">
                   {categories.map((c) => (
                     <tr key={c.category} className="hover:bg-[#faf9f7] transition-colors">
-                      <td className="p-4 uppercase font-mono font-medium text-[#1a1c1b]">
+                      <td className="p-3 sm:p-4 uppercase font-mono font-medium text-[#1a1c1b] text-xs sm:text-sm">
                         {c.category}
                       </td>
-                      <td className="p-4 font-mono text-[#444748]">
+                      <td className="p-3 sm:p-4 font-mono text-[#444748] text-xs sm:text-sm">
                         {c.count} products
                       </td>
-                      <td className="p-4 text-right">
+                      <td className="p-3 sm:p-4 text-right">
                         <button
                           onClick={() => handleDeleteCategory(c.category)}
-                          className="p-1.5 hover:bg-red-50 text-[#444748] hover:text-red-600 transition-colors"
+                          className="p-2 hover:bg-red-50 text-[#444748] hover:text-red-600 transition-colors"
                           title="Remove Category"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1086,26 +1169,26 @@ export const AdminDashboard: React.FC = () => {
         {/* --- TAB 5: INQUIRIES & CONTACT MESSAGES --- */}
         {activeTab === 'inquiries' && (
           <div className="space-y-6 animate-fadeIn">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
               <div>
                 <span className="text-[10px] uppercase tracking-[0.25em] text-[#8c9a86] font-mono block mb-1">
                   Client Sanctuary
                 </span>
                 <h2
-                  className="text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
+                  className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   Client Inquiries & Contact Forms ({filteredInquiries.length})
                 </h2>
               </div>
 
-              {/* Type Filter */}
-              <div className="flex gap-2">
+              {/* Type Filter Chips */}
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
                 {(['all', 'contact', 'bespoke', 'trade'] as const).map((type) => (
                   <button
                     key={type}
                     onClick={() => setInquiryFilter(type)}
-                    className={`px-3 py-1 text-label-caps uppercase font-mono transition-colors border ${
+                    className={`px-3 py-1 text-[11px] sm:text-label-caps uppercase font-mono transition-colors border ${
                       inquiryFilter === type
                         ? 'bg-[#1a1c1b] text-white border-[#1a1c1b]'
                         : 'bg-white text-[#444748] border-[#c4c7c7] hover:bg-[#efeeec]'
@@ -1118,13 +1201,13 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* Inquiries Stream */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {filteredInquiries.map((inq) => (
-                <div key={inq.id} className="bg-white border border-[#c4c7c7] p-6 space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#efeeec] pb-3">
-                    <div className="flex items-center gap-3">
+                <div key={inq.id} className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#efeeec] pb-2.5 sm:pb-3">
+                    <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                       <span
-                        className={`text-[10px] font-mono uppercase px-2 py-0.5 border ${
+                        className={`text-[9.5px] font-mono uppercase px-1.5 py-0.5 border shrink-0 ${
                           inq.type === 'bespoke'
                             ? 'bg-purple-50 text-purple-800 border-purple-200'
                             : inq.type === 'trade'
@@ -1134,11 +1217,11 @@ export const AdminDashboard: React.FC = () => {
                       >
                         {inq.type}
                       </span>
-                      <h4 className="text-title-sm font-medium text-[#1a1c1b]">{inq.title}</h4>
+                      <h4 className="text-sm sm:text-title-sm font-medium text-[#1a1c1b]">{inq.title}</h4>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="text-body-xs font-mono text-[#444748]">
+                    <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+                      <span className="text-[11px] font-mono text-[#444748]">
                         {new Date(inq.submittedAt).toLocaleDateString()}
                       </span>
                       <select
@@ -1164,14 +1247,14 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  <p className="text-body-sm text-[#444748] leading-relaxed">{inq.details}</p>
+                  <p className="text-xs sm:text-body-sm text-[#444748] leading-relaxed">{inq.details}</p>
 
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-2 text-body-xs text-[#444748] border-t border-[#efeeec]">
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] sm:text-body-xs text-[#444748] border-t border-[#efeeec]">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                       <span>Sender: <strong className="text-[#1a1c1b]">{inq.sender}</strong></span>
                       <a
                         href={`mailto:${inq.email}?subject=Regarding your BOSKI LIMITED inquiry`}
-                        className="text-[#1a1c1b] underline hover:text-[#d7c7b3]"
+                        className="text-[#1a1c1b] underline hover:text-[#d7c7b3] break-all"
                       >
                         {inq.email}
                       </a>
@@ -1181,7 +1264,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               ))}
               {filteredInquiries.length === 0 && (
-                <div className="bg-white border border-[#c4c7c7] p-8 text-center text-[#444748]">
+                <div className="bg-white border border-[#c4c7c7] p-6 sm:p-8 text-center text-[#444748] text-sm">
                   No inquiries found under the selected filter.
                 </div>
               )}
@@ -1193,30 +1276,31 @@ export const AdminDashboard: React.FC = () => {
       {/* --- CREATE / EDIT PRODUCT MODAL --- */}
       {isCreateModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
           onClick={() => setIsCreateModalOpen(false)}
         >
           <div
-            className="bg-[#faf9f7] w-full max-w-3xl border border-[#c4c7c7] shadow-2xl p-8 max-h-[90vh] overflow-y-auto"
+            className="bg-[#faf9f7] w-full max-w-3xl border border-[#c4c7c7] shadow-2xl p-4 sm:p-6 md:p-8 max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#c4c7c7] pb-4 mb-6">
+            <div className="flex items-center justify-between border-b border-[#c4c7c7] pb-3 sm:pb-4 mb-4 sm:mb-6">
               <h3
-                className="text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
+                className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 {editingProduct ? 'Edit Catalog Piece' : 'New Atelier Product'}
               </h3>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                className="text-[#444748] hover:text-black"
+                className="w-8 h-8 flex items-center justify-center text-[#444748] hover:text-black hover:bg-[#efeeec] transition-colors"
+                title="Close"
               >
                 ✕
               </button>
             </div>
 
             <form onSubmit={handleSaveProduct} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-1">
                   <label className="text-label-caps text-[#444748] block">Product Title *</label>
                   <input
@@ -1256,7 +1340,7 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div className="space-y-1">
                   <label className="text-label-caps text-[#444748] block">Price (USD) *</label>
                   <input
@@ -1303,14 +1387,14 @@ export const AdminDashboard: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveTab('upload')}
-                    className="px-3 py-2 bg-[#efeeec] border border-[#c4c7c7] text-label-caps uppercase text-[#1a1c1b] hover:bg-black hover:text-white transition-colors"
+                    className="px-3 py-2 bg-[#efeeec] border border-[#c4c7c7] text-[11px] sm:text-label-caps uppercase text-[#1a1c1b] hover:bg-black hover:text-white transition-colors shrink-0"
                   >
                     Open CDN
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-1">
                   <label className="text-label-caps text-[#444748] block">Color Swatch Name</label>
                   <input
@@ -1352,7 +1436,7 @@ export const AdminDashboard: React.FC = () => {
                 />
               </div>
 
-              <div className="flex items-center gap-6 pt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 pt-2">
                 <label className="flex items-center gap-2 text-body-sm cursor-pointer">
                   <input
                     type="checkbox"
@@ -1374,17 +1458,17 @@ export const AdminDashboard: React.FC = () => {
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-[#c4c7c7]">
+              <div className="flex flex-col-reverse sm:flex-row justify-end gap-2.5 sm:gap-3 pt-4 border-t border-[#c4c7c7]">
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
-                  className="px-6 py-2.5 bg-[#efeeec] text-[#1a1c1b] text-label-caps uppercase tracking-wider hover:bg-[#e3e2e0] transition-colors"
+                  className="w-full sm:w-auto px-6 py-3 sm:py-2.5 bg-[#efeeec] text-[#1a1c1b] text-label-caps uppercase tracking-wider hover:bg-[#e3e2e0] transition-colors text-center"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-8 py-2.5 bg-[#1a1c1b] text-white text-label-caps uppercase tracking-wider hover:bg-black transition-colors"
+                  className="w-full sm:w-auto px-8 py-3 sm:py-2.5 bg-[#1a1c1b] text-white text-label-caps uppercase tracking-wider hover:bg-black transition-colors text-center"
                 >
                   {editingProduct ? 'Save Modifications' : 'Create in Catalog'}
                 </button>
