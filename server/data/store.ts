@@ -26,6 +26,10 @@ class DataStore {
       if (fs.existsSync(STORE_PATH)) {
         const raw = fs.readFileSync(STORE_PATH, 'utf-8');
         this.cache = JSON.parse(raw) as DatabaseSchema;
+        if (!this.cache.collections || !Array.isArray(this.cache.collections) || this.cache.collections.length === 0) {
+          this.cache.collections = INITIAL_DATABASE.collections;
+          this.flush();
+        }
       } else {
         this.cache = INITIAL_DATABASE;
         this.flush();

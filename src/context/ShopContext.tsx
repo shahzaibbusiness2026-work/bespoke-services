@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { Product, CartItem, ProductColor, Currency, PromoCode, OrderDetails, User, Address, BespokeInquiry, TradeInquiry } from '../types';
+import { Product, CartItem, ProductColor, Currency, PromoCode, OrderDetails, User, Address, BespokeInquiry, TradeInquiry, Collection } from '../types';
 import { PRODUCTS, CURRENCIES, PROMO_CODES } from '../data/products';
 import { api } from '../services/api';
 
@@ -51,6 +51,8 @@ interface ShopContextType {
   products: Product[];
   categories: CategoryItem[];
   refreshCategories: () => Promise<void>;
+  collections: Collection[];
+  refreshCollections: () => Promise<void>;
   refreshProducts: () => Promise<void>;
   isApiConnected: boolean;
   isContactOpen: boolean;
@@ -276,6 +278,19 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
+  const [collections, setCollections] = useState<Collection[]>([]);
+
+  const refreshCollections = useCallback(async () => {
+    try {
+      const res = await api.collections.getAll();
+      if (res.success && res.data && res.data.length > 0) {
+        setCollections(res.data);
+      }
+    } catch (e) {
+      console.warn('Failed to refresh collections:', e);
+    }
+  }, []);
+
   // Deterministic initial states (identical on server and initial client render to prevent hydration mismatches)
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -403,6 +418,9 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     // 2. Fetch live categories from backend
     refreshCategories();
+
+    // 3. Fetch live collections from backend
+    refreshCollections();
 
     // 3. Validate session if token exists
     if (api.getToken()) {
@@ -850,6 +868,8 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         products,
         categories,
         refreshCategories,
+        collections,
+        refreshCollections,
         refreshProducts,
         isApiConnected,
         cart,

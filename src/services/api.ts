@@ -7,6 +7,7 @@ import {
   TradeInquiry,
   PromoCode,
   LookbookItem,
+  Collection,
 } from '../types';
 
 export interface ContactInquiry {
@@ -208,6 +209,51 @@ class ApiClient {
 
     delete: async (name: string) => {
       return this.request(`/categories/${encodeURIComponent(name)}`, {
+        method: 'DELETE',
+      });
+    },
+  };
+
+  // --- Collections API ---
+  public collections = {
+    getAll: async (params: {
+      season?: string;
+      status?: string;
+      year?: number;
+      search?: string;
+      featured?: boolean;
+    } = {}) => {
+      const query = new URLSearchParams();
+      if (params.season) query.set('season', params.season);
+      if (params.status) query.set('status', params.status);
+      if (params.year) query.set('year', String(params.year));
+      if (params.search) query.set('search', params.search);
+      if (params.featured !== undefined) query.set('featured', String(params.featured));
+
+      const qs = query.toString();
+      return this.request<Collection[]>(`/collections${qs ? `?${qs}` : ''}`);
+    },
+
+    getById: async (id: string) => {
+      return this.request<Collection>(`/collections/${id}`);
+    },
+
+    create: async (collectionData: Omit<Collection, 'id' | 'createdAt'>) => {
+      return this.request<Collection>('/collections', {
+        method: 'POST',
+        body: JSON.stringify(collectionData),
+      });
+    },
+
+    update: async (id: string, updates: Partial<Collection>) => {
+      return this.request<Collection>(`/collections/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(updates),
+      });
+    },
+
+    delete: async (id: string) => {
+      return this.request(`/collections/${id}`, {
         method: 'DELETE',
       });
     },

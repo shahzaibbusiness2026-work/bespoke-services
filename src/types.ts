@@ -33,6 +33,11 @@ export interface Product {
   featured?: boolean;
   threadCount?: string;
   fabric?: string;
+  collectionIds?: string[];
+  season?: 'Spring' | 'Summer' | 'Autumn' | 'Winter' | string;
+  status?: 'active' | 'draft' | 'archived';
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface CartItem {
@@ -186,3 +191,43 @@ export interface TradeInquiry {
   projectDetails?: string;
   submittedAt: string;
 }
+
+export type CollectionSeason = 'Spring' | 'Summer' | 'Autumn' | 'Winter';
+export type CollectionStatus = 'draft' | 'upcoming' | 'active' | 'archived';
+
+export interface Collection {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  story?: string;
+  designInspiration?: string;
+  craftsmanship?: string;
+  materialPhilosophy?: string;
+  season: CollectionSeason;
+  year: number;
+  status: CollectionStatus;
+  coverImage: string;
+  gallery: string[];
+  launchDate: string;
+  featured: boolean;
+  homepageVisible: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+  productIds: string[];
+  productCount?: number;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface CategoryModel {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  image?: string;
+  status: 'active' | 'hidden';
+  productCount?: number;
+  subcategories?: string[];
+}
+
