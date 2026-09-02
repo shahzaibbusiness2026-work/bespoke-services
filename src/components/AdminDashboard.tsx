@@ -517,7 +517,7 @@ export const AdminDashboard: React.FC = () => {
               Atelier Management Console
             </span>
             <h1
-              className="text-3xl sm:text-4xl font-normal tracking-wider"
+              className="text-xl sm:text-2xl font-medium tracking-[0.20em]"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               BOSKI LIMITED
@@ -534,9 +534,10 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-1.5 border border-inherit hover:opacity-70 transition-opacity"
+                className="p-1.5 bg-transparent hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+                aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
               >
-                {isDarkMode ? <Sun className="w-4 h-4 text-[#C9A227]" /> : <Moon className="w-4 h-4 text-black" />}
+                {isDarkMode ? <Sun className="w-4 h-4 text-[#C9A227]" /> : <Moon className="w-4 h-4 text-[#171717]" />}
               </button>
             </div>
 
@@ -622,7 +623,7 @@ export const AdminDashboard: React.FC = () => {
             >
               <div className="flex items-center gap-2.5">
                 <span
-                  className="text-xl sm:text-2xl font-normal tracking-wider"
+                  className="text-sm sm:text-base font-medium tracking-[0.20em]"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   BOSKI LIMITED
@@ -653,26 +654,17 @@ export const AdminDashboard: React.FC = () => {
               <span>View Storefront</span>
             </button>
 
-            {/* Dark / Bright Theme Switcher Button */}
+            {/* Dark / Bright Theme Toggle: No background color, no bright/dark text */}
             <button
               onClick={toggleTheme}
-              className={`p-2 sm:px-3 sm:py-2 text-xs uppercase tracking-wider font-semibold border flex items-center gap-2 transition-colors cursor-pointer ${
-                isDarkMode
-                  ? 'border-[#2D322F] text-[#C9A227] hover:border-[#C9A227]'
-                  : 'border-[#E6E1D8] text-black hover:border-black'
-              }`}
-              title="Toggle Atelier Light / Dark Mode"
+              className="p-2 bg-transparent text-inherit hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+              aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
+              title={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
             >
               {isDarkMode ? (
-                <>
-                  <Sun className="w-4 h-4 text-[#C9A227]" />
-                  <span className="hidden sm:inline">Bright Mode</span>
-                </>
+                <Sun className="w-[18px] h-[18px] text-[#C9A227]" />
               ) : (
-                <>
-                  <Moon className="w-4 h-4 text-black" />
-                  <span className="hidden sm:inline">Dark Mode</span>
-                </>
+                <Moon className="w-[18px] h-[18px] text-[#171717]" />
               )}
             </button>
 

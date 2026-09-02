@@ -94,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               aria-label="BOSKI LIMITED Home"
             >
               <span
-                className={`text-[17px] sm:text-[22px] lg:text-[25px] tracking-[0.10em] sm:tracking-[0.16em] font-normal uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap ${
+                className={`text-[13px] sm:text-[15px] lg:text-[16px] tracking-[0.20em] sm:tracking-[0.24em] font-medium uppercase group-hover:opacity-75 transition-opacity whitespace-nowrap ${
                   isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
                 }`}
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
@@ -409,22 +409,18 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               )}
             </button>
 
-            {/* 3. Dark Mode / Bright Mode Switch Button (Always visible on Desktop and Mobile) */}
+            {/* 3. Dark Mode / Bright Mode Switch Button: No background color, no text */}
             <button
               id="theme-toggle-btn"
               onClick={toggleTheme}
-              className={`w-10 h-10 min-w-[40px] min-h-[40px] flex items-center justify-center transition-all cursor-pointer focus:outline-none border rounded-none ${
-                isDarkMode
-                  ? 'border-[#383D3A] bg-[#1A1D1C] text-[#C5A059] hover:border-[#C5A059] hover:bg-[#242826]'
-                  : 'border-[#E5DFD7] bg-[#FAF8F5] text-[#141615] hover:border-[#141615] hover:bg-[#F0EEEA]'
-              }`}
-              aria-label={`Switch to ${isDarkMode ? 'Bright' : 'Dark'} Mode`}
-              title={`Switch to ${isDarkMode ? 'Bright' : 'Dark'} Mode`}
+              className="p-2 bg-transparent text-inherit hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+              aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
+              title={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
             >
               {isDarkMode ? (
-                <Sun className="w-4 h-4 text-[#C5A059]" />
+                <Sun className="w-[18px] h-[18px] text-[#C9A227]" />
               ) : (
-                <Moon className="w-4 h-4 text-[#141615]" />
+                <Moon className="w-[18px] h-[18px] text-[#171717]" />
               )}
             </button>
 
@@ -693,7 +689,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
           }`}>
             <span
-              className={`text-[20px] font-normal tracking-[0.14em] uppercase ${
+              className={`text-[13px] tracking-[0.20em] font-medium uppercase ${
                 isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
               }`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
@@ -711,21 +707,19 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             </button>
           </div>
 
-          {/* Dedicated Theme Toggle Bar in Mobile Drawer */}
-          <div className={`px-5 py-3 border-b ${isDarkMode ? 'border-[#2A2E2C] bg-[#1A1D1C]' : 'border-[#e3e2e0] bg-[#FAF8F5]'}`}>
+          {/* Theme Toggle Bar in Mobile Drawer: No background color, no bright/dark text */}
+          <div className="px-5 py-2.5 border-b border-inherit flex items-center justify-between bg-transparent">
+            <span className="text-[11px] font-mono uppercase tracking-widest opacity-60">Theme</span>
             <button
               onClick={toggleTheme}
-              className={`w-full py-2 px-3 border text-xs uppercase font-mono tracking-wider flex items-center justify-between transition-colors cursor-pointer ${
-                isDarkMode
-                  ? 'border-[#383D3A] bg-[#141615] text-[#FAF8F5] hover:border-[#C5A059]'
-                  : 'border-[#c4c7c7] bg-white text-[#141615] hover:border-[#141615]'
-              }`}
+              className="p-2 bg-transparent text-inherit hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+              aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
             >
-              <span className="flex items-center gap-2">
-                {isDarkMode ? <Sun className="w-4 h-4 text-[#C5A059]" /> : <Moon className="w-4 h-4 text-[#141615]" />}
-                <span className="font-sans font-medium text-[11px]">Theme: {isDarkMode ? 'Dark Mode' : 'Bright Mode'}</span>
-              </span>
-              <span className="text-[10px] text-[#C5A059] font-medium tracking-normal">Switch to {isDarkMode ? 'Bright' : 'Dark'}</span>
+              {isDarkMode ? (
+                <Sun className="w-[18px] h-[18px] text-[#C9A227]" />
+              ) : (
+                <Moon className="w-[18px] h-[18px] text-[#171717]" />
+              )}
             </button>
           </div>
 

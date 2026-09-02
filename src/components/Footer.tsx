@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
             aria-label="BOSKI LIMITED Home"
           >
             <span
-              className={`text-[24px] font-normal tracking-[0.14em] uppercase block hover:opacity-75 transition-opacity ${
+              className={`text-[15px] sm:text-[16px] font-medium tracking-[0.20em] uppercase block hover:opacity-75 transition-opacity ${
                 isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
               }`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
