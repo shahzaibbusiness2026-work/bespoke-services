@@ -36,7 +36,7 @@ export const AdminDashboard: React.FC = () => {
   }, []);
 
   // Admin Authentication State
-  const isAdmin = currentUser?.role === 'admin';
+  const isAdmin = currentUser?.role === 'admin' || (currentUser?.role as string) === 'superadmin';
   const [adminEmail, setAdminEmail] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -164,20 +164,22 @@ export const AdminDashboard: React.FC = () => {
 
     setIsLoggingIn(true);
     try {
-      const success = await login(cleanEmail, cleanPass);
+      const res = await api.auth.login(cleanEmail, cleanPass);
 
-      if (success && currentUser?.role === 'admin') {
-        // Successfully authenticated as admin — refreshData will be triggered by useEffect
-        showToast('Atelier Admin Access Granted', 'Welcome to the Master Administrator Console', 'success');
-      } else if (success && currentUser?.role !== 'admin') {
-        // Authenticated but not an admin — sign them out
-        logout();
-        setLoginError('Your account does not have administrator privileges.');
+      if (res.success && res.data?.user) {
+        const authUser = res.data.user;
+        const role = String(authUser.role || '').toLowerCase();
+        if (role === 'admin' || role === 'superadmin') {
+          setCurrentUser(authUser);
+          showToast('Atelier Admin Access Granted', 'Welcome to the Master Administrator Console', 'success');
+        } else {
+          setLoginError('Your account does not have administrator privileges.');
+        }
       } else {
-        setLoginError('Invalid email or password. Please try again.');
+        setLoginError(res.error || 'Invalid email or password. Please try again.');
       }
-    } catch {
-      setLoginError('An error occurred. Please try again.');
+    } catch (err: any) {
+      setLoginError(err.message || 'An error occurred during authentication.');
     } finally {
       setIsLoggingIn(false);
     }
