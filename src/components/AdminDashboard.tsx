@@ -26,6 +26,8 @@ import {
   Activity,
   ArrowUpRight,
   Clock,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { api, ConsolidatedInquiry, MediaFile } from '../services/api';
@@ -39,6 +41,24 @@ export const AdminDashboard: React.FC = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Theme Mode: Bright (Light) vs Dark with persistent localStorage
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('boski_admin_theme');
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      localStorage.setItem('boski_admin_theme', next ? 'dark' : 'light');
+      return next;
+    });
+  };
 
   // Admin Authentication State
   const isAdmin = currentUser?.role === 'admin' || (currentUser?.role as string) === 'superadmin';
@@ -433,55 +453,106 @@ export const AdminDashboard: React.FC = () => {
   // --- UN-AUTHENTICATED ADMIN LOGIN WALL ---
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-[#1a1c1b] flex items-center justify-center p-3.5 sm:p-6 text-white">
-        <div className="bg-[#242625] border border-[#383838] w-full max-w-md p-5 sm:p-8 shadow-2xl">
+      <div className={`min-h-screen flex items-center justify-center p-3.5 sm:p-6 transition-colors relative ${
+        isDarkMode ? 'bg-[#111312] text-white' : 'bg-[#FAF8F5] text-[#141615]'
+      }`}>
+        {/* Top-Right Theme Toggle on Login Screen */}
+        <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+          <button
+            onClick={toggleTheme}
+            className={`flex items-center gap-2 px-3 py-1.5 border text-xs uppercase tracking-widest font-mono transition-colors cursor-pointer ${
+              isDarkMode
+                ? 'bg-[#1A1D1C] border-[#2E3230] text-[#E8D8B8] hover:border-[#C5A059]'
+                : 'bg-white border-[#E5DFD7] text-[#141615] hover:border-[#141615]'
+            }`}
+            title={`Switch to ${isDarkMode ? 'Bright' : 'Dark'} Mode`}
+          >
+            {isDarkMode ? (
+              <>
+                <Sun className="w-3.5 h-3.5 text-[#C5A059]" />
+                <span className="hidden sm:inline">Bright Mode</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-3.5 h-3.5 text-[#6E6B65]" />
+                <span className="hidden sm:inline">Dark Mode</span>
+              </>
+            )}
+          </button>
+        </div>
+
+        <div className={`border w-full max-w-md p-5 sm:p-8 shadow-2xl transition-colors ${
+          isDarkMode
+            ? 'bg-[#1A1D1C] border-[#2E3230]'
+            : 'bg-white border-[#E5DFD7]'
+        }`}>
           <div className="text-center mb-6 sm:mb-8">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 bg-[#1a1c1b] border border-[#d7c7b3]/40 flex items-center justify-center mx-auto mb-3 sm:mb-4">
-              <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-[#d7c7b3]" />
+            <div className={`w-11 h-11 sm:w-12 sm:h-12 border flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-colors ${
+              isDarkMode
+                ? 'bg-[#141615] border-[#C5A059]/40 text-[#C5A059]'
+                : 'bg-[#FAF8F5] border-[#E5DFD7] text-[#141615]'
+            }`}>
+              <Lock className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <span className="text-[10px] uppercase tracking-[0.25em] text-[#d7c7b3] font-mono block mb-1">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8c9a86] font-mono block mb-1">
               Restricted Portal
             </span>
             <h1
-              className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-white"
-              style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              className={`text-xl sm:text-2xl font-normal uppercase tracking-wider ${
+                isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+              }`}
+              style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
             >
               Atelier Administrator
             </h1>
-            <p className="text-body-xs text-[#e3e2e0]/60 mt-2 font-light">
+            <p className={`text-body-xs mt-2 font-light ${
+              isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+            }`}>
               Sign in with Master Concierge credentials to access product management, categories, image uploads, and client inquiries.
             </p>
           </div>
 
           <form onSubmit={handleAdminLogin} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-label-caps text-[#d7c7b3] block">Admin Email</label>
+              <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Admin Email</label>
               <input
                 type="email"
                 required
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
                 placeholder="boskilimited@boskilimited.info"
-                className="w-full bg-[#1a1c1b] border border-[#444748] px-3 py-2 text-body-sm text-white focus:border-[#d7c7b3] outline-none transition-colors"
+                className={`w-full border px-3 py-2 text-body-sm outline-none transition-colors ${
+                  isDarkMode
+                    ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                    : 'bg-[#FAF8F5] border-[#C4C7C7] text-[#141615] focus:border-[#141615] placeholder-[#8C8C8C]'
+                }`}
               />
             </div>
 
             <div className="space-y-1">
-              <label className="text-label-caps text-[#d7c7b3] block">Password</label>
+              <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Password</label>
               <input
                 type="password"
                 required
                 value={adminPassword}
                 onChange={(e) => setAdminPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#1a1c1b] border border-[#444748] px-3 py-2 text-body-sm text-white focus:border-[#d7c7b3] outline-none transition-colors"
+                className={`w-full border px-3 py-2 text-body-sm outline-none transition-colors ${
+                  isDarkMode
+                    ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                    : 'bg-[#FAF8F5] border-[#C4C7C7] text-[#141615] focus:border-[#141615] placeholder-[#8C8C8C]'
+                }`}
               />
             </div>
 
             <button
               type="submit"
               disabled={isLoggingIn}
-              className="w-full py-3 bg-[#d7c7b3] text-[#1a1c1b] font-medium text-label-caps tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center gap-2 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
+              className={`w-full py-3 font-medium text-label-caps tracking-widest uppercase transition-colors flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
+                isDarkMode
+                  ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                  : 'bg-[#141615] text-white hover:bg-black'
+              }`}
             >
               <ShieldCheck className="w-4 h-4" />
               <span>{isLoggingIn ? 'Verifying Credentials...' : 'Authenticate as Admin'}</span>
@@ -504,7 +575,9 @@ export const AdminDashboard: React.FC = () => {
                   setActivePage('home');
                 }
               }}
-              className="text-body-xs text-[#e3e2e0]/60 hover:text-white transition-colors underline-offset-4 hover:underline inline-block"
+              className={`text-body-xs underline-offset-4 hover:underline inline-block transition-colors ${
+                isDarkMode ? 'text-[#A8A49C] hover:text-white' : 'text-[#6E6B65] hover:text-black'
+              }`}
             >
               ← Return to Client Storefront
             </a>
@@ -529,9 +602,11 @@ export const AdminDashboard: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#141615]">
+    <div className={`min-h-screen transition-colors duration-200 ${isDarkMode ? 'bg-[#111312] text-[#FAF8F5]' : 'bg-[#FAF8F5] text-[#141615]'}`}>
       {/* Top Admin Header — Dark Charcoal Atelier Bar */}
-      <header className="bg-[#141615] text-white border-b border-[#262826] px-3 sm:px-6 py-3 sm:py-4 sticky top-0 z-40 shadow-sm">
+      <header className={`border-b px-3 sm:px-6 py-2.5 sm:py-3.5 sticky top-0 z-40 shadow-sm transition-colors ${
+        isDarkMode ? 'bg-[#0E100F] border-[#222523] text-white' : 'bg-[#141615] border-[#262826] text-white'
+      }`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
             <span
@@ -545,7 +620,34 @@ export const AdminDashboard: React.FC = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Theme Toggle Button: Dark Mode / Bright Mode */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className={`px-2.5 py-1 text-[11px] font-mono uppercase tracking-wider flex items-center gap-1.5 border transition-all cursor-pointer ${
+                isDarkMode
+                  ? 'bg-[#1E2220] border-[#383D3A] text-[#E8D8B8] hover:border-[#C5A059] hover:text-white'
+                  : 'bg-[#222524] border-[#383D3A] text-[#C5A059] hover:text-white hover:border-[#C5A059]'
+              }`}
+              title={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
+              aria-label="Toggle Bright/Dark Mode"
+            >
+              {isDarkMode ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span className="hidden sm:inline font-mono text-[10px] tracking-widest">Bright</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span className="hidden sm:inline font-mono text-[10px] tracking-widest">Dark</span>
+                </>
+              )}
+            </button>
+
+            <div className="h-4 w-px bg-[#333634]" />
+
             <a
               href="/"
               onClick={(e) => {
@@ -561,10 +663,12 @@ export const AdminDashboard: React.FC = () => {
               <span className="sm:hidden font-mono">Store</span>
               <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
+
             <div className="h-4 w-px bg-[#333634]" />
+
             <button
               onClick={logout}
-              className="text-[11px] sm:text-body-xs text-white/70 hover:text-white flex items-center gap-1.5 transition-colors py-1"
+              className="text-[11px] sm:text-body-xs text-white/70 hover:text-white flex items-center gap-1.5 transition-colors py-1 cursor-pointer"
               title="Sign Out"
             >
               <LogOut className="w-3.5 h-3.5" />
@@ -575,13 +679,19 @@ export const AdminDashboard: React.FC = () => {
       </header>
 
       {/* Main Workspace Navigation Tabs — Warm Taupe Accent Bar */}
-      <div className="bg-[#F4EFEA] border-b border-[#E5DFD7] px-2 sm:px-6">
+      <div className={`border-b px-2 sm:px-6 transition-colors ${
+        isDarkMode ? 'bg-[#161817] border-[#262A28]' : 'bg-[#F4EFEA] border-[#E5DFD7]'
+      }`}>
         <div className="max-w-7xl mx-auto flex gap-1 overflow-x-auto py-1 scrollbar-none">
           <button
             onClick={() => setActiveTab('overview')}
             className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'overview'
-                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                ? isDarkMode
+                  ? 'border-[#C5A059] bg-[#1E2120] text-[#FAF8F5] font-semibold shadow-sm'
+                  : 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : isDarkMode
+                ? 'border-transparent text-[#9E9B95] hover:text-[#FAF8F5]'
                 : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
@@ -593,7 +703,11 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => setActiveTab('products')}
             className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'products'
-                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                ? isDarkMode
+                  ? 'border-[#C5A059] bg-[#1E2120] text-[#FAF8F5] font-semibold shadow-sm'
+                  : 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : isDarkMode
+                ? 'border-transparent text-[#9E9B95] hover:text-[#FAF8F5]'
                 : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
@@ -605,7 +719,11 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => setActiveTab('upload')}
             className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'upload'
-                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                ? isDarkMode
+                  ? 'border-[#C5A059] bg-[#1E2120] text-[#FAF8F5] font-semibold shadow-sm'
+                  : 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : isDarkMode
+                ? 'border-transparent text-[#9E9B95] hover:text-[#FAF8F5]'
                 : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
@@ -617,7 +735,11 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => setActiveTab('categories')}
             className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'categories'
-                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                ? isDarkMode
+                  ? 'border-[#C5A059] bg-[#1E2120] text-[#FAF8F5] font-semibold shadow-sm'
+                  : 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : isDarkMode
+                ? 'border-transparent text-[#9E9B95] hover:text-[#FAF8F5]'
                 : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
@@ -629,7 +751,11 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => setActiveTab('inquiries')}
             className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'inquiries'
-                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                ? isDarkMode
+                  ? 'border-[#C5A059] bg-[#1E2120] text-[#FAF8F5] font-semibold shadow-sm'
+                  : 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : isDarkMode
+                ? 'border-transparent text-[#9E9B95] hover:text-[#FAF8F5]'
                 : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
@@ -646,17 +772,25 @@ export const AdminDashboard: React.FC = () => {
           <div className="space-y-6 sm:space-y-8 animate-fadeIn">
             {/* 1. Executive Header */}
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#F4EFEA] border border-[#E5DFD7] text-[#9E7B3B] text-[10px] uppercase font-mono tracking-[0.25em] mb-2">
+              <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 border text-[10px] uppercase font-mono tracking-[0.25em] mb-2 ${
+                isDarkMode
+                  ? 'bg-[#1E2120] border-[#333835] text-[#D8B468]'
+                  : 'bg-[#F4EFEA] border-[#E5DFD7] text-[#9E7B3B]'
+              }`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
                 Atelier Executive Console
               </div>
               <h1
-                className="text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-wider text-[#141615]"
+                className={`text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-wider ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                }`}
                 style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
               >
                 Atelier Operations Summary
               </h1>
-              <p className="text-xs sm:text-sm text-[#6E6B65] font-light mt-1.5">
+              <p className={`text-xs sm:text-sm font-light mt-1.5 ${
+                isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+              }`}>
                 Real-time overview of catalog, inquiry queue, and digital media assets.
               </p>
             </div>
@@ -664,88 +798,136 @@ export const AdminDashboard: React.FC = () => {
             {/* 2. Metric Cards Grid (4 columns) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {/* Card 1: Total Products */}
-              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+              <div className={`p-5 sm:p-6 border transition-all duration-300 group ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.1)]'
+                  : 'bg-white border-[#E5DFD7] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)]'
+              }`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                  <span className={`text-[10.5px] uppercase tracking-[0.15em] font-medium ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                  }`}>
                     Total Products
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                  <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform ${
+                    isDarkMode ? 'bg-[#24211A] border-[#4A3D22]' : 'bg-[#FAF4E8] border-[#E8D8B8]'
+                  }`}>
                     <Package className="w-4 h-4" />
                   </div>
                 </div>
                 <span
-                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  className={`text-3xl sm:text-4xl font-normal block my-2 ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
                   {products.length || 10}
                 </span>
-                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                <span className={`text-[11px] flex items-center gap-1.5 font-mono ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                }`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8C9A86]" />
                   {products.filter((p) => p.inStock).length || 10} In Stock
                 </span>
               </div>
 
               {/* Card 2: Active Categories */}
-              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+              <div className={`p-5 sm:p-6 border transition-all duration-300 group ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.1)]'
+                  : 'bg-white border-[#E5DFD7] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)]'
+              }`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                  <span className={`text-[10.5px] uppercase tracking-[0.15em] font-medium ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                  }`}>
                     Active Categories
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                  <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform ${
+                    isDarkMode ? 'bg-[#24211A] border-[#4A3D22]' : 'bg-[#FAF4E8] border-[#E8D8B8]'
+                  }`}>
                     <Layers className="w-4 h-4" />
                   </div>
                 </div>
                 <span
-                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  className={`text-3xl sm:text-4xl font-normal block my-2 ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
                   {categories.length || 8}
                 </span>
-                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                <span className={`text-[11px] flex items-center gap-1.5 font-mono ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                }`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
                   Master-loom textiles
                 </span>
               </div>
 
               {/* Card 3: Incoming Inquiries */}
-              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+              <div className={`p-5 sm:p-6 border transition-all duration-300 group ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.1)]'
+                  : 'bg-white border-[#E5DFD7] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)]'
+              }`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                  <span className={`text-[10.5px] uppercase tracking-[0.15em] font-medium ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                  }`}>
                     Incoming Inquiries
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                  <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform ${
+                    isDarkMode ? 'bg-[#24211A] border-[#4A3D22]' : 'bg-[#FAF4E8] border-[#E8D8B8]'
+                  }`}>
                     <Inbox className="w-4 h-4" />
                   </div>
                 </div>
                 <span
-                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  className={`text-3xl sm:text-4xl font-normal block my-2 ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
                   {inquiries.length || 0}
                 </span>
-                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                <span className={`text-[11px] flex items-center gap-1.5 font-mono ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                }`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
                   {inquiries.filter((i) => i.status === 'pending').length} Pending review
                 </span>
               </div>
 
               {/* Card 4: Media Assets */}
-              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+              <div className={`p-5 sm:p-6 border transition-all duration-300 group ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.1)]'
+                  : 'bg-white border-[#E5DFD7] hover:border-[#C5A059] shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)]'
+              }`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                  <span className={`text-[10.5px] uppercase tracking-[0.15em] font-medium ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                  }`}>
                     Media Assets
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                  <div className={`w-9 h-9 rounded-full border flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform ${
+                    isDarkMode ? 'bg-[#24211A] border-[#4A3D22]' : 'bg-[#FAF4E8] border-[#E8D8B8]'
+                  }`}>
                     <ImageIcon className="w-4 h-4" />
                   </div>
                 </div>
                 <span
-                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  className={`text-3xl sm:text-4xl font-normal block my-2 ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
                   {mediaList.length || 1}
                 </span>
-                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                <span className={`text-[11px] flex items-center gap-1.5 font-mono ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                }`}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8C9A86]" />
                   CDN hosted images
                 </span>
@@ -753,15 +935,23 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             {/* 3. Quick Atelier Actions — Floating Luxury Bar */}
-            <div className="bg-white border border-[#E5DFD7] p-4 sm:p-5 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className={`p-4 sm:p-5 border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${
+              isDarkMode
+                ? 'bg-[#1A1D1C] border-[#2A2E2C] shadow-[0_4px_24px_rgba(0,0,0,0.3)]'
+                : 'bg-white border-[#E5DFD7] shadow-[0_4px_24px_rgba(0,0,0,0.03)]'
+            }`}>
               <div>
                 <h3
-                  className="text-base sm:text-lg font-normal uppercase tracking-wider text-[#141615]"
+                  className={`text-base sm:text-lg font-normal uppercase tracking-wider ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
                   Quick Atelier Actions
                 </h3>
-                <p className="text-xs text-[#6E6B65] font-light mt-0.5">
+                <p className={`text-xs font-light mt-0.5 ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'
+                }`}>
                   Directly dispatch additions to the production catalog and media repository.
                 </p>
               </div>
@@ -771,15 +961,23 @@ export const AdminDashboard: React.FC = () => {
                     resetForm();
                     setIsCreateModalOpen(true);
                   }}
-                  className="w-full sm:w-auto px-6 py-2.5 bg-[#141615] hover:bg-black text-white text-[11px] uppercase tracking-widest font-medium border border-[#141615] shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group"
+                  className={`w-full sm:w-auto px-6 py-2.5 text-[11px] uppercase tracking-widest font-medium border shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group cursor-pointer ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] hover:bg-[#D8B468] text-black border-[#C5A059]'
+                      : 'bg-[#141615] hover:bg-black text-white border-[#141615]'
+                  }`}
                 >
-                  <Plus className="w-4 h-4 text-[#C5A059] group-hover:rotate-90 transition-transform duration-300" />
+                  <Plus className={`w-4 h-4 ${isDarkMode ? 'text-black' : 'text-[#C5A059]'} group-hover:rotate-90 transition-transform duration-300`} />
                   <span>+ Create Product</span>
                 </button>
 
                 <button
                   onClick={() => setActiveTab('upload')}
-                  className="w-full sm:w-auto px-6 py-2.5 bg-transparent hover:bg-[#FAF8F5] text-[#141615] border border-[#DCD5CB] hover:border-[#C5A059] text-[11px] uppercase tracking-widest font-medium transition-all flex items-center justify-center gap-2 group"
+                  className={`w-full sm:w-auto px-6 py-2.5 text-[11px] uppercase tracking-widest font-medium border transition-all flex items-center justify-center gap-2 group cursor-pointer ${
+                    isDarkMode
+                      ? 'bg-transparent hover:bg-[#242826] text-[#FAF8F5] border-[#383D3A] hover:border-[#C5A059]'
+                      : 'bg-transparent hover:bg-[#FAF8F5] text-[#141615] border-[#DCD5CB] hover:border-[#C5A059]'
+                  }`}
                 >
                   <Upload className="w-4 h-4 text-[#6E6B65] group-hover:text-[#C5A059] transition-colors" />
                   <span>Upload Image</span>
@@ -790,34 +988,48 @@ export const AdminDashboard: React.FC = () => {
             {/* 4. Secondary Content Section (Split Layout) */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 pt-1">
               {/* Left Column (2/3): Recent Activity Log */}
-              <div className="lg:col-span-2 bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
-                <div className="flex items-center justify-between border-b border-[#F4EFEA] pb-3">
+              <div className={`lg:col-span-2 border p-5 sm:p-6 transition-colors space-y-4 ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+                  : 'bg-white border-[#E5DFD7] shadow-[0_4px_20px_rgba(0,0,0,0.02)]'
+              }`}>
+                <div className={`flex items-center justify-between border-b pb-3 ${
+                  isDarkMode ? 'border-[#262A28]' : 'border-[#F4EFEA]'
+                }`}>
                   <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-full bg-[#FAF4E8] flex items-center justify-center text-[#C5A059]">
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[#C5A059] ${
+                      isDarkMode ? 'bg-[#24211A]' : 'bg-[#FAF4E8]'
+                    }`}>
                       <Activity className="w-3.5 h-3.5" />
                     </div>
                     <div>
                       <h3
-                        className="text-base font-normal uppercase tracking-wider text-[#141615]"
+                        className={`text-base font-normal uppercase tracking-wider ${
+                          isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                        }`}
                         style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                       >
                         Recent Activity Log
                       </h3>
-                      <p className="text-[11px] text-[#6E6B65]">Live catalog telemetry and system changes</p>
+                      <p className={`text-[11px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>
+                        Live catalog telemetry and system changes
+                      </p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono uppercase bg-[#F4EFEA] text-[#6E6B65] px-2 py-0.5">
+                  <span className={`text-[10px] font-mono uppercase px-2 py-0.5 ${
+                    isDarkMode ? 'bg-[#242826] text-[#A8A49C]' : 'bg-[#F4EFEA] text-[#6E6B65]'
+                  }`}>
                     Real-time
                   </span>
                 </div>
 
-                <div className="space-y-3 divide-y divide-[#FAF8F5]">
+                <div className={`space-y-3 divide-y ${isDarkMode ? 'divide-[#222524]' : 'divide-[#FAF8F5]'}`}>
                   <div className="pt-2 flex items-start justify-between gap-3 text-xs">
                     <div className="flex items-start gap-2.5">
                       <span className="w-2 h-2 rounded-full bg-[#8C9A86] mt-1.5 shrink-0" />
                       <div>
-                        <p className="font-medium text-[#141615]">Master Catalog Synced</p>
-                        <p className="text-[#6E6B65] text-[11px]">10 luxury bedding and natural flax drapery pieces active.</p>
+                        <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>Master Catalog Synced</p>
+                        <p className={`text-[11px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>10 luxury bedding and natural flax drapery pieces active.</p>
                       </div>
                     </div>
                     <span className="text-[10px] font-mono text-[#8C9A86] shrink-0">Just now</span>
@@ -827,41 +1039,43 @@ export const AdminDashboard: React.FC = () => {
                     <div className="flex items-start gap-2.5">
                       <span className="w-2 h-2 rounded-full bg-[#C5A059] mt-1.5 shrink-0" />
                       <div>
-                        <p className="font-medium text-[#141615]">Supabase PostgreSQL Verified</p>
-                        <p className="text-[#6E6B65] text-[11px]">Tables `products`, `categories`, `admin_users` synchronized.</p>
+                        <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>Supabase PostgreSQL Verified</p>
+                        <p className={`text-[11px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>Tables `products`, `categories`, `admin_users` synchronized.</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">2m ago</span>
+                    <span className={`text-[10px] font-mono shrink-0 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>2m ago</span>
                   </div>
 
                   <div className="pt-2.5 flex items-start justify-between gap-3 text-xs">
                     <div className="flex items-start gap-2.5">
                       <span className="w-2 h-2 rounded-full bg-[#8C9A86] mt-1.5 shrink-0" />
                       <div>
-                        <p className="font-medium text-[#141615]">Admin Identity Authenticated</p>
-                        <p className="text-[#6E6B65] text-[11px]">Master Superadmin session granted to boskilimited@boskilimited.info.</p>
+                        <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>Admin Identity Authenticated</p>
+                        <p className={`text-[11px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>Master Superadmin session granted to boskilimited@boskilimited.info.</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">15m ago</span>
+                    <span className={`text-[10px] font-mono shrink-0 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>15m ago</span>
                   </div>
 
                   <div className="pt-2.5 flex items-start justify-between gap-3 text-xs">
                     <div className="flex items-start gap-2.5">
                       <span className="w-2 h-2 rounded-full bg-[#C5A059] mt-1.5 shrink-0" />
                       <div>
-                        <p className="font-medium text-[#141615]">CDN Asset Engine Ready</p>
-                        <p className="text-[#6E6B65] text-[11px]">Optimized image pipeline supporting WebP, AVIF & JPEG uploads.</p>
+                        <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>CDN Asset Engine Ready</p>
+                        <p className={`text-[11px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>Optimized image pipeline supporting WebP, AVIF & JPEG uploads.</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">30m ago</span>
+                    <span className={`text-[10px] font-mono shrink-0 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>30m ago</span>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-[#F4EFEA] flex justify-between items-center text-[11px]">
-                  <span className="text-[#6E6B65]">Showing latest atelier events</span>
+                <div className={`pt-3 border-t flex justify-between items-center text-[11px] ${
+                  isDarkMode ? 'border-[#262A28]' : 'border-[#F4EFEA]'
+                }`}>
+                  <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>Showing latest atelier events</span>
                   <button
                     onClick={() => setActiveTab('products')}
-                    className="text-[#C5A059] hover:text-[#9E7B3B] font-medium flex items-center gap-1 transition-colors"
+                    className="text-[#C5A059] hover:text-[#D8B468] font-medium flex items-center gap-1 transition-colors cursor-pointer"
                   >
                     <span>Manage Catalog</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -870,55 +1084,79 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* Right Column (1/3): Quick Insights / System Status */}
-              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
-                <div className="flex items-center justify-between border-b border-[#F4EFEA] pb-3">
+              <div className={`border p-5 sm:p-6 transition-colors space-y-4 ${
+                isDarkMode
+                  ? 'bg-[#1A1D1C] border-[#2A2E2C] shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+                  : 'bg-white border-[#E5DFD7] shadow-[0_4px_20px_rgba(0,0,0,0.02)]'
+              }`}>
+                <div className={`flex items-center justify-between border-b pb-3 ${
+                  isDarkMode ? 'border-[#262A28]' : 'border-[#F4EFEA]'
+                }`}>
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-[#FAF4E8] flex items-center justify-center text-[#C5A059]">
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[#C5A059] ${
+                      isDarkMode ? 'bg-[#24211A]' : 'bg-[#FAF4E8]'
+                    }`}>
                       <Database className="w-3.5 h-3.5" />
                     </div>
                     <h3
-                      className="text-base font-normal uppercase tracking-wider text-[#141615]"
+                      className={`text-base font-normal uppercase tracking-wider ${
+                        isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                      }`}
                       style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                     >
                       System Status
                     </h3>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-mono border border-emerald-200">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-950/40 text-emerald-400 text-[10px] font-mono border border-emerald-800/60">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Operational
                   </span>
                 </div>
 
                 <div className="space-y-3 text-xs">
-                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
-                    <span className="text-[#6E6B65]">PostgreSQL Engine</span>
-                    <span className="font-mono font-medium text-[#141615]">Supabase (v15)</span>
+                  <div className={`flex items-center justify-between p-2.5 border transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A]' : 'bg-[#FAF8F5] border-[#E5DFD7]'
+                  }`}>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>PostgreSQL Engine</span>
+                    <span className={`font-mono font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>Supabase (v15)</span>
                   </div>
 
-                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
-                    <span className="text-[#6E6B65]">Media CDN Storage</span>
-                    <span className="font-mono font-medium text-emerald-700">Healthy (10MB Max)</span>
+                  <div className={`flex items-center justify-between p-2.5 border transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A]' : 'bg-[#FAF8F5] border-[#E5DFD7]'
+                  }`}>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>Media CDN Storage</span>
+                    <span className="font-mono font-medium text-emerald-400">Healthy (10MB Max)</span>
                   </div>
 
-                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
-                    <span className="text-[#6E6B65]">API Auth Guard</span>
-                    <span className="font-mono font-medium text-[#141615]">Bearer JWT (24h)</span>
+                  <div className={`flex items-center justify-between p-2.5 border transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A]' : 'bg-[#FAF8F5] border-[#E5DFD7]'
+                  }`}>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>API Auth Guard</span>
+                    <span className={`font-mono font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>Bearer JWT (24h)</span>
                   </div>
 
-                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
-                    <span className="text-[#6E6B65]">Master Loom Stock</span>
+                  <div className={`flex items-center justify-between p-2.5 border transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A]' : 'bg-[#FAF8F5] border-[#E5DFD7]'
+                  }`}>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>Master Loom Stock</span>
                     <span className="font-mono font-medium text-[#8C9A86]">100% In Stock</span>
                   </div>
 
-                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
-                    <span className="text-[#6E6B65]">Inquiry Queue</span>
-                    <span className="font-mono font-medium text-[#141615]">0 Pending</span>
+                  <div className={`flex items-center justify-between p-2.5 border transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A]' : 'bg-[#FAF8F5] border-[#E5DFD7]'
+                  }`}>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}>Inquiry Queue</span>
+                    <span className={`font-mono font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>0 Pending</span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#FAF4E8] border border-[#E8D8B8] text-[11px] text-[#9E7B3B] space-y-1">
+                <div className={`p-3 border text-[11px] space-y-1 transition-colors ${
+                  isDarkMode
+                    ? 'bg-[#24211A] border-[#4A3D22] text-[#D8B468]'
+                    : 'bg-[#FAF4E8] border-[#E8D8B8] text-[#9E7B3B]'
+                }`}>
                   <p className="font-semibold uppercase tracking-wider text-[10px]">Atelier Registry</p>
-                  <p className="text-[#6E6B65] text-[10.5px]">Unit 4, Balmoral Trading Estate, 113 River Road, Barking, IG11 0EG</p>
+                  <p className={`text-[10.5px] ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#6E6B65]'}`}>Unit 4, Balmoral Trading Estate, 113 River Road, Barking, IG11 0EG</p>
                 </div>
               </div>
             </div>
@@ -934,8 +1172,10 @@ export const AdminDashboard: React.FC = () => {
                   Catalog Inventory
                 </span>
                 <h2
-                  className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className={`text-xl sm:text-2xl font-normal uppercase tracking-wider ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                  }`}
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
                 >
                   Product Management ({filteredProducts.length})
                 </h2>
@@ -946,32 +1186,48 @@ export const AdminDashboard: React.FC = () => {
                   resetForm();
                   setIsCreateModalOpen(true);
                 }}
-                className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
+                className={`w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 text-label-caps tracking-widest uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+                  isDarkMode
+                    ? 'bg-[#C5A059] hover:bg-[#D8B468] text-black font-semibold'
+                    : 'bg-[#141615] hover:bg-black text-white'
+                }`}
               >
-                <Plus className="w-4 h-4 text-[#d7c7b3]" />
+                <Plus className={`w-4 h-4 ${isDarkMode ? 'text-black' : 'text-[#C5A059]'}`} />
                 <span>Add New Product</span>
               </button>
             </div>
 
             {/* Filter & Search Bar — Stacked on Mobile */}
-            <div className="bg-white border border-[#c4c7c7] p-3 sm:p-4 flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-between">
+            <div className={`p-3 sm:p-4 border flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-between transition-colors ${
+              isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#E5DFD7]'
+            }`}>
               <div className="relative flex-1">
-                <Search className="w-4 h-4 text-[#444748] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+                  isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'
+                }`} />
                 <input
                   type="text"
                   placeholder="Search products by title or category..."
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 border border-[#c4c7c7] text-body-sm text-[#1a1c1b] focus:border-[#1a1c1b] outline-none"
+                  className={`w-full pl-9 pr-4 py-2 border text-body-sm outline-none transition-colors ${
+                    isDarkMode
+                      ? 'bg-[#151716] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                      : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-[#141615] placeholder-[#8C8C8C]'
+                  }`}
                 />
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-                <label className="text-label-caps text-[#444748] shrink-0">Category:</label>
+                <label className={`text-label-caps shrink-0 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>Category:</label>
                 <select
                   value={productFilterCategory}
                   onChange={(e) => setProductFilterCategory(e.target.value)}
-                  className="w-full sm:w-auto border border-[#c4c7c7] px-3 py-2 text-body-sm text-[#1a1c1b] bg-white outline-none"
+                  className={`w-full sm:w-auto border px-3 py-2 text-body-sm outline-none transition-colors ${
+                    isDarkMode
+                      ? 'bg-[#151716] border-[#383D3A] text-white focus:border-[#C5A059]'
+                      : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-[#141615]'
+                  }`}
                 >
                   <option value="all">All Categories</option>
                   {categories.map((c) => (
@@ -986,50 +1242,64 @@ export const AdminDashboard: React.FC = () => {
             {/* Mobile Product Cards View (Visible only on screens < md) */}
             <div className="md:hidden space-y-3">
               {filteredProducts.map((p) => (
-                <div key={p.id} className="bg-white border border-[#c4c7c7] p-3.5 space-y-3">
+                <div key={p.id} className={`p-3.5 border space-y-3 transition-colors ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#E5DFD7]'
+                }`}>
                   <div className="flex gap-3 items-start">
                     <img
                       src={p.images[0] || 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af'}
                       alt={p.name}
-                      className="w-16 h-16 object-cover border border-[#c4c7c7] shrink-0"
+                      className={`w-16 h-16 object-cover border shrink-0 ${isDarkMode ? 'border-[#383D3A]' : 'border-[#C4C7C7]'}`}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-1">
-                        <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-[#efeeec] text-[#444748] truncate">
+                        <span className={`text-[10px] uppercase font-mono px-1.5 py-0.5 truncate ${
+                          isDarkMode ? 'bg-[#242826] text-[#A8A49C]' : 'bg-[#EFEEEC] text-[#444748]'
+                        }`}>
                           {p.category}
                         </span>
                         {p.featured && (
-                          <span className="text-[9px] uppercase font-mono px-1.5 py-0.5 bg-[#d7c7b3]/30 border border-[#d7c7b3] text-[#1a1c1b] shrink-0">
+                          <span className={`text-[9px] uppercase font-mono px-1.5 py-0.5 border shrink-0 ${
+                            isDarkMode ? 'bg-[#C5A059]/20 border-[#C5A059] text-[#E8D8B8]' : 'bg-[#d7c7b3]/30 border-[#d7c7b3] text-[#1a1c1b]'
+                          }`}>
                             Featured
                           </span>
                         )}
                       </div>
-                      <h4 className="font-medium text-[#1a1c1b] text-sm mt-1 truncate">{p.name}</h4>
-                      <p className="text-[11px] text-[#444748] line-clamp-1">{p.subtitle}</p>
+                      <h4 className={`font-medium text-sm mt-1 truncate ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>{p.name}</h4>
+                      <p className={`text-[11px] line-clamp-1 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{p.subtitle}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#efeeec] text-xs">
+                  <div className={`flex items-center justify-between pt-2 border-t text-xs ${
+                    isDarkMode ? 'border-[#262A28]' : 'border-[#EFEEEC]'
+                  }`}>
                     <div>
-                      <span className="font-mono font-medium text-sm text-[#1a1c1b]">${p.price}</span>
+                      <span className={`font-mono font-medium text-sm ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>${p.price}</span>
                       {p.originalPrice && (
-                        <span className="text-[11px] text-[#444748]/50 line-through ml-1.5">
+                        <span className={`text-[11px] line-through ml-1.5 ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#444748]/50'}`}>
                           ${p.originalPrice}
                         </span>
                       )}
                     </div>
-                    <span className="text-[11px] font-mono text-[#444748]">
+                    <span className={`text-[11px] font-mono ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                       {p.stockCount} units
                     </span>
                   </div>
 
                   {/* Touch Action Buttons */}
-                  <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#efeeec]">
+                  <div className={`flex items-center justify-between gap-2 pt-2 border-t ${
+                    isDarkMode ? 'border-[#262A28]' : 'border-[#EFEEEC]'
+                  }`}>
                     <button
                       onClick={() => handleToggleStatus(p.id, 'inStock')}
-                      className={`px-3 py-1.5 text-[11px] uppercase font-mono tracking-wider border transition-colors flex-1 text-center ${
+                      className={`px-3 py-1.5 text-[11px] uppercase font-mono tracking-wider border transition-colors flex-1 text-center cursor-pointer ${
                         p.inStock
-                          ? 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                          ? isDarkMode
+                            ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
+                            : 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                          : isDarkMode
+                          ? 'bg-red-950/40 border-red-800 text-red-300'
                           : 'bg-red-50 border-red-300 text-red-700'
                       }`}
                     >
@@ -1038,7 +1308,11 @@ export const AdminDashboard: React.FC = () => {
 
                     <button
                       onClick={() => openEditModal(p)}
-                      className="px-3 py-1.5 bg-[#efeeec] hover:bg-[#e3e2e0] text-[#1a1c1b] text-xs flex items-center justify-center gap-1 border border-[#c4c7c7] transition-colors"
+                      className={`px-3 py-1.5 text-xs flex items-center justify-center gap-1 border transition-colors cursor-pointer ${
+                        isDarkMode
+                          ? 'bg-[#242826] hover:bg-[#2E3330] text-[#FAF8F5] border-[#383D3A]'
+                          : 'bg-[#EFEEEC] hover:bg-[#E3E2E0] text-[#141615] border-[#C4C7C7]'
+                      }`}
                       title="Edit Product"
                     >
                       <Edit className="w-3.5 h-3.5" />
@@ -1047,7 +1321,11 @@ export const AdminDashboard: React.FC = () => {
 
                     <button
                       onClick={() => handleDeleteProduct(p.id, p.name)}
-                      className="p-2 hover:bg-red-50 text-[#444748] hover:text-red-600 border border-[#c4c7c7] transition-colors"
+                      className={`p-2 border transition-colors cursor-pointer ${
+                        isDarkMode
+                          ? 'hover:bg-red-950/40 text-[#A8A49C] hover:text-red-400 border-[#383D3A]'
+                          : 'hover:bg-red-50 text-[#444748] hover:text-red-600 border-[#C4C7C7]'
+                      }`}
                       title="Delete Product"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -1057,17 +1335,23 @@ export const AdminDashboard: React.FC = () => {
               ))}
 
               {filteredProducts.length === 0 && (
-                <div className="p-6 text-center text-[#444748] bg-white border border-[#c4c7c7] text-sm">
+                <div className={`p-6 text-center text-sm border ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C] text-[#A8A49C]' : 'bg-white border-[#C4C7C7] text-[#444748]'
+                }`}>
                   No products match your search query.
                 </div>
               )}
             </div>
 
             {/* Desktop Products Table (Visible on screens >= md) */}
-            <div className="hidden md:block bg-white border border-[#c4c7c7] overflow-x-auto">
+            <div className={`hidden md:block border overflow-x-auto transition-colors ${
+              isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#E5DFD7]'
+            }`}>
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#efeeec] border-b border-[#c4c7c7] text-label-caps text-[#444748]">
+                  <tr className={`border-b text-label-caps transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A] text-[#A8A49C]' : 'bg-[#EFEEEC] border-[#C4C7C7] text-[#444748]'
+                  }`}>
                     <th className="p-4">Item</th>
                     <th className="p-4">Category</th>
                     <th className="p-4">Price</th>
@@ -1076,35 +1360,41 @@ export const AdminDashboard: React.FC = () => {
                     <th className="p-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#efeeec] text-body-sm">
+                <tbody className={`divide-y text-body-sm transition-colors ${
+                  isDarkMode ? 'divide-[#222524]' : 'divide-[#EFEEEC]'
+                }`}>
                   {filteredProducts.map((p) => (
-                    <tr key={p.id} className="hover:bg-[#faf9f7] transition-colors">
+                    <tr key={p.id} className={`transition-colors ${
+                      isDarkMode ? 'hover:bg-[#202422]' : 'hover:bg-[#FAF9F7]'
+                    }`}>
                       <td className="p-4 flex items-center gap-3">
                         <img
                           src={p.images[0] || 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af'}
                           alt={p.name}
-                          className="w-12 h-12 object-cover border border-[#c4c7c7] shrink-0"
+                          className={`w-12 h-12 object-cover border shrink-0 ${
+                            isDarkMode ? 'border-[#383D3A]' : 'border-[#C4C7C7]'
+                          }`}
                         />
                         <div>
-                          <div className="font-medium text-[#1a1c1b]">{p.name}</div>
-                          <div className="text-body-xs text-[#444748] line-clamp-1">{p.subtitle}</div>
+                          <div className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>{p.name}</div>
+                          <div className={`text-body-xs line-clamp-1 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{p.subtitle}</div>
                         </div>
                       </td>
 
-                      <td className="p-4 uppercase font-mono text-body-xs text-[#444748]">
+                      <td className={`p-4 uppercase font-mono text-body-xs ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {p.category}
                       </td>
 
-                      <td className="p-4 font-mono font-medium text-[#1a1c1b]">
+                      <td className={`p-4 font-mono font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}`}>
                         ${p.price}
                         {p.originalPrice && (
-                          <span className="text-body-xs text-[#444748]/50 line-through ml-2">
+                          <span className={`text-body-xs line-through ml-2 ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#444748]/50'}`}>
                             ${p.originalPrice}
                           </span>
                         )}
                       </td>
 
-                      <td className="p-4 font-mono text-body-xs">
+                      <td className={`p-4 font-mono text-body-xs ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {p.stockCount} units
                       </td>
 
@@ -1112,16 +1402,22 @@ export const AdminDashboard: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleToggleStatus(p.id, 'inStock')}
-                            className={`px-2 py-0.5 text-[10px] uppercase font-mono tracking-wider border ${
+                            className={`px-2 py-0.5 text-[10px] uppercase font-mono tracking-wider border cursor-pointer ${
                               p.inStock
-                                ? 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                                ? isDarkMode
+                                  ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
+                                  : 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                                : isDarkMode
+                                ? 'bg-red-950/40 border-red-800 text-red-300'
                                 : 'bg-red-50 border-red-300 text-red-700'
                             }`}
                           >
                             {p.inStock ? 'In Stock' : 'Out of Stock'}
                           </button>
                           {p.featured && (
-                            <span className="px-2 py-0.5 text-[10px] uppercase font-mono tracking-wider bg-[#d7c7b3]/30 border border-[#d7c7b3] text-[#1a1c1b]">
+                            <span className={`px-2 py-0.5 text-[10px] uppercase font-mono tracking-wider border ${
+                              isDarkMode ? 'bg-[#C5A059]/20 border-[#C5A059] text-[#E8D8B8]' : 'bg-[#d7c7b3]/30 border-[#d7c7b3] text-[#1a1c1b]'
+                            }`}>
                               Featured
                             </span>
                           )}
@@ -1132,14 +1428,18 @@ export const AdminDashboard: React.FC = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => openEditModal(p)}
-                            className="p-1.5 hover:bg-[#efeeec] text-[#444748] hover:text-black transition-colors"
+                            className={`p-1.5 transition-colors cursor-pointer ${
+                              isDarkMode ? 'hover:bg-[#242826] text-[#A8A49C] hover:text-[#FAF8F5]' : 'hover:bg-[#EFEEEC] text-[#444748] hover:text-black'
+                            }`}
                             title="Edit Product"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(p.id, p.name)}
-                            className="p-1.5 hover:bg-red-50 text-[#444748] hover:text-red-600 transition-colors"
+                            className={`p-1.5 transition-colors cursor-pointer ${
+                              isDarkMode ? 'hover:bg-red-950/40 text-[#A8A49C] hover:text-red-400' : 'hover:bg-red-50 text-[#444748] hover:text-red-600'
+                            }`}
                             title="Delete Product"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -1150,7 +1450,7 @@ export const AdminDashboard: React.FC = () => {
                   ))}
                   {filteredProducts.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="p-8 text-center text-[#444748]">
+                      <td colSpan={6} className={`p-8 text-center ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         No products match your search query.
                       </td>
                     </tr>
@@ -1169,23 +1469,31 @@ export const AdminDashboard: React.FC = () => {
                 Asset Engine
               </span>
               <h2
-                className="text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                className={`text-2xl font-normal uppercase tracking-wider ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                }`}
+                style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
               >
                 Image Upload & Media Library
               </h2>
             </div>
 
             {/* Uploader Box */}
-            <div className="bg-white border-2 border-dashed border-[#c4c7c7] p-4 sm:p-8 text-center">
+            <div className={`border-2 border-dashed p-4 sm:p-8 text-center transition-colors ${
+              isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A]' : 'bg-white border-[#C4C7C7]'
+            }`}>
               <div className="max-w-md mx-auto space-y-4">
-                <div className="w-12 h-12 bg-[#efeeec] flex items-center justify-center mx-auto">
-                  <Upload className="w-6 h-6 text-[#1a1c1b]" />
+                <div className={`w-12 h-12 flex items-center justify-center mx-auto transition-colors ${
+                  isDarkMode ? 'bg-[#242826] text-[#C5A059]' : 'bg-[#EFEEEC] text-[#141615]'
+                }`}>
+                  <Upload className="w-6 h-6" />
                 </div>
-                <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b]">
+                <h3 className={`text-base sm:text-title-md uppercase tracking-wider ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                }`}>
                   Upload Atelier Imagery
                 </h3>
-                <p className="text-body-xs text-[#444748] font-light">
+                <p className={`text-body-xs font-light ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                   Select high-resolution product photography (JPEG, PNG, WEBP, AVIF). Uploads are stored on the local backend CDN and instantly available across products.
                 </p>
 
@@ -1200,7 +1508,11 @@ export const AdminDashboard: React.FC = () => {
                 <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 pt-2">
                   <label
                     htmlFor="image-file-input"
-                    className="w-full sm:w-auto px-6 py-2.5 bg-[#efeeec] hover:bg-[#e3e2e0] text-[#1a1c1b] text-label-caps tracking-widest uppercase cursor-pointer transition-colors border border-[#c4c7c7] text-center"
+                    className={`w-full sm:w-auto px-6 py-2.5 text-label-caps tracking-widest uppercase cursor-pointer transition-colors border text-center ${
+                      isDarkMode
+                        ? 'bg-[#242826] hover:bg-[#2E3330] text-white border-[#383D3A]'
+                        : 'bg-[#EFEEEC] hover:bg-[#E3E2E0] text-[#141615] border-[#C4C7C7]'
+                    }`}
                   >
                     Select File
                   </label>
@@ -1210,23 +1522,27 @@ export const AdminDashboard: React.FC = () => {
                       type="button"
                       onClick={handleUploadImage}
                       disabled={isUploading}
-                      className="w-full sm:w-auto px-6 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
+                      className={`w-full sm:w-auto px-6 py-2.5 text-label-caps tracking-widest uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+                        isDarkMode
+                          ? 'bg-[#C5A059] hover:bg-[#D8B468] text-black font-semibold'
+                          : 'bg-[#141615] text-white hover:bg-black'
+                      }`}
                     >
-                      <Check className="w-4 h-4 text-[#d7c7b3]" />
+                      <Check className={`w-4 h-4 ${isDarkMode ? 'text-black' : 'text-[#d7c7b3]'}`} />
                       <span>{isUploading ? 'Uploading...' : 'Confirm Upload'}</span>
                     </button>
                   )}
                 </div>
 
                 {uploadPreview && (
-                  <div className="mt-4 pt-4 border-t border-[#efeeec]">
-                    <span className="text-label-caps text-[#444748] block mb-2">Upload Preview</span>
+                  <div className={`mt-4 pt-4 border-t ${isDarkMode ? 'border-[#282C2A]' : 'border-[#efeeec]'}`}>
+                    <span className={`text-label-caps block mb-2 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>Upload Preview</span>
                     <img
                       src={uploadPreview}
                       alt="Preview"
-                      className="w-40 h-28 sm:w-48 sm:h-36 object-cover mx-auto border border-[#c4c7c7]"
+                      className={`w-40 h-28 sm:w-48 sm:h-36 object-cover mx-auto border ${isDarkMode ? 'border-[#383D3A]' : 'border-[#c4c7c7]'}`}
                     />
-                    <span className="text-body-xs font-mono text-[#444748] mt-1 block truncate">
+                    <span className={`text-body-xs font-mono mt-1 block truncate ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                       {uploadFile?.name} ({Math.round((uploadFile?.size || 0) / 1024)} KB)
                     </span>
                   </div>
@@ -1236,16 +1552,22 @@ export const AdminDashboard: React.FC = () => {
 
             {/* Media Gallery */}
             <div>
-              <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b] mb-3 sm:mb-4">
+              <h3 className={`text-base sm:text-title-md uppercase tracking-wider mb-3 sm:mb-4 ${
+                isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+              }`}>
                 Media Library ({mediaList.length} Images)
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-4">
                 {mediaList.map((media) => (
                   <div
                     key={media.filename}
-                    className="bg-white border border-[#c4c7c7] overflow-hidden group hover:border-[#1a1c1b] transition-all"
+                    className={`border overflow-hidden group transition-all ${
+                      isDarkMode
+                        ? 'bg-[#1A1D1C] border-[#2A2E2C] hover:border-[#C5A059]'
+                        : 'bg-white border-[#c4c7c7] hover:border-[#1a1c1b]'
+                    }`}
                   >
-                    <div className="aspect-square relative overflow-hidden bg-[#efeeec]">
+                    <div className={`aspect-square relative overflow-hidden ${isDarkMode ? 'bg-[#151716]' : 'bg-[#efeeec]'}`}>
                       <img
                         src={media.url}
                         alt={media.filename}
@@ -1253,12 +1575,16 @@ export const AdminDashboard: React.FC = () => {
                       />
                     </div>
                     <div className="p-2 space-y-1">
-                      <div className="text-[10px] font-mono text-[#444748] truncate" title={media.filename}>
+                      <div className={`text-[10px] font-mono truncate ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`} title={media.filename}>
                         {media.filename}
                       </div>
                       <button
                         onClick={() => copyToClipboard(media.url)}
-                        className="w-full py-1 text-[10px] bg-[#efeeec] hover:bg-[#1a1c1b] hover:text-white transition-colors uppercase font-mono tracking-wider flex items-center justify-center gap-1"
+                        className={`w-full py-1 text-[10px] transition-colors uppercase font-mono tracking-wider flex items-center justify-center gap-1 cursor-pointer ${
+                          isDarkMode
+                            ? 'bg-[#242826] hover:bg-[#C5A059] hover:text-black text-white'
+                            : 'bg-[#efeeec] hover:bg-[#1a1c1b] hover:text-white text-[#141615]'
+                        }`}
                       >
                         <Copy className="w-3 h-3" />
                         <span>{copiedUrl === media.url ? 'Copied' : 'Copy URL'}</span>
@@ -1267,7 +1593,9 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 ))}
                 {mediaList.length === 0 && (
-                  <div className="col-span-full p-8 text-center text-[#444748] bg-white border border-[#c4c7c7] text-sm">
+                  <div className={`col-span-full p-8 text-center border text-sm ${
+                    isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C] text-[#A8A49C]' : 'bg-white border-[#c4c7c7] text-[#444748]'
+                  }`}>
                     No images uploaded yet. Upload your first product photograph above.
                   </div>
                 )}
@@ -1284,16 +1612,22 @@ export const AdminDashboard: React.FC = () => {
                 Taxonomy & Groupings
               </span>
               <h2
-                className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                className={`text-xl sm:text-2xl font-normal uppercase tracking-wider ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                }`}
+                style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
               >
                 Category Management
               </h2>
             </div>
 
             {/* Add Category Form */}
-            <form onSubmit={handleCreateCategory} className="bg-white border border-[#c4c7c7] p-4 sm:p-6 max-w-xl">
-              <h3 className="text-base sm:text-title-md uppercase tracking-wider text-[#1a1c1b] mb-3 sm:mb-4">
+            <form onSubmit={handleCreateCategory} className={`border p-4 sm:p-6 max-w-xl transition-colors ${
+              isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#c4c7c7]'
+            }`}>
+              <h3 className={`text-base sm:text-title-md uppercase tracking-wider mb-3 sm:mb-4 ${
+                isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+              }`}>
                 Add New Category
               </h3>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -1303,41 +1637,65 @@ export const AdminDashboard: React.FC = () => {
                   placeholder="e.g. Silk Quilts, Loungewear, Cashmere"
                   value={newCategoryName}
                   onChange={(e) => setNewCategoryName(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-[#c4c7c7] text-body-sm text-[#1a1c1b] outline-none focus:border-[#1a1c1b]"
+                  className={`flex-1 px-4 py-2 border text-body-sm outline-none transition-colors ${
+                    isDarkMode
+                      ? 'bg-[#151716] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                      : 'bg-white border-[#c4c7c7] text-[#1a1c1b] focus:border-[#1a1c1b]'
+                  }`}
                 />
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-6 py-2 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
+                  className={`w-full sm:w-auto px-6 py-2 text-label-caps tracking-widest uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] hover:bg-[#D8B468] text-black font-semibold'
+                      : 'bg-[#1a1c1b] text-white hover:bg-black'
+                  }`}
                 >
-                  <Plus className="w-4 h-4 text-[#d7c7b3]" />
+                  <Plus className={`w-4 h-4 ${isDarkMode ? 'text-black' : 'text-[#d7c7b3]'}`} />
                   <span>Create</span>
                 </button>
               </div>
             </form>
 
             {/* Categories Table */}
-            <div className="bg-white border border-[#c4c7c7] max-w-2xl overflow-x-auto">
+            <div className={`border max-w-2xl overflow-x-auto transition-colors ${
+              isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#c4c7c7]'
+            }`}>
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-[#efeeec] border-b border-[#c4c7c7] text-label-caps text-[#444748]">
+                  <tr className={`border-b text-label-caps transition-colors ${
+                    isDarkMode ? 'bg-[#161817] border-[#282C2A] text-[#A8A49C]' : 'bg-[#efeeec] border-[#c4c7c7] text-[#444748]'
+                  }`}>
                     <th className="p-3 sm:p-4">Category Name</th>
                     <th className="p-3 sm:p-4">Active Items</th>
                     <th className="p-3 sm:p-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#efeeec] text-body-sm">
+                <tbody className={`divide-y text-body-sm transition-colors ${
+                  isDarkMode ? 'divide-[#222524]' : 'divide-[#efeeec]'
+                }`}>
                   {categories.map((c) => (
-                    <tr key={c.category} className="hover:bg-[#faf9f7] transition-colors">
-                      <td className="p-3 sm:p-4 uppercase font-mono font-medium text-[#1a1c1b] text-xs sm:text-sm">
+                    <tr key={c.category} className={`transition-colors ${
+                      isDarkMode ? 'hover:bg-[#202422]' : 'hover:bg-[#faf9f7]'
+                    }`}>
+                      <td className={`p-3 sm:p-4 uppercase font-mono font-medium text-xs sm:text-sm ${
+                        isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
+                      }`}>
                         {c.category}
                       </td>
-                      <td className="p-3 sm:p-4 font-mono text-[#444748] text-xs sm:text-sm">
+                      <td className={`p-3 sm:p-4 font-mono text-xs sm:text-sm ${
+                        isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'
+                      }`}>
                         {c.count} products
                       </td>
                       <td className="p-3 sm:p-4 text-right">
                         <button
                           onClick={() => handleDeleteCategory(c.category)}
-                          className="p-2 hover:bg-red-50 text-[#444748] hover:text-red-600 transition-colors"
+                          className={`p-2 transition-colors cursor-pointer ${
+                            isDarkMode
+                              ? 'hover:bg-red-950/40 text-[#A8A49C] hover:text-red-400'
+                              : 'hover:bg-red-50 text-[#444748] hover:text-red-600'
+                          }`}
                           title="Remove Category"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1360,8 +1718,10 @@ export const AdminDashboard: React.FC = () => {
                   Client Sanctuary
                 </span>
                 <h2
-                  className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className={`text-xl sm:text-2xl font-normal uppercase tracking-wider ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
+                  }`}
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
                 >
                   Client Inquiries & Contact Forms ({filteredInquiries.length})
                 </h2>
@@ -1373,9 +1733,13 @@ export const AdminDashboard: React.FC = () => {
                   <button
                     key={type}
                     onClick={() => setInquiryFilter(type)}
-                    className={`px-3 py-1 text-[11px] sm:text-label-caps uppercase font-mono transition-colors border ${
+                    className={`px-3 py-1 text-[11px] sm:text-label-caps uppercase font-mono transition-colors border cursor-pointer ${
                       inquiryFilter === type
-                        ? 'bg-[#1a1c1b] text-white border-[#1a1c1b]'
+                        ? isDarkMode
+                          ? 'bg-[#C5A059] text-black border-[#C5A059] font-medium'
+                          : 'bg-[#1a1c1b] text-white border-[#1a1c1b]'
+                        : isDarkMode
+                        ? 'bg-[#1A1D1C] text-[#A8A49C] border-[#2E3230] hover:bg-[#242826]'
                         : 'bg-white text-[#444748] border-[#c4c7c7] hover:bg-[#efeeec]'
                     }`}
                   >
@@ -1388,25 +1752,29 @@ export const AdminDashboard: React.FC = () => {
             {/* Inquiries Stream */}
             <div className="space-y-3 sm:space-y-4">
               {filteredInquiries.map((inq) => (
-                <div key={inq.id} className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6 space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#efeeec] pb-2.5 sm:pb-3">
+                <div key={inq.id} className={`border p-3.5 sm:p-6 space-y-3 transition-colors ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-white border-[#c4c7c7]'
+                }`}>
+                  <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2.5 sm:pb-3 ${
+                    isDarkMode ? 'border-[#262A28]' : 'border-[#efeeec]'
+                  }`}>
                     <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
                       <span
                         className={`text-[9.5px] font-mono uppercase px-1.5 py-0.5 border shrink-0 ${
                           inq.type === 'bespoke'
-                            ? 'bg-purple-50 text-purple-800 border-purple-200'
+                            ? isDarkMode ? 'bg-purple-950/40 text-purple-300 border-purple-800' : 'bg-purple-50 text-purple-800 border-purple-200'
                             : inq.type === 'trade'
-                            ? 'bg-blue-50 text-blue-800 border-blue-200'
-                            : 'bg-amber-50 text-amber-800 border-amber-200'
+                            ? isDarkMode ? 'bg-blue-950/40 text-blue-300 border-blue-800' : 'bg-blue-50 text-blue-800 border-blue-200'
+                            : isDarkMode ? 'bg-amber-950/40 text-amber-300 border-amber-800' : 'bg-amber-50 text-amber-800 border-amber-200'
                         }`}
                       >
                         {inq.type}
                       </span>
-                      <h4 className="text-sm sm:text-title-sm font-medium text-[#1a1c1b]">{inq.title}</h4>
+                      <h4 className={`text-sm sm:text-title-sm font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'}`}>{inq.title}</h4>
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
-                      <span className="text-[11px] font-mono text-[#444748]">
+                      <span className={`text-[11px] font-mono ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {new Date(inq.submittedAt).toLocaleDateString()}
                       </span>
                       <select
@@ -1419,10 +1787,10 @@ export const AdminDashboard: React.FC = () => {
                         }
                         className={`text-[10px] font-mono uppercase px-2 py-1 border outline-none ${
                           inq.status === 'resolved'
-                            ? 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
+                            ? isDarkMode ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-[#8c9a86]/20 border-[#8c9a86] text-[#2c3d26]'
                             : inq.status === 'contacted'
-                            ? 'bg-[#d7c7b3]/30 border-[#d7c7b3] text-[#1a1c1b]'
-                            : 'bg-red-50 border-red-300 text-red-700'
+                            ? isDarkMode ? 'bg-[#C5A059]/20 border-[#C5A059] text-[#E8D8B8]' : 'bg-[#d7c7b3]/30 border-[#d7c7b3] text-[#1a1c1b]'
+                            : isDarkMode ? 'bg-red-950/40 border-red-800 text-red-300' : 'bg-red-50 border-red-300 text-red-700'
                         }`}
                       >
                         <option value="pending">Pending</option>
@@ -1432,14 +1800,16 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-body-sm text-[#444748] leading-relaxed">{inq.details}</p>
+                  <p className={`text-xs sm:text-body-sm leading-relaxed ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{inq.details}</p>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] sm:text-body-xs text-[#444748] border-t border-[#efeeec]">
+                  <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-[11px] sm:text-body-xs border-t ${
+                    isDarkMode ? 'border-[#262A28] text-[#A8A49C]' : 'border-[#efeeec] text-[#444748]'
+                  }`}>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                      <span>Sender: <strong className="text-[#1a1c1b]">{inq.sender}</strong></span>
+                      <span>Sender: <strong className={isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'}>{inq.sender}</strong></span>
                       <a
                         href={`mailto:${inq.email}?subject=Regarding your BOSKI LIMITED inquiry`}
-                        className="text-[#1a1c1b] underline hover:text-[#d7c7b3] break-all"
+                        className={`break-all ${isDarkMode ? 'text-[#C5A059] hover:underline' : 'text-[#1a1c1b] underline hover:text-[#d7c7b3]'}`}
                       >
                         {inq.email}
                       </a>
@@ -1449,7 +1819,9 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               ))}
               {filteredInquiries.length === 0 && (
-                <div className="bg-white border border-[#c4c7c7] p-6 sm:p-8 text-center text-[#444748] text-sm">
+                <div className={`border p-6 sm:p-8 text-center text-sm ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C] text-[#A8A49C]' : 'bg-white border-[#c4c7c7] text-[#444748]'
+                }`}>
                   No inquiries found under the selected filter.
                 </div>
               )}
@@ -1461,23 +1833,35 @@ export const AdminDashboard: React.FC = () => {
       {/* --- CREATE / EDIT PRODUCT MODAL --- */}
       {isCreateModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-sm overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/70 backdrop-blur-sm overflow-y-auto"
           onClick={() => setIsCreateModalOpen(false)}
         >
           <div
-            className="bg-[#faf9f7] w-full max-w-3xl border border-[#c4c7c7] shadow-2xl p-4 sm:p-6 md:p-8 max-h-[92vh] overflow-y-auto"
+            className={`w-full max-w-3xl border shadow-2xl p-4 sm:p-6 md:p-8 max-h-[92vh] overflow-y-auto transition-colors ${
+              isDarkMode
+                ? 'bg-[#181B1A] border-[#383D3A] text-[#FAF8F5]'
+                : 'bg-[#FAF9F7] border-[#C4C7C7] text-[#141615]'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-[#c4c7c7] pb-3 sm:pb-4 mb-4 sm:mb-6">
+            <div className={`flex items-center justify-between border-b pb-3 sm:pb-4 mb-4 sm:mb-6 ${
+              isDarkMode ? 'border-[#2A2E2C]' : 'border-[#C4C7C7]'
+            }`}>
               <h3
-                className="text-xl sm:text-2xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                className={`text-xl sm:text-2xl font-normal uppercase tracking-wider ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'
+                }`}
+                style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
               >
                 {editingProduct ? 'Edit Catalog Piece' : 'New Atelier Product'}
               </h3>
               <button
                 onClick={() => setIsCreateModalOpen(false)}
-                className="w-8 h-8 flex items-center justify-center text-[#444748] hover:text-black hover:bg-[#efeeec] transition-colors"
+                className={`w-8 h-8 flex items-center justify-center transition-colors cursor-pointer ${
+                  isDarkMode
+                    ? 'text-[#A8A49C] hover:text-white hover:bg-[#242826]'
+                    : 'text-[#444748] hover:text-black hover:bg-[#efeeec]'
+                }`}
                 title="Close"
               >
                 ✕
@@ -1487,23 +1871,31 @@ export const AdminDashboard: React.FC = () => {
             <form onSubmit={handleSaveProduct} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Product Title *</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Product Title *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Master Atelier Linen Duvet"
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black placeholder-[#8C8C8C]'
+                    }`}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Category *</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Category *</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black uppercase font-mono"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none uppercase font-mono transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black'
+                    }`}
                   >
                     {categories.map((c) => (
                       <option key={c.category} value={c.category}>
@@ -1515,64 +1907,88 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               <div className="space-y-1">
-                <label className="text-label-caps text-[#444748] block">Subtitle / Sub-heading</label>
+                <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Subtitle / Sub-heading</label>
                 <input
                   type="text"
                   value={formData.subtitle}
                   onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                   placeholder="e.g. 480-Thread-Count Egyptian Cotton Sateen"
-                  className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black"
+                  className={`w-full px-3 py-2 border text-body-sm outline-none transition-colors ${
+                    isDarkMode
+                      ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                      : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black placeholder-[#8C8C8C]'
+                  }`}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Price (USD) *</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Price (USD) *</label>
                   <input
                     type="number"
                     required
                     min="1"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black font-mono"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none font-mono transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black'
+                    }`}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Original Price (USD)</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Original Price (USD)</label>
                   <input
                     type="number"
                     value={formData.originalPrice}
                     onChange={(e) => setFormData({ ...formData, originalPrice: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black font-mono"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none font-mono transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black'
+                    }`}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Inventory Stock</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Inventory Stock</label>
                   <input
                     type="number"
                     value={formData.stockCount}
                     onChange={(e) => setFormData({ ...formData, stockCount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black font-mono"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none font-mono transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black'
+                    }`}
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-label-caps text-[#444748] block">Primary Image URL</label>
+                <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Primary Image URL</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={formData.imageUrl}
                     onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                     placeholder="/uploads/... or https://images.unsplash.com/..."
-                    className="flex-1 px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black font-mono"
+                    className={`flex-1 px-3 py-2 border text-body-sm outline-none font-mono transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black placeholder-[#8C8C8C]'
+                    }`}
                   />
                   <button
                     type="button"
                     onClick={() => setActiveTab('upload')}
-                    className="px-3 py-2 bg-[#efeeec] border border-[#c4c7c7] text-[11px] sm:text-label-caps uppercase text-[#1a1c1b] hover:bg-black hover:text-white transition-colors shrink-0"
+                    className={`px-3 py-2 text-[11px] sm:text-label-caps uppercase transition-colors shrink-0 border cursor-pointer ${
+                      isDarkMode
+                        ? 'bg-[#242826] border-[#383D3A] text-[#FAF8F5] hover:bg-[#C5A059] hover:text-black'
+                        : 'bg-[#efeeec] border-[#C4C7C7] text-[#141615] hover:bg-black hover:text-white'
+                    }`}
                   >
                     Open CDN
                   </button>
@@ -1581,43 +1997,57 @@ export const AdminDashboard: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Color Swatch Name</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Color Swatch Name</label>
                   <input
                     type="text"
                     value={formData.colorName}
                     onChange={(e) => setFormData({ ...formData, colorName: e.target.value })}
                     placeholder="e.g. Warm Ivory, Slate Grey"
-                    className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none"
+                    className={`w-full px-3 py-2 border text-body-sm outline-none transition-colors ${
+                      isDarkMode
+                        ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                        : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black placeholder-[#8C8C8C]'
+                    }`}
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-label-caps text-[#444748] block">Color Hex</label>
+                  <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Color Hex</label>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
                       value={formData.colorHex}
                       onChange={(e) => setFormData({ ...formData, colorHex: e.target.value })}
-                      className="w-10 h-10 border border-[#c4c7c7] p-1 bg-white cursor-pointer"
+                      className={`w-10 h-10 border p-1 cursor-pointer transition-colors ${
+                        isDarkMode ? 'border-[#383D3A] bg-[#141615]' : 'border-[#C4C7C7] bg-white'
+                      }`}
                     />
                     <input
                       type="text"
                       value={formData.colorHex}
                       onChange={(e) => setFormData({ ...formData, colorHex: e.target.value })}
-                      className="flex-1 px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm font-mono outline-none"
+                      className={`flex-1 px-3 py-2 border text-body-sm font-mono outline-none transition-colors ${
+                        isDarkMode
+                          ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059]'
+                          : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black'
+                      }`}
                     />
                   </div>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-label-caps text-[#444748] block">Description</label>
+                <label className={`text-label-caps block ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>Description</label>
                 <textarea
                   rows={3}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Editorial copy describing the textile drape, loom characteristics and feel..."
-                  className="w-full px-3 py-2 border border-[#c4c7c7] bg-white text-body-sm outline-none focus:border-black resize-none"
+                  className={`w-full px-3 py-2 border text-body-sm outline-none resize-none transition-colors ${
+                    isDarkMode
+                      ? 'bg-[#141615] border-[#383D3A] text-white focus:border-[#C5A059] placeholder-[#6E6B65]'
+                      : 'bg-white border-[#C4C7C7] text-[#141615] focus:border-black placeholder-[#8C8C8C]'
+                  }`}
                 />
               </div>
 
@@ -1627,9 +2057,9 @@ export const AdminDashboard: React.FC = () => {
                     type="checkbox"
                     checked={formData.inStock}
                     onChange={(e) => setFormData({ ...formData, inStock: e.target.checked })}
-                    className="w-4 h-4 accent-black"
+                    className={`w-4 h-4 ${isDarkMode ? 'accent-[#C5A059]' : 'accent-black'}`}
                   />
-                  <span>Mark as In Stock</span>
+                  <span className={isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}>Mark as In Stock</span>
                 </label>
 
                 <label className="flex items-center gap-2 text-body-sm cursor-pointer">
@@ -1637,23 +2067,33 @@ export const AdminDashboard: React.FC = () => {
                     type="checkbox"
                     checked={formData.isFeatured}
                     onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                    className="w-4 h-4 accent-black"
+                    className={`w-4 h-4 ${isDarkMode ? 'accent-[#C5A059]' : 'accent-black'}`}
                   />
-                  <span>Feature on Storefront Homepage</span>
+                  <span className={isDarkMode ? 'text-[#FAF8F5]' : 'text-[#141615]'}>Feature on Storefront Homepage</span>
                 </label>
               </div>
 
-              <div className="flex flex-col-reverse sm:flex-row justify-end gap-2.5 sm:gap-3 pt-4 border-t border-[#c4c7c7]">
+              <div className={`flex flex-col-reverse sm:flex-row justify-end gap-2.5 sm:gap-3 pt-4 border-t ${
+                isDarkMode ? 'border-[#2A2E2C]' : 'border-[#C4C7C7]'
+              }`}>
                 <button
                   type="button"
                   onClick={() => setIsCreateModalOpen(false)}
-                  className="w-full sm:w-auto px-6 py-3 sm:py-2.5 bg-[#efeeec] text-[#1a1c1b] text-label-caps uppercase tracking-wider hover:bg-[#e3e2e0] transition-colors text-center"
+                  className={`w-full sm:w-auto px-6 py-3 sm:py-2.5 text-label-caps uppercase tracking-wider transition-colors text-center cursor-pointer ${
+                    isDarkMode
+                      ? 'bg-[#242826] text-white hover:bg-[#2E3330]'
+                      : 'bg-[#EFEEEC] text-[#141615] hover:bg-[#E3E2E0]'
+                  }`}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 py-3 sm:py-2.5 bg-[#1a1c1b] text-white text-label-caps uppercase tracking-wider hover:bg-black transition-colors text-center"
+                  className={`w-full sm:w-auto px-8 py-3 sm:py-2.5 text-label-caps uppercase tracking-wider transition-colors text-center cursor-pointer ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] hover:bg-[#D8B468] text-black font-semibold'
+                      : 'bg-[#141615] text-white hover:bg-black'
+                  }`}
                 >
                   {editingProduct ? 'Save Modifications' : 'Create in Catalog'}
                 </button>
