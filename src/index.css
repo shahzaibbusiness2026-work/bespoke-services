@@ -378,3 +378,43 @@ a:hover .btn-cta-arrow {
 ::-webkit-scrollbar-thumb:hover {
   background: #747878;
 }
+
+/* Luxury brand text selection styling */
+::selection {
+  background-color: #d7c7b3;
+  color: #1a1c1b;
+}
+
+::-moz-selection {
+  background-color: #d7c7b3;
+  color: #1a1c1b;
+}
+
+/* Quiet luxury typography helpers */
+.font-serif-luxury {
+  font-family: "Cormorant Garamond", "Libre Caslon Text", Georgia, serif;
+  font-feature-settings: "liga" 1, "dlig" 1;
+}
+
+.font-editorial {
+  font-family: "Libre Caslon Text", Georgia, serif;
+}
+
+.font-sans-body {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: 0.012em;
+}
+
+.text-micro-caps {
+  font-family: "Tenor Sans", "DM Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 11px;
+}
+
+/* Luxury glassmorphism */
+.luxury-glass {
+  background: rgba(250, 249, 247, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
