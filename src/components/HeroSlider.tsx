@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useShop, PageView } from '../context/ShopContext';
 import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 
 interface Slide {
   id: string;
@@ -10,58 +11,47 @@ interface Slide {
   headline: string;
   subtitle: string;
   image: string;
-  primaryCta: { label: string; page: PageView; category?: string };
-  secondaryCta: { label: string; page: PageView; category?: string };
+  primaryCta: { label: string; page: PageView };
+  secondaryCta: { label: string; page: PageView };
 }
 
 const SLIDES: Slide[] = [
   {
-    id: 'slide-1',
-    tagline: 'BOSKI LIMITED · THE 2025 ATELIER',
-    headline: 'Elevate Your Everyday',
-    subtitle:
-      'Master-loom linens, Egyptian sateen, and bespoke architectural drapery crafted for quiet, restorative sanctuaries.',
-    image:
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1920&q=85',
-    primaryCta: { label: 'Shop New Arrivals', page: 'new-arrivals' },
-    secondaryCta: { label: 'Explore Bedding', page: 'bedding' },
-  },
-  {
-    id: 'slide-2',
-    tagline: 'ARCHITECTURAL DRAPERY & LIGHT',
-    headline: 'Belgian Linen Curtains',
-    subtitle:
-      'Heavyweight 280 GSM pure flax with tailored weighted hems that gently diffuse sunlight into calming, tonal layers.',
-    image:
-      'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=85',
-    primaryCta: { label: 'Explore Curtains', page: 'curtains' },
-    secondaryCta: { label: 'Bespoke Consultation', page: 'bespoke' },
-  },
-  {
-    id: 'slide-3',
-    tagline: 'HOTEL-GRADE SPA RITUALS',
-    headline: 'Aegean Cotton Towels',
-    subtitle:
-      'Spun from rare long-staple Turkish cotton at 700 GSM density for cloud-like absorbency and enduring softness.',
-    image:
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1920&q=85',
-    primaryCta: { label: 'Discover Towels', page: 'towels' },
-    secondaryCta: { label: 'View Complete Shop', page: 'shop' },
-  },
-  {
-    id: 'slide-4',
-    tagline: 'GENERATIONAL HEIRLOOM WEAVES',
+    id: 'slide-linen',
+    tagline: 'NORMANDY MARITIME FLAX · 185 GSM',
     headline: 'Stonewashed French Linen',
     subtitle:
-      'Harvested in Normandy, pre-washed for effortless suppleness that becomes softer and more luminous with every single laundering.',
+      'Cultivated in the misty coastal fields of Normandy. Woven on generational shuttle looms to breathe with quiet gravity and soften with every laundering cycle for decades of restorative sleep.',
     image:
-      'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1920&q=85',
-    primaryCta: { label: 'Explore Bedding Sets', page: 'bedding' },
-    secondaryCta: { label: 'Read Our Story', page: 'canvas' },
+      'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=2400&q=90',
+    primaryCta: { label: 'Discover Collection', page: 'bedding' },
+    secondaryCta: { label: 'Explore Craftsmanship', page: 'canvas' },
+  },
+  {
+    id: 'slide-drapery',
+    tagline: 'ARCHITECTURAL WINDOW TREATMENTS',
+    headline: 'Belgian Weighted Drapery',
+    subtitle:
+      'Heavyweight 280 GSM pure Flanders flax tailored with lead-weighted perimeter hems that sculpt daylight into quiet, acoustic calm.',
+    image:
+      'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=90',
+    primaryCta: { label: 'Discover Collection', page: 'curtains' },
+    secondaryCta: { label: 'Explore Craftsmanship', page: 'bespoke' },
+  },
+  {
+    id: 'slide-sateen',
+    tagline: 'EGYPTIAN GIZA 480TC SATEEN',
+    headline: 'Signature Core Sheet Suite',
+    subtitle:
+      'Silky single-ply combed staple yarns pre-washed in organic mountain water. A luminous touch designed to elevate your everyday sanctuary.',
+    image:
+      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=2400&q=90',
+    primaryCta: { label: 'Discover Collection', page: 'bedding' },
+    secondaryCta: { label: 'Explore Craftsmanship', page: 'canvas' },
   },
 ];
 
-const AUTOPLAY_INTERVAL = 6000;
+const AUTOPLAY_INTERVAL = 7000;
 
 interface HeroSliderProps {
   onSelectCategory?: (category: string) => void;
@@ -72,7 +62,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onSelectCategory }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Automatic slide rotation every 6 seconds - pauses on hover / user focus
+  // Subtle ambient rotation — pauses when user interacts
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -82,16 +72,8 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onSelectCategory }) => {
     return () => clearInterval(timer);
   }, [isPaused]);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
-  };
-
-  const handleCtaClick = (cta: Slide['primaryCta']) => {
-    setActivePage(cta.page);
+  const handleCtaClick = (page: PageView) => {
+    setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -99,20 +81,19 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onSelectCategory }) => {
 
   return (
     <section
-      id="hero-carousel-section"
+      id="hero-editorial-section"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative w-full h-[88vh] min-h-[620px] max-h-[920px] flex items-center justify-center overflow-hidden bg-[#121313] select-none"
-      aria-roledescription="carousel"
-      aria-label="BOSKI LIMITED Featured Collections"
+      className="relative w-full h-[88vh] min-h-[800px] max-h-[1100px] flex items-center justify-center overflow-hidden bg-[#0e100f] select-none"
+      aria-label="BOSKI LIMITED Editorial Atelier"
     >
-      {/* Background Image Carousel Layer with Smooth Pure Opacity Cross-Fade */}
+      {/* Background Image Layer with Cinematic Clarity & Reduced Dark Overlay */}
       {SLIDES.map((slide, index) => {
         const isActive = index === currentIndex;
         return (
           <div
             key={slide.id}
-            className={`absolute inset-0 z-0 transition-opacity duration-700 ease-in-out will-change-[opacity] ${
+            className={`absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out will-change-[opacity] ${
               isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
             aria-hidden={!isActive}
@@ -120,129 +101,89 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ onSelectCategory }) => {
             <img
               src={slide.image}
               alt={slide.headline}
-              className={`w-full h-full object-cover object-center transition-transform duration-10000 ease-out ${
+              className={`w-full h-full object-cover object-center transition-transform duration-[12000ms] ease-out ${
                 isActive ? 'scale-105' : 'scale-100'
               }`}
             />
-            {/* Editorial Tonal Vignette & Contrast Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30" />
+            {/* Lighter, nuanced tonal overlay letting textile texture and weave glow */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/15" />
+            <div className="absolute inset-0 bg-black/10 backdrop-contrast-[1.02]" />
           </div>
         );
       })}
 
-      {/* Hero Content Layer with Fluid Staggered Motion */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
+      {/* Hero Content Layer with Fluid Staggered Editorial Typography */}
+      <div className="relative z-10 text-center px-6 sm:px-8 max-w-4xl mx-auto flex flex-col items-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSlide.id}
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
-            {/* Brand Tagline Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/15 backdrop-blur-md border border-white/25 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              <span className="text-label-caps text-white tracking-[0.22em] text-[11px] uppercase font-medium">
+            {/* Luxury Provenance Tagline */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/35 backdrop-blur-md border border-white/20 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] animate-pulse" />
+              <span className="text-white tracking-[0.26em] text-[10.5px] uppercase font-mono font-medium">
                 {activeSlide.tagline}
               </span>
             </div>
 
-            {/* Main Headline */}
+            {/* Main Headline in Elegant Editorial Serif */}
             <h1
-              className="text-[40px] sm:text-[62px] md:text-[76px] leading-[48px] sm:leading-[70px] md:leading-[84px] tracking-[-0.02em] text-white font-normal mb-6 drop-shadow-sm max-w-3xl"
-              style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              className="text-[44px] sm:text-[68px] md:text-[84px] leading-[1.05] tracking-[-0.025em] text-[#FAF8F5] font-normal mb-6 drop-shadow-sm max-w-3xl"
+              style={{ fontFamily: "'Libre Caslon Text', 'Cormorant Garamond', Georgia, serif" }}
             >
               {activeSlide.headline}
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-body-lg sm:text-[19px] text-white/90 max-w-2xl mb-10 font-light leading-relaxed drop-shadow-sm min-h-[56px]">
+            {/* Emotional Narrative Description */}
+            <p className="text-base sm:text-lg md:text-[20px] text-[#FAF8F5]/90 max-w-2xl mb-10 font-light leading-relaxed drop-shadow-sm">
               {activeSlide.subtitle}
             </p>
 
-            {/* Action CTAs */}
+            {/* Luxury Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto">
               <button
-                id={`hero-primary-cta-${activeSlide.id}`}
-                onClick={() => handleCtaClick(activeSlide.primaryCta)}
-                className="group relative overflow-hidden bg-white text-[#000000] py-4 px-9 text-[13px] uppercase tracking-[0.16em] font-medium transition-colors duration-200 hover:bg-[#f4f3f1] active:opacity-85 shadow-lg flex items-center justify-center gap-2 cursor-pointer rounded-none border border-white"
+                id="hero-primary-cta"
+                onClick={() => handleCtaClick(activeSlide.primaryCta.page)}
+                className="group relative overflow-hidden bg-[#FAF8F5] text-[#141615] py-4 px-10 text-[12.5px] uppercase tracking-[0.2em] font-semibold transition-all duration-300 hover:bg-[#C9A227] hover:text-black active:scale-[0.98] shadow-xl flex items-center justify-center gap-2.5 cursor-pointer rounded-none border border-[#FAF8F5]"
               >
                 <span>{activeSlide.primaryCta.label}</span>
-                <span
-                  className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-1"
-                  style={{ fontVariationSettings: "'wght' 300" }}
-                >
-                  arrow_forward
-                </span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
 
               <button
-                id={`hero-secondary-cta-${activeSlide.id}`}
-                onClick={() => handleCtaClick(activeSlide.secondaryCta)}
-                className="group bg-transparent text-white py-4 px-9 text-[13px] uppercase tracking-[0.16em] font-medium hover:bg-white/15 transition-colors duration-200 border border-white/80 backdrop-blur-sm active:opacity-85 flex items-center justify-center gap-2 cursor-pointer rounded-none"
+                id="hero-secondary-cta"
+                onClick={() => handleCtaClick(activeSlide.secondaryCta.page)}
+                className="group bg-black/30 backdrop-blur-md text-[#FAF8F5] py-4 px-10 text-[12.5px] uppercase tracking-[0.2em] font-semibold hover:bg-white/15 transition-all duration-300 border border-white/70 active:scale-[0.98] flex items-center justify-center gap-2.5 cursor-pointer rounded-none"
               >
                 <span>{activeSlide.secondaryCta.label}</span>
-                <span
-                  className="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:translate-x-1"
-                  style={{ fontVariationSettings: "'wght' 300" }}
-                >
-                  arrow_forward
-                </span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Left/Right Accessible Navigation Arrows (Subtle Editorial Wireframe) */}
-      <button
-        type="button"
-        onClick={handlePrev}
-        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center text-white/70 hover:text-white bg-black/20 hover:bg-black/50 border border-white/20 transition-all cursor-pointer backdrop-blur-xs focus:outline-none"
-        aria-label="Previous slide"
-      >
-        <span className="material-symbols-outlined text-[24px]">chevron_left</span>
-      </button>
-
-      <button
-        type="button"
-        onClick={handleNext}
-        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 items-center justify-center text-white/70 hover:text-white bg-black/20 hover:bg-black/50 border border-white/20 transition-all cursor-pointer backdrop-blur-xs focus:outline-none"
-        aria-label="Next slide"
-      >
-        <span className="material-symbols-outlined text-[24px]">chevron_right</span>
-      </button>
-
-      {/* Bottom Slide Indicators with WCAG Autoplay Pause/Play Toggle */}
-      <div className="absolute bottom-8 inset-x-0 z-20 flex justify-center items-center gap-3 px-6">
-        <button
-          type="button"
-          onClick={() => setIsPaused(!isPaused)}
-          className="text-white/60 hover:text-white p-1 cursor-pointer transition-colors mr-1"
-          aria-label={isPaused ? "Resume carousel autoplay" : "Pause carousel autoplay"}
-          title={isPaused ? "Resume autoplay" : "Pause autoplay"}
-        >
-          <span className="material-symbols-outlined text-[16px]">
-            {isPaused ? 'play_arrow' : 'pause'}
-          </span>
-        </button>
-
+      {/* Subtle Editorial Progress Bars & Ambient Navigation (Zero Generic Slider Arrows) */}
+      <div className="absolute bottom-10 inset-x-0 z-20 flex justify-center items-center gap-3 px-6">
         {SLIDES.map((slide, index) => {
           const isActive = index === currentIndex;
           return (
             <button
               key={slide.id}
               onClick={() => setCurrentIndex(index)}
-              className="group p-2 cursor-pointer focus:outline-none"
+              className="group py-2 px-1 cursor-pointer focus:outline-none"
               aria-label={`Slide ${index + 1}: ${slide.headline}`}
             >
               <div
-                className={`h-1 transition-all duration-500 rounded-none ${
+                className={`h-[2px] transition-all duration-700 rounded-none ${
                   isActive
-                    ? 'w-10 bg-white shadow-sm'
-                    : 'w-4 bg-white/40 group-hover:bg-white/70'
+                    ? 'w-14 bg-[#C9A227] shadow-sm'
+                    : 'w-6 bg-white/35 group-hover:bg-white/70'
                 }`}
               />
             </button>

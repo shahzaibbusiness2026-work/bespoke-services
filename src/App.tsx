@@ -19,6 +19,12 @@ import { MyAccountPage } from './components/MyAccountPage';
 import { AdminDashboard } from './components/AdminDashboard';
 import { NewsletterSubscription } from './components/NewsletterSubscription';
 
+// Luxury Homepage Editorial Sections
+import { BrandPhilosophy } from './components/home/BrandPhilosophy';
+import { FeaturedCollectionsSection } from './components/home/FeaturedCollectionsSection';
+import { CraftsmanshipSection } from './components/home/CraftsmanshipSection';
+import { EditorialJournalSection } from './components/home/EditorialJournalSection';
+
 // Modals & Drawers
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { SizeGuideModal } from './components/SizeGuideModal';
@@ -61,28 +67,40 @@ export const MainLayout: React.FC = () => {
       {/* Page Routing — each navbar button opens its dedicated page */}
       {activePage === 'home' && (
         <main className="flex-1 animate-fadeIn">
-          {/* Hero Section — 85vh full-bleed bedroom image */}
+          {/* 1. Hero Section — 85-90vh cinematic full-screen editorial photography */}
           <HeroSlider onSelectCategory={handleSelectCategory} />
 
-          {/* Category Grid / Bento Grid */}
+          {/* 2. Brand Philosophy — Provenance, natural fibers, and quiet luxury */}
+          <BrandPhilosophy />
+
+          {/* 3. The Textile Sanctuary — Featured Bedding Suite + 7 luxury categories */}
           <CategoryGrid onSelectCategory={handleSelectCategory} />
 
-          {/* Product Catalog — filterable 4-column grid */}
+          {/* 4. Featured Collections — Curated seasonal suites */}
+          <FeaturedCollectionsSection />
+
+          {/* 5. Craftsmanship Storytelling — Loom techniques & fiber honesty */}
+          <CraftsmanshipSection />
+
+          {/* 6. Product Catalog — filterable 4-column grid */}
           <ProductCatalog
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
           />
 
-          {/* Lookbook Hotspots */}
+          {/* 7. Lookbook Hotspots — Interactive room view */}
           <LookbookHotspots />
 
-          {/* Limited Drop Countdown Banner */}
+          {/* 8. Editorial Journal — Magazine-grade essays on restful living */}
+          <EditorialJournalSection />
+
+          {/* 9. Limited Drop Countdown Banner */}
           <CountdownBanner />
 
-          {/* Customer Reviews */}
+          {/* 10. Customer Reviews */}
           <CustomerReviews />
 
-          {/* Instagram / UGC Feed */}
+          {/* 11. Instagram / UGC Visual Diary */}
           <InstagramFeed />
         </main>
       )}
