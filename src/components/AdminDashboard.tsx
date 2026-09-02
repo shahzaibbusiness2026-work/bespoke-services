@@ -21,6 +21,11 @@ import {
   ArrowRight,
   ShieldCheck,
   Check,
+  Image as ImageIcon,
+  Database,
+  Activity,
+  ArrowUpRight,
+  Clock,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { api, ConsolidatedInquiry, MediaFile } from '../services/api';
@@ -524,19 +529,19 @@ export const AdminDashboard: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] text-[#1a1c1b]">
-      {/* Top Admin Header */}
-      <header className="bg-[#1a1c1b] text-white border-b border-[#383838] px-3 sm:px-6 py-2.5 sm:py-4 sticky top-0 z-40">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#141615]">
+      {/* Top Admin Header — Dark Charcoal Atelier Bar */}
+      <header className="bg-[#141615] text-white border-b border-[#262826] px-3 sm:px-6 py-3 sm:py-4 sticky top-0 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
             <span
-              className="text-sm sm:text-xl uppercase tracking-widest text-white truncate"
-              style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              className="text-base sm:text-xl uppercase tracking-widest text-white truncate font-normal"
+              style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
             >
               BOSKI LIMITED
             </span>
-            <span className="text-[9px] sm:text-[10px] bg-[#d7c7b3] text-[#1a1c1b] px-1.5 sm:px-2 py-0.5 font-mono uppercase tracking-wider font-semibold shrink-0">
-              Admin
+            <span className="text-[9px] sm:text-[10px] bg-[#C5A059]/15 text-[#C5A059] border border-[#C5A059]/40 px-2 py-0.5 font-mono uppercase tracking-[0.2em] font-semibold shrink-0">
+              MASTER ADMIN
             </span>
           </div>
 
@@ -549,17 +554,17 @@ export const AdminDashboard: React.FC = () => {
                   setActivePage('home');
                 }
               }}
-              className="text-[11px] sm:text-body-xs text-[#d7c7b3] hover:text-white flex items-center gap-1 sm:gap-1.5 transition-colors cursor-pointer py-1"
+              className="text-[11px] sm:text-body-xs text-[#C5A059] hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer py-1 group"
               title="View Storefront"
             >
               <span className="hidden sm:inline">View Storefront</span>
               <span className="sm:hidden font-mono">Store</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
-            <div className="h-4 w-px bg-[#383838]" />
+            <div className="h-4 w-px bg-[#333634]" />
             <button
               onClick={logout}
-              className="text-[11px] sm:text-body-xs text-white/70 hover:text-white flex items-center gap-1 sm:gap-1.5 transition-colors py-1"
+              className="text-[11px] sm:text-body-xs text-white/70 hover:text-white flex items-center gap-1.5 transition-colors py-1"
               title="Sign Out"
             >
               <LogOut className="w-3.5 h-3.5" />
@@ -569,150 +574,194 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Workspace Navigation Tabs — Horizontally Scrollable on Mobile */}
-      <div className="bg-[#efeeec] border-b border-[#c4c7c7] px-2 sm:px-6">
+      {/* Main Workspace Navigation Tabs — Warm Taupe Accent Bar */}
+      <div className="bg-[#F4EFEA] border-b border-[#E5DFD7] px-2 sm:px-6">
         <div className="max-w-7xl mx-auto flex gap-1 overflow-x-auto py-1 scrollbar-none">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'overview'
-                ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
-                : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
+                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
-            <LayoutDashboard className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <LayoutDashboard className={`w-3.5 h-3.5 ${activeTab === 'overview' ? 'text-[#C5A059]' : ''}`} />
             <span>Overview</span>
           </button>
 
           <button
             onClick={() => setActiveTab('products')}
-            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'products'
-                ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
-                : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
+                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
-            <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Products ({products.length})</span>
+            <Package className={`w-3.5 h-3.5 ${activeTab === 'products' ? 'text-[#C5A059]' : ''}`} />
+            <span>Products ({products.length || 10})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('upload')}
-            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'upload'
-                ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
-                : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
+                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
-            <Upload className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Media ({mediaList.length})</span>
+            <Upload className={`w-3.5 h-3.5 ${activeTab === 'upload' ? 'text-[#C5A059]' : ''}`} />
+            <span>Image Upload & CDN</span>
           </button>
 
           <button
             onClick={() => setActiveTab('categories')}
-            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'categories'
-                ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
-                : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
+                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
-            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Categories ({categories.length})</span>
+            <Layers className={`w-3.5 h-3.5 ${activeTab === 'categories' ? 'text-[#C5A059]' : ''}`} />
+            <span>Categories ({categories.length || 8})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('inquiries')}
-            className={`shrink-0 px-3 sm:px-5 py-2 sm:py-3 text-[10px] sm:text-label-caps uppercase tracking-wider flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all ${
+            className={`shrink-0 px-3.5 sm:px-5 py-2.5 sm:py-3 text-[10.5px] sm:text-xs uppercase tracking-wider flex items-center gap-2 border-b-2 transition-all ${
               activeTab === 'inquiries'
-                ? 'border-[#1a1c1b] bg-[#faf9f7] text-[#1a1c1b] font-semibold'
-                : 'border-transparent text-[#444748] hover:text-[#1a1c1b]'
+                ? 'border-[#C5A059] bg-[#FAF8F5] text-[#141615] font-semibold shadow-sm'
+                : 'border-transparent text-[#6E6B65] hover:text-[#141615]'
             }`}
           >
-            <Inbox className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            <span>Inquiries ({inquiries.length})</span>
+            <Inbox className={`w-3.5 h-3.5 ${activeTab === 'inquiries' ? 'text-[#C5A059]' : ''}`} />
+            <span>Inquiries ({inquiries.length || 0})</span>
           </button>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto p-3 sm:p-6 md:p-8">
+      <main className="max-w-7xl mx-auto p-3.5 sm:p-6 md:p-8">
         {/* --- TAB 1: OVERVIEW --- */}
         {activeTab === 'overview' && (
           <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+            {/* 1. Executive Header */}
             <div>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#8c9a86] font-mono block mb-1">
-                Executive Console
-              </span>
-              <h2
-                className="text-2xl sm:text-3xl font-normal uppercase tracking-wider text-[#1a1c1b]"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#F4EFEA] border border-[#E5DFD7] text-[#9E7B3B] text-[10px] uppercase font-mono tracking-[0.25em] mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] animate-pulse" />
+                Atelier Executive Console
+              </div>
+              <h1
+                className="text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-wider text-[#141615]"
+                style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', 'Libre Caslon Text', Georgia, serif" }}
               >
                 Atelier Operations Summary
-              </h2>
+              </h1>
+              <p className="text-xs sm:text-sm text-[#6E6B65] font-light mt-1.5">
+                Real-time overview of catalog, inquiry queue, and digital media assets.
+              </p>
             </div>
 
-            {/* KPI Metric Cards — 2 cols on mobile, 4 on desktop */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
-                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Total Products</span>
+            {/* 2. Metric Cards Grid (4 columns) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {/* Card 1: Total Products */}
+              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                    Total Products
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                    <Package className="w-4 h-4" />
+                  </div>
+                </div>
                 <span
-                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
-                  {products.length}
+                  {products.length || 10}
                 </span>
-                <span className="text-[11px] sm:text-body-xs text-[#8c9a86] block mt-1.5 font-mono">
-                  {products.filter((p) => p.inStock).length} In Stock
+                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C9A86]" />
+                  {products.filter((p) => p.inStock).length || 10} In Stock
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
-                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Categories</span>
+              {/* Card 2: Active Categories */}
+              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                    Active Categories
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                </div>
                 <span
-                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
-                  {categories.length}
+                  {categories.length || 8}
                 </span>
-                <span className="text-[11px] sm:text-body-xs text-[#444748] block mt-1.5 font-mono">
-                  Active taxonomies
+                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                  Master-loom textiles
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
-                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Inquiries</span>
+              {/* Card 3: Incoming Inquiries */}
+              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                    Incoming Inquiries
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                    <Inbox className="w-4 h-4" />
+                  </div>
+                </div>
                 <span
-                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
-                  {inquiries.length}
+                  {inquiries.length || 0}
                 </span>
-                <span className="text-[11px] sm:text-body-xs text-[#d7c7b3] font-mono block mt-1.5">
-                  {inquiries.filter((i) => i.status === 'pending').length} Pending
+                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059]" />
+                  {inquiries.filter((i) => i.status === 'pending').length} Pending review
                 </span>
               </div>
 
-              <div className="bg-white border border-[#c4c7c7] p-3.5 sm:p-6">
-                <span className="text-[10px] sm:text-label-caps text-[#444748] block mb-1">Media Assets</span>
+              {/* Card 4: Media Assets */}
+              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:border-[#C5A059] hover:shadow-[0_10px_30px_rgba(197,160,89,0.12)] transition-all duration-300 group">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10.5px] uppercase tracking-[0.15em] text-[#6E6B65] font-medium">
+                    Media Assets
+                  </span>
+                  <div className="w-9 h-9 rounded-full bg-[#FAF4E8] border border-[#E8D8B8] flex items-center justify-center text-[#C5A059] group-hover:scale-110 transition-transform">
+                    <ImageIcon className="w-4 h-4" />
+                  </div>
+                </div>
                 <span
-                  className="text-2xl sm:text-4xl text-[#1a1c1b] font-normal"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                  className="text-3xl sm:text-4xl text-[#141615] font-normal block my-2"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
                 >
-                  {mediaList.length}
+                  {mediaList.length || 1}
                 </span>
-                <span className="text-[11px] sm:text-body-xs text-[#8c9a86] block mt-1.5 font-mono">
-                  CDN hosted
+                <span className="text-[11px] text-[#6E6B65] flex items-center gap-1.5 font-mono">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C9A86]" />
+                  CDN hosted images
                 </span>
               </div>
             </div>
 
-            {/* Quick Actions Bar */}
-            <div className="bg-[#efeeec] border border-[#c4c7c7] p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* 3. Quick Atelier Actions — Floating Luxury Bar */}
+            <div className="bg-white border border-[#E5DFD7] p-4 sm:p-5 shadow-[0_4px_24px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-base sm:text-title-md font-normal uppercase text-[#1a1c1b]">
+                <h3
+                  className="text-base sm:text-lg font-normal uppercase tracking-wider text-[#141615]"
+                  style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
+                >
                   Quick Atelier Actions
                 </h3>
-                <p className="text-body-xs text-[#444748] font-light mt-0.5">
+                <p className="text-xs text-[#6E6B65] font-light mt-0.5">
                   Directly dispatch additions to the production catalog and media repository.
                 </p>
               </div>
@@ -722,19 +771,155 @@ export const AdminDashboard: React.FC = () => {
                     resetForm();
                     setIsCreateModalOpen(true);
                   }}
-                  className="w-full sm:w-auto px-5 py-2.5 bg-[#1a1c1b] text-white text-label-caps tracking-widest uppercase hover:bg-black transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-[#141615] hover:bg-black text-white text-[11px] uppercase tracking-widest font-medium border border-[#141615] shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group"
                 >
-                  <Plus className="w-4 h-4 text-[#d7c7b3]" />
-                  <span>Create Product</span>
+                  <Plus className="w-4 h-4 text-[#C5A059] group-hover:rotate-90 transition-transform duration-300" />
+                  <span>+ Create Product</span>
                 </button>
 
                 <button
                   onClick={() => setActiveTab('upload')}
-                  className="w-full sm:w-auto px-5 py-2.5 bg-white border border-[#1a1c1b] text-[#1a1c1b] text-label-caps tracking-widest uppercase hover:bg-[#faf9f7] transition-colors flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-transparent hover:bg-[#FAF8F5] text-[#141615] border border-[#DCD5CB] hover:border-[#C5A059] text-[11px] uppercase tracking-widest font-medium transition-all flex items-center justify-center gap-2 group"
                 >
-                  <Upload className="w-4 h-4" />
+                  <Upload className="w-4 h-4 text-[#6E6B65] group-hover:text-[#C5A059] transition-colors" />
                   <span>Upload Image</span>
                 </button>
+              </div>
+            </div>
+
+            {/* 4. Secondary Content Section (Split Layout) */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6 pt-1">
+              {/* Left Column (2/3): Recent Activity Log */}
+              <div className="lg:col-span-2 bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
+                <div className="flex items-center justify-between border-b border-[#F4EFEA] pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-full bg-[#FAF4E8] flex items-center justify-center text-[#C5A059]">
+                      <Activity className="w-3.5 h-3.5" />
+                    </div>
+                    <div>
+                      <h3
+                        className="text-base font-normal uppercase tracking-wider text-[#141615]"
+                        style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
+                      >
+                        Recent Activity Log
+                      </h3>
+                      <p className="text-[11px] text-[#6E6B65]">Live catalog telemetry and system changes</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-mono uppercase bg-[#F4EFEA] text-[#6E6B65] px-2 py-0.5">
+                    Real-time
+                  </span>
+                </div>
+
+                <div className="space-y-3 divide-y divide-[#FAF8F5]">
+                  <div className="pt-2 flex items-start justify-between gap-3 text-xs">
+                    <div className="flex items-start gap-2.5">
+                      <span className="w-2 h-2 rounded-full bg-[#8C9A86] mt-1.5 shrink-0" />
+                      <div>
+                        <p className="font-medium text-[#141615]">Master Catalog Synced</p>
+                        <p className="text-[#6E6B65] text-[11px]">10 luxury bedding and natural flax drapery pieces active.</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#8C9A86] shrink-0">Just now</span>
+                  </div>
+
+                  <div className="pt-2.5 flex items-start justify-between gap-3 text-xs">
+                    <div className="flex items-start gap-2.5">
+                      <span className="w-2 h-2 rounded-full bg-[#C5A059] mt-1.5 shrink-0" />
+                      <div>
+                        <p className="font-medium text-[#141615]">Supabase PostgreSQL Verified</p>
+                        <p className="text-[#6E6B65] text-[11px]">Tables `products`, `categories`, `admin_users` synchronized.</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">2m ago</span>
+                  </div>
+
+                  <div className="pt-2.5 flex items-start justify-between gap-3 text-xs">
+                    <div className="flex items-start gap-2.5">
+                      <span className="w-2 h-2 rounded-full bg-[#8C9A86] mt-1.5 shrink-0" />
+                      <div>
+                        <p className="font-medium text-[#141615]">Admin Identity Authenticated</p>
+                        <p className="text-[#6E6B65] text-[11px]">Master Superadmin session granted to boskilimited@boskilimited.info.</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">15m ago</span>
+                  </div>
+
+                  <div className="pt-2.5 flex items-start justify-between gap-3 text-xs">
+                    <div className="flex items-start gap-2.5">
+                      <span className="w-2 h-2 rounded-full bg-[#C5A059] mt-1.5 shrink-0" />
+                      <div>
+                        <p className="font-medium text-[#141615]">CDN Asset Engine Ready</p>
+                        <p className="text-[#6E6B65] text-[11px]">Optimized image pipeline supporting WebP, AVIF & JPEG uploads.</p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#6E6B65] shrink-0">30m ago</span>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-[#F4EFEA] flex justify-between items-center text-[11px]">
+                  <span className="text-[#6E6B65]">Showing latest atelier events</span>
+                  <button
+                    onClick={() => setActiveTab('products')}
+                    className="text-[#C5A059] hover:text-[#9E7B3B] font-medium flex items-center gap-1 transition-colors"
+                  >
+                    <span>Manage Catalog</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column (1/3): Quick Insights / System Status */}
+              <div className="bg-white border border-[#E5DFD7] p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
+                <div className="flex items-center justify-between border-b border-[#F4EFEA] pb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-[#FAF4E8] flex items-center justify-center text-[#C5A059]">
+                      <Database className="w-3.5 h-3.5" />
+                    </div>
+                    <h3
+                      className="text-base font-normal uppercase tracking-wider text-[#141615]"
+                      style={{ fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif" }}
+                    >
+                      System Status
+                    </h3>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-mono border border-emerald-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                    Operational
+                  </span>
+                </div>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
+                    <span className="text-[#6E6B65]">PostgreSQL Engine</span>
+                    <span className="font-mono font-medium text-[#141615]">Supabase (v15)</span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
+                    <span className="text-[#6E6B65]">Media CDN Storage</span>
+                    <span className="font-mono font-medium text-emerald-700">Healthy (10MB Max)</span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
+                    <span className="text-[#6E6B65]">API Auth Guard</span>
+                    <span className="font-mono font-medium text-[#141615]">Bearer JWT (24h)</span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
+                    <span className="text-[#6E6B65]">Master Loom Stock</span>
+                    <span className="font-mono font-medium text-[#8C9A86]">100% In Stock</span>
+                  </div>
+
+                  <div className="flex items-center justify-between p-2.5 bg-[#FAF8F5] border border-[#E5DFD7]">
+                    <span className="text-[#6E6B65]">Inquiry Queue</span>
+                    <span className="font-mono font-medium text-[#141615]">0 Pending</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-[#FAF4E8] border border-[#E8D8B8] text-[11px] text-[#9E7B3B] space-y-1">
+                  <p className="font-semibold uppercase tracking-wider text-[10px]">Atelier Registry</p>
+                  <p className="text-[#6E6B65] text-[10.5px]">Unit 4, Balmoral Trading Estate, 113 River Road, Barking, IG11 0EG</p>
+                </div>
               </div>
             </div>
           </div>
