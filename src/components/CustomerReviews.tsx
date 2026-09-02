@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { REVIEWS, PRODUCTS } from '../data/products';
 import { Review } from '../types';

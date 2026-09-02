@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 import { Address } from '../types';
@@ -33,6 +35,7 @@ export const MyAccountPage: React.FC = () => {
     setIsWishlistOpen,
     setSelectedProductForQuickView,
     showToast,
+    setActivePage,
   } = useShop();
 
   const [activeTab, setActiveTab] = useState<
@@ -103,6 +106,14 @@ export const MyAccountPage: React.FC = () => {
                   {tab.label}
                 </button>
               ))}
+              <div className="pt-4 mt-4 border-t border-neutral-200">
+                <button
+                  onClick={() => setActivePage('admin')}
+                  className="block w-full text-left text-xs uppercase tracking-widest text-[#8c9a86] hover:text-black font-mono transition-colors"
+                >
+                  ⚙ Atelier Portal (Admin)
+                </button>
+              </div>
             </nav>
           </aside>
 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 import { useVaultCountdown } from '../hooks/useVaultCountdown';
@@ -88,7 +90,7 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({
             <div className="bg-[#121313] border border-[#383838] p-6 sm:p-8 text-center w-full max-w-sm shadow-xl">
               <div className="flex items-center justify-center gap-2 text-label-caps uppercase tracking-widest text-white/80 font-medium mb-5">
                 <span className="material-symbols-outlined text-[18px] text-white">timer</span>
-                <span>{isExpired ? 'Drop Concluded' : 'Vault Access Closes In'}</span>
+                <span suppressHydrationWarning>{isExpired ? 'Drop Concluded' : 'Vault Access Closes In'}</span>
               </div>
 
               {/* Digits Grid */}
@@ -97,6 +99,7 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({
                   <span
                     className="text-[32px] sm:text-[38px] font-normal text-white block"
                     style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                    suppressHydrationWarning
                   >
                     {formattedHours}
                   </span>
@@ -109,6 +112,7 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({
                   <span
                     className="text-[32px] sm:text-[38px] font-normal text-white block"
                     style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                    suppressHydrationWarning
                   >
                     {formattedMinutes}
                   </span>
@@ -121,6 +125,7 @@ export const PromoBanner: React.FC<PromoBannerProps> = ({
                   <span
                     className="text-[32px] sm:text-[38px] font-normal text-white block"
                     style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                    suppressHydrationWarning
                   >
                     {formattedSeconds}
                   </span>

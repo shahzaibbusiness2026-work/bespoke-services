@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { ShopProvider, useShop } from './context/ShopContext';
 import { Header } from './components/Header';
@@ -13,6 +15,8 @@ import { BespokeServicesPage } from './components/BespokeServicesPage';
 import { TradeHospitalityPage } from './components/TradeHospitalityPage';
 import { TheCanvasPage } from './components/TheCanvasPage';
 import { CollectionPage } from './components/CollectionPage';
+import { MyAccountPage } from './components/MyAccountPage';
+import { AdminDashboard } from './components/AdminDashboard';
 import { NewsletterSubscription } from './components/NewsletterSubscription';
 
 // Modals & Drawers
@@ -24,15 +28,25 @@ import { WishlistDrawer } from './components/WishlistDrawer';
 import { CheckoutModal } from './components/CheckoutModal';
 import { AuthModal } from './components/AuthModal';
 import { ViewInRoomModal } from './components/ViewInRoomModal';
+import { ContactModal } from './components/ContactModal';
 import { Toast } from './components/Toast';
 
-const MainLayout: React.FC = () => {
-  const { activePage, currentUser, setActivePage } = useShop();
+export const MainLayout: React.FC = () => {
+  const { activePage, currentUser, setActivePage, isContactOpen, setIsContactOpen } = useShop();
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
   };
+
+  if (activePage === 'admin') {
+    return (
+      <div className="min-h-screen bg-[#faf9f7] text-[#1a1c1b]">
+        <AdminDashboard />
+        <Toast />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -119,101 +133,9 @@ const MainLayout: React.FC = () => {
         <TheCanvasPage />
       )}
 
-      {/* Account Dashboard Page */}
+      {/* Account Dashboard Page — Full Editorial Architecture */}
       {activePage === 'account' && (
-        <main className="flex-1 w-full max-w-[1440px] mx-auto px-5 md:px-16 py-16 animate-fadeIn">
-          {currentUser ? (
-            <>
-              <h1
-                className="text-[48px] leading-[56px] tracking-[0.01em] text-[#000000] mb-4"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif", fontWeight: 400 }}
-              >
-                Welcome, {currentUser.firstName}
-              </h1>
-              <p className="text-body-md text-[#444748] mb-12">{currentUser.email}</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="border border-[#c4c7c7] p-8 bg-[#ffffff]">
-                  <p className="text-label-caps text-[#444748] mb-2">VIP Status</p>
-                  <p className="text-headline-sm text-[#000000]" style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}>
-                    {currentUser.vipTier}
-                  </p>
-                </div>
-                <div className="border border-[#c4c7c7] p-8 bg-[#ffffff]">
-                  <p className="text-label-caps text-[#444748] mb-2">Member Since</p>
-                  <p className="text-headline-sm text-[#000000]" style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}>
-                    {currentUser.joinedDate}
-                  </p>
-                </div>
-                <div className="border border-[#c4c7c7] p-8 bg-[#ffffff]">
-                  <p className="text-label-caps text-[#444748] mb-2">Points Balance</p>
-                  <p className="text-headline-sm text-[#000000]" style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}>
-                    {currentUser.pointsBalance.toLocaleString()} pts
-                  </p>
-                </div>
-              </div>
-              <div className="mt-16">
-                <h2
-                  className="text-headline-sm text-[#000000] mb-8"
-                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
-                >
-                  Your Addresses
-                </h2>
-                {currentUser.addresses.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {currentUser.addresses.map((addr) => (
-                      <div key={addr.id} className="border border-[#c4c7c7] p-6 bg-[#ffffff]">
-                        {addr.isDefault && (
-                          <span className="text-label-caps text-[#675d50] mb-2 block font-semibold">Default</span>
-                        )}
-                        <p className="text-body-md text-[#000000] font-medium">
-                          {addr.firstName} {addr.lastName}
-                        </p>
-                        <p className="text-body-sm text-[#444748]">{addr.addressLine1}</p>
-                        {addr.addressLine2 && <p className="text-body-sm text-[#444748]">{addr.addressLine2}</p>}
-                        <p className="text-body-sm text-[#444748]">{addr.city}, {addr.state} {addr.zipCode}</p>
-                        <p className="text-body-sm text-[#444748]">{addr.country}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-body-md text-[#444748]">No addresses saved yet.</p>
-                )}
-              </div>
-              <div className="mt-16 flex flex-wrap gap-4">
-                <button
-                  onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="px-8 py-4 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors"
-                >
-                  Continue Shopping
-                </button>
-                <button
-                  onClick={() => { setActivePage('bespoke'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                  className="px-8 py-4 border border-[#c4c7c7] text-[#000000] text-label-caps hover:bg-[#f4f3f1] transition-colors"
-                >
-                  Request Bespoke Service
-                </button>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-24 border border-dashed border-[#c4c7c7] p-12">
-              <h1
-                className="text-headline-lg text-[#000000] mb-4"
-                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
-              >
-                Sign In to Continue
-              </h1>
-              <p className="text-body-md text-[#444748] mb-8">
-                Access your orders, addresses, and wishlist.
-              </p>
-              <button
-                onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                className="px-8 py-3.5 bg-[#000000] text-white text-label-caps"
-              >
-                Return to Home
-              </button>
-            </div>
-          )}
-        </main>
+        <MyAccountPage />
       )}
 
       {/* Refined Single Subscription Component with Multi-State Validation */}
@@ -225,6 +147,7 @@ const MainLayout: React.FC = () => {
       {/* Global Modals & Overlays */}
       <ProductDetailModal />
       <ViewInRoomModal />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <AuthModal />
       <SizeGuideModal />
       <SearchModal />

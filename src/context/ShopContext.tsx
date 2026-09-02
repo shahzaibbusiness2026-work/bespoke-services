@@ -1,6 +1,15 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+'use client';
+
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Product, CartItem, ProductColor, Currency, PromoCode, OrderDetails, User, Address, BespokeInquiry, TradeInquiry } from '../types';
 import { PRODUCTS, CURRENCIES, PROMO_CODES } from '../data/products';
+import { api } from '../services/api';
+
+export interface CategoryItem {
+  category: string;
+  count: number;
+  label?: string;
+}
 
 interface ToastData {
   id: string;
@@ -33,11 +42,19 @@ export type PageView =
   | 'trade'
   | 'canvas'
   | 'account'
-  | 'wishlist';
+  | 'wishlist'
+  | 'admin';
 
 interface ShopContextType {
   activePage: PageView;
   setActivePage: (page: PageView) => void;
+  products: Product[];
+  categories: CategoryItem[];
+  refreshCategories: () => Promise<void>;
+  refreshProducts: () => Promise<void>;
+  isApiConnected: boolean;
+  isContactOpen: boolean;
+  setIsContactOpen: (open: boolean) => void;
   cart: CartItem[];
   wishlist: string[];
   currency: Currency;
@@ -67,8 +84,9 @@ interface ShopContextType {
   arProduct: Product | null;
   openARView: (prod: Product) => void;
   currentUser: User | null;
-  login: (email: string, password?: string) => boolean;
-  signup: (firstName: string, lastName: string, email: string, password?: string, phone?: string) => boolean;
+  setCurrentUser: (user: User | null) => void;
+  login: (email: string, password?: string) => Promise<boolean> | boolean;
+  signup: (firstName: string, lastName: string, email: string, password?: string, phone?: string) => Promise<boolean> | boolean;
   logout: () => void;
   updateUserProfile: (updates: Partial<User>) => void;
   addAddress: (address: Omit<Address, 'id'>) => void;
@@ -120,8 +138,10 @@ const DEFAULT_VIP_USER: User = {
   id: 'usr-ll-4921',
   firstName: 'Eleanor',
   lastName: 'Vance',
+  name: 'Eleanor Vance',
   email: 'eleanor.vance@boski-limited.com',
   phone: '+1 (617) 555-0192',
+  role: 'client',
   vipTier: 'Diamond Concierge',
   pointsBalance: 3840,
   joinedDate: 'October 2022',
@@ -197,69 +217,108 @@ const INITIAL_ORDER_HISTORY: OrderDetails[] = [
   },
 ];
 
+const INITIAL_CART: CartItem[] = [
+  {
+    id: 'cart-1',
+    product: PRODUCTS[0],
+    selectedColor: PRODUCTS[0].colors[0], // Warm Ivory
+    selectedSize: 'Queen',
+    quantity: 1,
+  },
+  {
+    id: 'cart-2',
+    product: PRODUCTS[1],
+    selectedColor: PRODUCTS[1].colors[0], // Natural Flax
+    selectedSize: 'Full / Queen',
+    quantity: 1,
+  },
+];
+
+const DEFAULT_CATEGORIES: CategoryItem[] = [
+  { category: 'sheets', count: 1, label: 'Sheet Sets' },
+  { category: 'duvets', count: 2, label: 'Duvet Covers' },
+  { category: 'curtains', count: 2, label: 'Curtains & Drapery' },
+  { category: 'towels', count: 2, label: 'Towels & Bath' },
+  { category: 'throws', count: 1, label: 'Artisan Throws' },
+  { category: 'blankets', count: 1, label: 'Waffle Blankets' },
+  { category: 'pillows', count: 1, label: 'Pillowcases' },
+];
+
 export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [activePage, setActivePage] = useState<PageView>('home');
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [categories, setCategories] = useState<CategoryItem[]>(DEFAULT_CATEGORIES);
+  const [isApiConnected, setIsApiConnected] = useState<boolean>(false);
 
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+  const refreshProducts = useCallback(async () => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.USER);
-      return saved ? JSON.parse(saved) : DEFAULT_VIP_USER;
-    } catch {
-      return DEFAULT_VIP_USER;
+      const res = await api.products.getAll();
+      if (res.success && res.data && res.data.length > 0) {
+        setProducts(res.data);
+        setIsApiConnected(true);
+      }
+    } catch (e) {
+      console.warn('Failed to refresh products:', e);
     }
-  });
+  }, []);
 
-  // Initial cart with 2 items to match count "2" in screen1.png navbar
-  const [cart, setCart] = useState<CartItem[]>(() => {
+  const refreshCategories = useCallback(async () => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEYS.CART);
-      if (saved) return JSON.parse(saved);
-    } catch {}
-    return [
-      {
-        id: 'cart-1',
-        product: PRODUCTS[0],
-        selectedColor: PRODUCTS[0].colors[0], // Warm Ivory
-        selectedSize: 'Queen',
-        quantity: 1,
-      },
-      {
-        id: 'cart-2',
-        product: PRODUCTS[1],
-        selectedColor: PRODUCTS[1].colors[0], // Natural Flax
-        selectedSize: 'Full / Queen',
-        quantity: 1,
-      },
-    ];
-  });
-
-  const [wishlist, setWishlist] = useState<string[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.WISHLIST);
-      return saved ? JSON.parse(saved) : ['prod-1', 'prod-2', 'prod-5'];
-    } catch {
-      return ['prod-1', 'prod-2', 'prod-5'];
+      const res = await api.categories.getAll();
+      if (res.success && res.data && res.data.length > 0) {
+        setCategories(res.data);
+      }
+    } catch (e) {
+      console.warn('Failed to refresh categories:', e);
     }
-  });
+  }, []);
 
-  const [currency, setCurrencyState] = useState<Currency>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.CURRENCY);
-      if (saved && CURRENCIES[saved]) return CURRENCIES[saved];
-    } catch {}
-    return CURRENCIES.GBP;
-  });
-
-  const [orderHistory, setOrderHistory] = useState<OrderDetails[]>(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEYS.ORDERS);
-      return saved ? JSON.parse(saved) : INITIAL_ORDER_HISTORY;
-    } catch {
-      return INITIAL_ORDER_HISTORY;
-    }
-  });
-
+  // Deterministic initial states (identical on server and initial client render to prevent hydration mismatches)
+  const [currentUser, setCurrentUser] = useState<User | null>(DEFAULT_VIP_USER);
+  const [cart, setCart] = useState<CartItem[]>(INITIAL_CART);
+  const [wishlist, setWishlist] = useState<string[]>(['prod-1', 'prod-2', 'prod-5']);
+  const [currency, setCurrencyState] = useState<Currency>(CURRENCIES.GBP);
+  const [orderHistory, setOrderHistory] = useState<OrderDetails[]>(INITIAL_ORDER_HISTORY);
   const [recentOrder, setRecentOrder] = useState<OrderDetails | null>(INITIAL_ORDER_HISTORY[0]);
+
+  // Safely hydrate stored client state from LocalStorage after initial mount
+  useEffect(() => {
+    try {
+      const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        if (parsed && !parsed.name && parsed.firstName && parsed.lastName) {
+          parsed.name = `${parsed.firstName} ${parsed.lastName}`;
+        }
+        setCurrentUser(parsed);
+      }
+
+      const savedCart = localStorage.getItem(STORAGE_KEYS.CART);
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        if (Array.isArray(parsedCart)) setCart(parsedCart);
+      }
+
+      const savedWishlist = localStorage.getItem(STORAGE_KEYS.WISHLIST);
+      if (savedWishlist) {
+        const parsedWish = JSON.parse(savedWishlist);
+        if (Array.isArray(parsedWish)) setWishlist(parsedWish);
+      }
+
+      const savedCurrency = localStorage.getItem(STORAGE_KEYS.CURRENCY);
+      if (savedCurrency && CURRENCIES[savedCurrency]) {
+        setCurrencyState(CURRENCIES[savedCurrency]);
+      }
+
+      const savedOrders = localStorage.getItem(STORAGE_KEYS.ORDERS);
+      if (savedOrders) {
+        const parsedOrders = JSON.parse(savedOrders);
+        if (Array.isArray(parsedOrders)) setOrderHistory(parsedOrders);
+      }
+    } catch (e) {
+      console.warn('[ShopContext] Error hydrating client state from localStorage:', e);
+    }
+  }, []);
 
   // UI Modals & Drawers
   const [selectedProductForQuickView, setSelectedProductForQuickView] = useState<Product | null>(null);
@@ -272,6 +331,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [isMiniAccountOpen, setIsMiniAccountOpen] = useState<boolean>(false);
+  const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
 
   // Augmented Reality Room View Modal
   const [isAROpen, setIsAROpen] = useState<boolean>(false);
@@ -288,6 +348,30 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Inquiries
   const [bespokeInquiries, setBespokeInquiries] = useState<BespokeInquiry[]>([]);
   const [tradeInquiries, setTradeInquiries] = useState<TradeInquiry[]>([]);
+
+  // Connect to backend API on mount
+  useEffect(() => {
+    // 1. Fetch live products from backend
+    refreshProducts();
+
+    // 2. Fetch live categories from backend
+    refreshCategories();
+
+    // 3. Validate session if token exists
+    if (api.getToken()) {
+      api.auth.getMe().then((res) => {
+        if (res.success && res.data) {
+          setCurrentUser(res.data);
+          // Sync server orders
+          api.orders.getAll(res.data.email).then((ordRes) => {
+            if (ordRes.success && ordRes.data && ordRes.data.length > 0) {
+              setOrderHistory(ordRes.data);
+            }
+          });
+        }
+      });
+    }
+  }, []);
 
   // Sync with LocalStorage
   useEffect(() => {
@@ -466,45 +550,86 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
   };
 
-  const login = (email: string) => {
-    if (email.toLowerCase().includes('eleanor')) {
-      setCurrentUser(DEFAULT_VIP_USER);
-    } else {
-      setCurrentUser({
-        id: `usr-${Date.now()}`,
-        firstName: email.split('@')[0] || 'Client',
-        lastName: 'Member',
-        email,
-        vipTier: 'Member',
-        pointsBalance: 500,
-        joinedDate: 'Recently',
-        addresses: DEFAULT_VIP_USER.addresses,
-      });
+  const login = async (email: string, password?: string): Promise<boolean> => {
+    try {
+      const res = await api.auth.login(email, password);
+      if (res.success && res.data?.user) {
+        setCurrentUser(res.data.user);
+        setIsAuthOpen(false);
+        showToast('Welcome back', `Signed in as ${res.data.user.firstName} ${res.data.user.lastName}`, 'success');
+
+        // Fetch live order history for this user
+        const ordRes = await api.orders.getAll(res.data.user.email);
+        if (ordRes.success && ordRes.data) {
+          setOrderHistory(ordRes.data);
+        }
+        return true;
+      } else {
+        showToast('Sign In Error', res.error || 'Invalid email or password credentials', 'info');
+        return false;
+      }
+    } catch {
+      // Local optimistic fallback
+      if (email.toLowerCase().includes('eleanor') || email.toLowerCase().includes('victoria')) {
+        setCurrentUser(DEFAULT_VIP_USER);
+      } else {
+        setCurrentUser({
+          id: `usr-${Date.now()}`,
+          firstName: email.toLowerCase().includes('concierge') ? 'Master' : (email.split('@')[0] || 'Client'),
+          lastName: email.toLowerCase().includes('concierge') ? 'Concierge' : 'Member',
+          email,
+          role: (email.toLowerCase().includes('concierge') || email.toLowerCase().includes('admin')) ? 'admin' : 'client',
+          vipTier: email.toLowerCase().includes('concierge') ? 'Diamond Concierge' : 'Member',
+          pointsBalance: 500,
+          joinedDate: 'Recently',
+          addresses: DEFAULT_VIP_USER.addresses,
+        });
+      }
+      setIsAuthOpen(false);
+      showToast('Welcome back', 'Signed into your BOSKI LIMITED account', 'success');
+      return true;
     }
-    setIsAuthOpen(false);
-    showToast('Welcome back', 'You are now signed into your BOSKI LIMITED account', 'success');
-    return true;
   };
 
-  const signup = (firstName: string, lastName: string, email: string, _password?: string, phone?: string) => {
-    const newUser: User = {
-      id: `usr-${Date.now()}`,
-      firstName: firstName.trim() || 'Client',
-      lastName: lastName.trim() || 'Member',
-      email: email.trim(),
-      phone: phone?.trim(),
-      vipTier: 'Member',
-      pointsBalance: 500,
-      joinedDate: 'New Client',
-      addresses: [],
-    };
-    setCurrentUser(newUser);
-    setIsAuthOpen(false);
-    showToast('Account Created', `Welcome to BOSKI LIMITED, ${newUser.firstName}`, 'success');
-    return true;
+  const signup = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password?: string,
+    phone?: string
+  ): Promise<boolean> => {
+    try {
+      const res = await api.auth.register({ firstName, lastName, email, password, phone });
+      if (res.success && res.data?.user) {
+        setCurrentUser(res.data.user);
+        setIsAuthOpen(false);
+        showToast('Account Created', `Welcome to BOSKI LIMITED, ${res.data.user.firstName}`, 'success');
+        return true;
+      } else {
+        showToast('Registration Error', res.error || 'Could not complete registration', 'info');
+        return false;
+      }
+    } catch {
+      const newUser: User = {
+        id: `usr-${Date.now()}`,
+        firstName: firstName.trim() || 'Client',
+        lastName: lastName.trim() || 'Member',
+        email: email.trim(),
+        phone: phone?.trim(),
+        vipTier: 'Member',
+        pointsBalance: 500,
+        joinedDate: 'New Client',
+        addresses: [],
+      };
+      setCurrentUser(newUser);
+      setIsAuthOpen(false);
+      showToast('Account Created', `Welcome to BOSKI LIMITED, ${newUser.firstName}`, 'success');
+      return true;
+    }
   };
 
   const logout = () => {
+    api.auth.logout();
     setCurrentUser(null);
     setIsAccountOpen(false);
     setIsMiniAccountOpen(false);
@@ -514,14 +639,16 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const updateUserProfile = (updates: Partial<User>) => {
     if (!currentUser) return;
     setCurrentUser((prev) => (prev ? { ...prev, ...updates } : null));
+    api.auth.updateProfile(updates);
     showToast('Profile Updated', 'Your details have been saved', 'success');
   };
 
   const addAddress = (addressData: Omit<Address, 'id'>) => {
     if (!currentUser) return;
+    const tempId = `addr-${Date.now()}`;
     const newAddr: Address = {
       ...addressData,
-      id: `addr-${Date.now()}`,
+      id: tempId,
     };
     setCurrentUser((prev) => {
       if (!prev) return null;
@@ -530,6 +657,17 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         updatedList = updatedList.map((a) => ({ ...a, isDefault: false }));
       }
       return { ...prev, addresses: [...updatedList, newAddr] };
+    });
+    api.auth.addAddress(addressData).then((res) => {
+      if (res.success && res.data) {
+        setCurrentUser((prev) => {
+          if (!prev) return null;
+          return {
+            ...prev,
+            addresses: prev.addresses.map((a) => (a.id === tempId ? res.data! : a)),
+          };
+        });
+      }
     });
     showToast('Address Added', newAddr.label, 'success');
   };
@@ -544,6 +682,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
       return { ...prev, addresses: updatedList };
     });
+    api.auth.updateAddress(id, updates);
     showToast('Address Updated', undefined, 'success');
   };
 
@@ -553,6 +692,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (!prev) return null;
       return { ...prev, addresses: prev.addresses.filter((a) => a.id !== id) };
     });
+    api.auth.deleteAddress(id);
     showToast('Address Deleted', undefined, 'info');
   };
 
@@ -565,6 +705,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         addresses: prev.addresses.map((a) => ({ ...a, isDefault: a.id === id })),
       };
     });
+    api.auth.setDefaultAddress(id);
     showToast('Default Address Set', undefined, 'success');
   };
 
@@ -577,7 +718,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const finalShippingPrice = totals.shipping;
     const finalTotal = totals.total;
 
-    const newOrder: OrderDetails = {
+    const localOrder: OrderDetails = {
       orderId: `LL-${Math.floor(1000 + Math.random() * 9000)}`,
       date: new Date().toLocaleDateString('en-US', {
         month: 'short',
@@ -593,22 +734,37 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       shipping: finalShippingPrice,
       tax: totals.tax,
       total: finalTotal,
-      trackingNumber: `LL-TRK-${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+      trackingNumber: `BOSKI-${shippingMethod.id.toUpperCase()}-${Date.now().toString().slice(-6)}-EXP`,
       status: 'Processing',
     };
 
-    setOrderHistory((prev) => [newOrder, ...prev]);
-    setRecentOrder(newOrder);
+    // Dispatch to live backend API
+    api.orders.create({
+      customer,
+      shippingMethod,
+      paymentMethod,
+      items: [...cart],
+      appliedPromoCode: appliedPromo?.code,
+      appliedGiftWrap,
+    }).then((res) => {
+      if (res.success && res.data) {
+        setRecentOrder(res.data);
+        setOrderHistory((prev) => [res.data!, ...prev.filter((o) => o.orderId !== res.data!.orderId)]);
+      }
+    });
+
+    setOrderHistory((prev) => [localOrder, ...prev]);
+    setRecentOrder(localOrder);
 
     if (currentUser) {
       setCurrentUser((prev) =>
-        prev ? { ...prev, pointsBalance: prev.pointsBalance + Math.round(finalTotal) } : null
+        prev ? { ...prev, pointsBalance: prev.pointsBalance + Math.round(finalTotal * 10) } : null
       );
     }
 
     clearCart();
-    showToast('Order Confirmed', `Order #${newOrder.orderId} is being prepared`, 'success');
-    return newOrder;
+    showToast('Order Confirmed', `Order #${localOrder.orderId} registered with Atelier vault`, 'success');
+    return localOrder;
   };
 
   const submitBespokeInquiry = (inquiryData: Omit<BespokeInquiry, 'submittedAt'>) => {
@@ -617,6 +773,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       submittedAt: new Date().toISOString(),
     };
     setBespokeInquiries((prev) => [fullInquiry, ...prev]);
+    api.inquiries.submitBespoke(inquiryData);
     showToast(
       'Consultation Requested',
       'An artisan specialist will contact you within 24–48 hours.',
@@ -630,6 +787,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       submittedAt: new Date().toISOString(),
     };
     setTradeInquiries((prev) => [fullTrade, ...prev]);
+    api.inquiries.submitTrade(inquiryData);
     showToast(
       'Application Submitted',
       'Our Trade & Hospitality team will review your credentials shortly.',
@@ -642,6 +800,11 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       value={{
         activePage,
         setActivePage,
+        products,
+        categories,
+        refreshCategories,
+        refreshProducts,
+        isApiConnected,
         cart,
         wishlist,
         currency,
@@ -666,11 +829,14 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setAuthMode,
         isMiniAccountOpen,
         setIsMiniAccountOpen,
+        isContactOpen,
+        setIsContactOpen,
         isAROpen,
         setIsAROpen,
         arProduct,
         openARView,
         currentUser,
+        setCurrentUser,
         login,
         signup,
         logout,

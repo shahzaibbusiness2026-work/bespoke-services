@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 
@@ -62,7 +64,7 @@ export const TheCanvasPage: React.FC = () => {
       date: 'August 12, 2024',
       readTime: '7 min read',
       image:
-        'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1000&q=85',
+        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=85',
     },
     {
       id: 'art-4',

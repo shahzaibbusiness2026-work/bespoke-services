@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Product } from '../types';
+import { FALLBACK_IMAGE } from '../data/products';
 import { useShop } from '../context/ShopContext';
 
 interface ProductCardProps {
@@ -7,7 +10,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { setSelectedProductForQuickView, toggleWishlist, isInWishlist, formatPrice, addToCart, showToast } = useShop();
+  const { setSelectedProductForQuickView, toggleWishlist, isInWishlist, formatPrice, addToCart, showToast, openARView } = useShop();
   const inWishlist = isInWishlist(product.id);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -64,6 +67,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           className="product-img object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
           loading="lazy"
           decoding="async"
+          onError={(e) => {
+            e.currentTarget.src = FALLBACK_IMAGE;
+            e.currentTarget.srcset = '';
+          }}
           onClick={handleCardClick}
         />
 
@@ -90,7 +97,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          className="w-11 h-11 min-w-[44px] min-h-[44px] absolute top-2 right-2 z-20 flex items-center justify-center text-[#000000] hover:text-[#252726] bg-white/75 hover:bg-white backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-black"
+          className="w-11 h-11 min-w-[44px] min-h-[44px] absolute top-2 right-2 z-20 flex items-center justify-center text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black shadow-xs"
           aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           aria-pressed={inWishlist}
         >
@@ -99,6 +106,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             style={{ fontVariationSettings: inWishlist ? "'FILL' 1, 'wght' 300" : "'FILL' 0, 'wght' 300" }}
           >
             favorite
+          </span>
+        </button>
+
+        {/* View in Room / 3D AR Visualizer Trigger */}
+        <button
+          id={`ar-view-btn-${product.id}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            openARView(product);
+          }}
+          className="w-11 h-11 min-w-[44px] min-h-[44px] absolute top-14 right-2 z-20 flex items-center justify-center text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-xs"
+          aria-label={`Preview ${product.name} in 3D AR room`}
+          title="View in Room (AR)"
+        >
+          <span
+            className="material-symbols-outlined text-[20px]"
+            style={{ fontVariationSettings: "'wght' 300" }}
+          >
+            view_in_ar
           </span>
         </button>
 
@@ -224,7 +250,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </span>
             ))}
             <span className="text-[11.5px] text-[#2b2d2c] ml-1 font-medium">
-              ({product.ratingCount || 48})
+              ({product.reviewsCount ?? product.ratingCount ?? 48})
             </span>
           </div>
         )}

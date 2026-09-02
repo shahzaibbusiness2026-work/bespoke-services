@@ -14,6 +14,9 @@ export const PROMO_CODES: PromoCode[] = [
   { code: 'WELCOME10', discountPercent: 10, description: '10% off for new atelier clients' },
 ];
 
+export const FALLBACK_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='1000' viewBox='0 0 800 1000'%3E%3Crect width='100%25' height='100%25' fill='%23faf9f7'/%3E%3Crect x='40' y='40' width='720' height='920' fill='none' stroke='%23e3e2e0' stroke-width='1'/%3E%3Ctext x='50%25' y='48%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='28' letter-spacing='0.2em' fill='%231a1c1b'%3EBOSKI LIMITED%3C/text%3E%3Ctext x='50%25' y='53%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' letter-spacing='0.25em' fill='%23675d50'%3EATELIER TEXTILE VAULT%3C/text%3E%3C/svg%3E";
+
 export const PRODUCTS: Product[] = [
   {
     id: 'prod-1',
@@ -52,7 +55,7 @@ export const PRODUCTS: Product[] = [
       {
         name: 'Sage Herb',
         hex: '#8C9A86',
-        image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85',
+        image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
       },
     ],
     sizes: ['Twin', 'Full', 'Queen', 'King', 'Cal King'],
@@ -60,7 +63,7 @@ export const PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85',
       'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85',
       'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85',
-      'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
     ],
     description: 'Our iconic bedding foundation. Woven from single-ply, long-staple Egyptian cotton in a luminous 480-thread-count sateen weave. Silky to the touch with an understated sheen, designed to soften gracefully with every laundering cycle.',
     details: [
@@ -163,14 +166,14 @@ export const PRODUCTS: Product[] = [
       {
         name: 'Dawn Sky Tint',
         hex: '#D2DBE2',
-        image: 'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85',
+        image: 'https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=1200&q=85',
       },
     ],
     sizes: ['Twin', 'Full', 'Queen', 'King', 'Cal King'],
     images: [
       'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85',
       'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85',
-      'https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85',
+      'https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=1200&q=85',
     ],
     description: 'The definitive crisp hotel sheet experience. Woven with a one-over-one percale weave from organically farmed cotton. Unmatched breathability with a cool, airy crunch that guarantees restorative sleep for warm sleepers.',
     details: [

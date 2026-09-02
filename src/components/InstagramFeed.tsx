@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
-import { Instagram, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Instagram, ArrowUpRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
-import { PRODUCTS } from '../data/products';
+import { FALLBACK_IMAGE, PRODUCTS } from '../data/products';
 
 const UGC_POSTS = [
   {
@@ -39,6 +41,13 @@ const UGC_POSTS = [
     productId: 'prod-7',
     caption: 'Mulberry silk pillowcases in Champagne Ivory for restorative sleep.',
   },
+  {
+    id: 'ugc-6',
+    user: '@savoy_residence',
+    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=600&q=80',
+    productId: 'prod-towel-1',
+    caption: '700 GSM Aegean long-staple bath sheets. Quiet hotel spa rituals.',
+  },
 ];
 
 export const InstagramFeed: React.FC = () => {
@@ -52,41 +61,48 @@ export const InstagramFeed: React.FC = () => {
   };
 
   return (
-    <section id="ugc-community-section" className="py-16 bg-[#F7F5F0] border-y border-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="ugc-community-section" className="py-20 bg-[#faf9f7] border-t border-[#c4c7c7]">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-12 lg:px-16">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-neutral-500 font-semibold">
-            <Instagram className="w-3.5 h-3.5 text-neutral-800" />
-            <span>Curated Bed & Bedroom Living</span>
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <div className="inline-flex items-center gap-2 text-label-caps uppercase tracking-[0.2em] text-[#505252] font-semibold">
+            <Instagram className="w-4 h-4 text-[#1a1c1b]" />
+            <span>Curated Living &amp; Sanctuaries</span>
           </div>
-          <h3 className="font-serif text-3xl sm:text-4xl text-neutral-950 font-normal">
+          <h2
+            className="text-[32px] sm:text-[42px] leading-tight text-[#000000] font-normal"
+            style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+          >
             Styled in Thoughtful Sanctuaries
-          </h3>
-          <p className="text-xs sm:text-sm text-neutral-600 font-light">
-            Tag <strong className="text-neutral-900 font-medium">@BoskiLimited</strong> or <strong className="text-neutral-900 font-medium">#BoskiLimited</strong> on Instagram to be featured in our seasonal bedroom galleries.
+          </h2>
+          <p className="text-body-sm text-[#444748] font-light leading-relaxed">
+            Tag <strong className="text-[#000000] font-medium">@BoskiLimited</strong> or <strong className="text-[#000000] font-medium">#BoskiLimited</strong> on Instagram to be featured in our seasonal bedroom galleries.
           </p>
         </div>
 
-        {/* Grid of UGC Posts */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+        {/* Grid of UGC Posts with 0px Sharp Corners and Smooth Scale */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {UGC_POSTS.map((post) => (
             <div
               key={post.id}
               onClick={() => handlePostClick(post.productId)}
-              className="group relative rounded-xl overflow-hidden aspect-square cursor-pointer bg-neutral-200 shadow-sm"
+              className="group relative rounded-none overflow-hidden aspect-square cursor-pointer bg-[#efeeec] border border-[#c4c7c7]/60 card-hover-lift"
             >
               <img
                 src={post.image}
                 alt={post.caption}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src = FALLBACK_IMAGE;
+                }}
               />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3.5 text-white">
-                <div className="flex justify-between items-center text-xs font-semibold">
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 text-white">
+                <div className="flex justify-between items-center text-label-caps uppercase tracking-wider font-medium">
                   <span>{post.user}</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
-                <p className="text-[11px] font-light leading-snug line-clamp-3">
+                <p className="text-[12px] font-light leading-snug line-clamp-3">
                   {post.caption}
                 </p>
               </div>

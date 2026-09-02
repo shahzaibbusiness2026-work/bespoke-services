@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
-import { X, Ruler, Sparkles } from 'lucide-react';
+import { X, Ruler } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const SizeGuideModal: React.FC = () => {
@@ -39,81 +41,85 @@ export const SizeGuideModal: React.FC = () => {
         onClick={() => setIsSizeGuideOpen(false)}
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
+          initial={{ opacity: 0, scale: 0.98, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
+          exit={{ opacity: 0, scale: 0.98, y: 15 }}
           id="size-guide-modal-content"
-          className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden flex flex-col max-h-[90vh]"
+          className="bg-[#faf9f7] w-full max-w-2xl rounded-none shadow-2xl border border-[#c4c7c7] overflow-hidden flex flex-col max-h-[90vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="p-6 border-b border-neutral-200 bg-[#FAF9F6] flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-neutral-900 text-white">
+          <div className="p-6 border-b border-[#c4c7c7] bg-[#faf9f7] flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-[#000000] text-white rounded-none">
                 <Ruler className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-serif text-xl text-neutral-900 font-normal">
-                  Bedding & Mattress Size Guide
+                <h3
+                  className="text-headline-sm text-[#000000] font-normal"
+                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                >
+                  Bedding &amp; Mattress Size Guide
                 </h3>
-                <p className="text-xs text-neutral-500">
-                  Precise dimensions for our sheets, duvets, and pillows
+                <p className="text-body-sm text-[#444748] font-light">
+                  Precise architectural dimensions for our linens, duvet covers, and pillows
                 </p>
               </div>
             </div>
 
             <button
               onClick={() => setIsSizeGuideOpen(false)}
-              className="p-1.5 text-neutral-400 hover:text-black rounded-full transition-colors"
+              className="p-2 text-[#444748] hover:text-[#000000] hover:bg-[#efeeec] transition-colors rounded-none cursor-pointer"
+              aria-label="Close size guide"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Controls Bar */}
-          <div className="p-4 border-b border-neutral-100 flex items-center justify-between bg-white text-xs">
+          <div className="p-4 border-b border-[#e3e2e0] flex items-center justify-between bg-[#f4f3f1] text-xs">
             {/* Tabs */}
             <div className="flex gap-2">
               <button
                 onClick={() => setCategoryTab('sheets')}
-                className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                  categoryTab === 'sheets' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+                className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
+                  categoryTab === 'sheets' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
                 Sheet Sets
               </button>
               <button
                 onClick={() => setCategoryTab('duvets')}
-                className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                  categoryTab === 'duvets' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+                className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
+                  categoryTab === 'duvets' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
-                Duvets & Covers
+                Duvets &amp; Covers
               </button>
               <button
                 onClick={() => setCategoryTab('pillows')}
-                className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                  categoryTab === 'pillows' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+                className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
+                  categoryTab === 'pillows' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
-                Pillows & Shams
+                Pillows &amp; Shams
               </button>
             </div>
 
             {/* Unit Toggle */}
-            <div className="flex items-center border border-neutral-200 rounded-lg p-0.5">
+            <div className="flex items-center border border-[#c4c7c7] rounded-none p-0.5 bg-white">
               <button
                 onClick={() => setUnit('in')}
-                className={`px-2.5 py-1 rounded text-[11px] font-semibold ${
-                  unit === 'in' ? 'bg-neutral-900 text-white' : 'text-neutral-500'
+                className={`px-2.5 py-1 rounded-none text-[11px] font-semibold cursor-pointer ${
+                  unit === 'in' ? 'bg-[#000000] text-white' : 'text-[#505252]'
                 }`}
               >
                 IN
               </button>
               <button
                 onClick={() => setUnit('cm')}
-                className={`px-2.5 py-1 rounded text-[11px] font-semibold ${
-                  unit === 'cm' ? 'bg-neutral-900 text-white' : 'text-neutral-500'
+                className={`px-2.5 py-1 rounded-none text-[11px] font-semibold cursor-pointer ${
+                  unit === 'cm' ? 'bg-[#000000] text-white' : 'text-[#505252]'
                 }`}
               >
                 CM
@@ -122,26 +128,26 @@ export const SizeGuideModal: React.FC = () => {
           </div>
 
           {/* Content Table */}
-          <div className="p-6 overflow-y-auto flex-1">
+          <div className="p-6 overflow-y-auto flex-1 bg-white">
             {categoryTab === 'sheets' && (
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-neutral-200 text-neutral-400 uppercase text-[10px] tracking-wider">
+                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
                     <th className="pb-3 font-semibold">Size</th>
                     <th className="pb-3 font-semibold">Mattress Fit</th>
                     <th className="pb-3 font-semibold">Fitted Pocket</th>
                     <th className="pb-3 font-semibold">Flat Sheet</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100 text-neutral-800">
+                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
                   {sheetsData.map((row) => (
-                    <tr key={row.size} className="hover:bg-neutral-50">
-                      <td className="py-3 font-medium text-neutral-950">{row.size}</td>
-                      <td className="py-3 text-neutral-600">
+                    <tr key={row.size} className="hover:bg-[#faf9f7] transition-colors">
+                      <td className="py-3.5 font-medium text-[#000000]">{row.size}</td>
+                      <td className="py-3.5 text-[#444748]">
                         {unit === 'in' ? row.mattressIn : row.mattressCm}
                       </td>
-                      <td className="py-3 text-neutral-600">{row.fittedIn}</td>
-                      <td className="py-3 text-neutral-600">{row.flatIn}</td>
+                      <td className="py-3.5 text-[#444748]">{row.fittedIn}</td>
+                      <td className="py-3.5 text-[#444748]">{row.flatIn}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -149,22 +155,22 @@ export const SizeGuideModal: React.FC = () => {
             )}
 
             {categoryTab === 'duvets' && (
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-neutral-200 text-neutral-400 uppercase text-[10px] tracking-wider">
-                    <th className="pb-3 font-semibold">Duvet Size</th>
-                    <th className="pb-3 font-semibold">Dimensions</th>
-                    <th className="pb-3 font-semibold">Compatible Bed</th>
+                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
+                    <th className="pb-3 font-semibold">Size</th>
+                    <th className="pb-3 font-semibold">Duvet Dimensions</th>
+                    <th className="pb-3 font-semibold">Fits Mattress</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100 text-neutral-800">
+                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
                   {duvetsData.map((row) => (
-                    <tr key={row.size} className="hover:bg-neutral-50">
-                      <td className="py-3 font-medium text-neutral-950">{row.size}</td>
-                      <td className="py-3 text-neutral-600">
+                    <tr key={row.size} className="hover:bg-[#faf9f7] transition-colors">
+                      <td className="py-3.5 font-medium text-[#000000]">{row.size}</td>
+                      <td className="py-3.5 text-[#444748]">
                         {unit === 'in' ? row.duvetIn : row.duvetCm}
                       </td>
-                      <td className="py-3 text-neutral-600">{row.fits}</td>
+                      <td className="py-3.5 text-[#444748]">{row.fits}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -172,32 +178,32 @@ export const SizeGuideModal: React.FC = () => {
             )}
 
             {categoryTab === 'pillows' && (
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-neutral-200 text-neutral-400 uppercase text-[10px] tracking-wider">
-                    <th className="pb-3 font-semibold">Pillow / Sham Type</th>
+                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
+                    <th className="pb-3 font-semibold">Item Style</th>
                     <th className="pb-3 font-semibold">Dimensions</th>
-                    <th className="pb-3 font-semibold">Notes</th>
+                    <th className="pb-3 font-semibold">Usage &amp; Layering</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100 text-neutral-800">
+                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
                   {pillowsData.map((row) => (
-                    <tr key={row.type} className="hover:bg-neutral-50">
-                      <td className="py-3 font-medium text-neutral-950">{row.type}</td>
-                      <td className="py-3 text-neutral-600">
+                    <tr key={row.type} className="hover:bg-[#faf9f7] transition-colors">
+                      <td className="py-3.5 font-medium text-[#000000]">{row.type}</td>
+                      <td className="py-3.5 text-[#444748]">
                         {unit === 'in' ? row.dimIn : row.dimCm}
                       </td>
-                      <td className="py-3 text-neutral-500">{row.notes}</td>
+                      <td className="py-3.5 text-[#444748]">{row.notes}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             )}
 
-            <div className="mt-6 p-4 rounded-xl bg-[#FAF9F6] border border-neutral-200 text-xs text-neutral-600 space-y-1">
-              <p className="font-semibold text-neutral-900">Atelier Deep-Pocket Guarantee:</p>
+            <div className="mt-8 pt-4 border-t border-[#e3e2e0] text-body-sm text-[#505252] space-y-1">
+              <p className="font-semibold text-[#000000]">Need custom drops or tailored measurements?</p>
               <p>
-                All fitted sheets feature our continuous 360° elastic hem accommodating mattress profiles up to 18" thick, including plush pillow-tops and natural latex toppers.
+                Our master atelier produces custom drapery drops, extra-deep mattress pockets (up to 24"), and bespoke dimensions upon request.
               </p>
             </div>
           </div>

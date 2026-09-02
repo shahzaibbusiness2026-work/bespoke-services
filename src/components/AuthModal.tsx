@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 
@@ -47,7 +49,7 @@ export const AuthModal: React.FC = () => {
         <div className="relative hidden md:block w-full h-full min-h-[580px] bg-[#efeeec]">
           <img
             src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
-            alt="LINEN & LOFT premium bedding editorial"
+            alt="BOSKI LIMITED premium bedding editorial"
             className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-black/20" />

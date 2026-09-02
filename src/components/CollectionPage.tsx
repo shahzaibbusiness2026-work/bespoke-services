@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
@@ -88,8 +90,7 @@ const PAGE_CONFIG: Record<
     badgeText: 'Belgian Flax Drapery',
     filterCategories: [
       { id: 'all', label: 'All Curtains' },
-      { id: 'curtains', label: 'Linen Panels' },
-      { id: 'sheer', label: 'Sheer Weaves' },
+      { id: 'curtains', label: 'Belgian Linen Drapes' },
     ],
   },
   towels: {
@@ -148,7 +149,7 @@ const PAGE_CONFIG: Record<
 };
 
 export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initialCategory }) => {
-  const { setActivePage } = useShop();
+  const { products, categories, setActivePage } = useShop();
   const config = PAGE_CONFIG[pageType] || PAGE_CONFIG.shop;
 
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>(initialCategory || 'all');
@@ -165,7 +166,8 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
   }, [pageType, initialCategory]);
 
   const filteredProducts = useMemo(() => {
-    let list = [...PRODUCTS];
+    const sourceProducts = products && products.length > 0 ? products : PRODUCTS;
+    let list = [...sourceProducts];
 
     if (pageType === 'new-arrivals') {
       list = list.filter((p) => p.isNew || p.featured);

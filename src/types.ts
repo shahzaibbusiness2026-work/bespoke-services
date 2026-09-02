@@ -13,6 +13,7 @@ export interface Product {
   originalPrice?: number;
   rating: number;
   reviewsCount: number;
+  ratingCount?: number;
   inStock: boolean;
   stockCount: number;
   isNew?: boolean;
@@ -112,8 +113,10 @@ export interface User {
   id: string;
   firstName: string;
   lastName: string;
+  name?: string;
   email: string;
   phone?: string;
+  role?: 'client' | 'admin' | 'concierge';
   vipTier: 'Member' | 'Silver' | 'Gold' | 'Diamond Concierge';
   pointsBalance: number;
   joinedDate: string;
@@ -154,6 +157,7 @@ export interface OrderDetails {
 export interface BespokeInquiry {
   fullName: string;
   email: string;
+  phone?: string;
   projectType: string;
   details?: string;
   imageFileName?: string;

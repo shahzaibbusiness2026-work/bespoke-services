@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import { useShop } from '../context/ShopContext';
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS, FALLBACK_IMAGE } from '../data/products';
 
 export const WishlistDrawer: React.FC = () => {
   const {
@@ -104,6 +106,9 @@ export const WishlistDrawer: React.FC = () => {
                       src={product.images[0]}
                       alt={product.name}
                       className="w-full h-full object-cover product-img group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.src = FALLBACK_IMAGE;
+                      }}
                     />
                   </div>
 

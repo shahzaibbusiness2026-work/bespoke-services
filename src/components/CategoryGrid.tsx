@@ -1,10 +1,45 @@
-import React from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
+import { useShop } from '../context/ShopContext';
+import { FALLBACK_IMAGE } from '../data/products';
 
 interface CategoryGridProps {
   onSelectCategory: (category: string) => void;
 }
 
-const CATEGORIES = [
+const DEFAULT_CATEGORY_METADATA: Record<string, { subtitle: string; image: string }> = {
+  duvets: {
+    subtitle: 'Stonewashed French Linen',
+    image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85',
+  },
+  sheets: {
+    subtitle: '480TC Sateen Weave',
+    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=85',
+  },
+  curtains: {
+    subtitle: 'Belgian Linen Drapes',
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=85',
+  },
+  towels: {
+    subtitle: '700 GSM Aegean Cotton',
+    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=85',
+  },
+  blankets: {
+    subtitle: 'Waffle Weave & Alpaca',
+    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=85',
+  },
+  throws: {
+    subtitle: 'Hand-Fringed Linen & Alpaca',
+    image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=85',
+  },
+  pillows: {
+    subtitle: 'Mulberry Silk & Down',
+    image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=85',
+  },
+};
+
+const DEFAULT_CATEGORIES = [
   {
     id: 'cat-linen',
     name: 'Linen Duvets',
@@ -62,6 +97,32 @@ const CATEGORIES = [
 ];
 
 export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) => {
+  const { categories } = useShop();
+
+  // Dynamically resolve category cards merging live context with visual styling
+  const displayCategories = useMemo(() => {
+    if (categories && categories.length > 0) {
+      return categories.map((c, index) => {
+        const key = c.category.toLowerCase();
+        const meta = DEFAULT_CATEGORY_METADATA[key] || {
+          subtitle: 'Atelier Collection',
+          image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=800&q=85',
+        };
+        const label = c.label || key.charAt(0).toUpperCase() + key.slice(1).replace(/-/g, ' ');
+        return {
+          id: `cat-${key}`,
+          name: label,
+          subtitle: meta.subtitle,
+          key,
+          image: meta.image,
+          colSpan: index === 0 ? 'md:col-span-2' : 'md:col-span-1',
+          rowSpan: index === 0 ? 'md:row-span-2' : '',
+        };
+      });
+    }
+    return DEFAULT_CATEGORIES;
+  }, [categories]);
+
   const handleClick = (key: string) => {
     onSelectCategory(key);
     setTimeout(() => {
@@ -92,7 +153,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) 
 
       {/* Bento Grid with Smooth Hardware-Accelerated Lift */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-[280px]">
-        {CATEGORIES.map((cat) => (
+        {displayCategories.map((cat) => (
           <div
             key={cat.id}
             id={`cat-card-${cat.key}`}
@@ -104,6 +165,9 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) 
               src={cat.image}
               alt={cat.name}
               className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+              onError={(e) => {
+                e.currentTarget.src = FALLBACK_IMAGE;
+              }}
             />
 
             {/* Contrast Overlay */}

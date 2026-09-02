@@ -1,0 +1,1272 @@
+{
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Signature Sateen Core Sheet Set",
+      "subtitle": "480-Thread-Count Long-Staple Egyptian Cotton",
+      "category": "sheets",
+      "price": 265,
+      "originalPrice": 320,
+      "rating": 4.96,
+      "reviewsCount": 248,
+      "inStock": true,
+      "stockCount": 14,
+      "isBestSeller": true,
+      "isSale": true,
+      "discountPercent": 17,
+      "sku": "LL-SAT-4921",
+      "featured": true,
+      "threadCount": "480 Thread Count",
+      "fabric": "100% Long-Staple Cotton Sateen",
+      "colors": [
+        {
+          "name": "Warm Ivory",
+          "hex": "#F5EFEB",
+          "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Cloud White",
+          "hex": "#FAF9F6",
+          "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "French Flax",
+          "hex": "#D7C7B3",
+          "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Sage Herb",
+          "hex": "#8C9A86",
+          "image": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Twin",
+        "Full",
+        "Queen",
+        "King",
+        "Cal King"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "Our iconic bedding foundation. Woven from single-ply, long-staple Egyptian cotton in a luminous 480-thread-count sateen weave. Silky to the touch with an understated sheen, designed to soften gracefully with every laundering cycle.",
+      "details": [
+        "Includes 1 Flat Sheet, 1 Deep-Pocket Fitted Sheet (up to 18\" mattress depth), and 2 Envelope Pillowcases",
+        "Luminous 480-thread-count four-over-one sateen weave",
+        "Continuous 360° elastic hem ensuring a snug, slip-free mattress fit",
+        "Discreet directional \"Short Side / Long Side\" woven identification tags",
+        "Pre-washed with organic mountain mineral water for immediate out-of-box drape"
+      ],
+      "material": "100% Certified Long-Staple Egyptian Cotton",
+      "careInstructions": "Machine wash warm on gentle cycle with mild detergent. Tumble dry low and remove promptly to minimize wrinkles. Warm iron if desired.",
+      "sustainability": "OEKO-TEX® Standard 100 Certified (Free from 300+ harmful substances) & GOTS Certified Organic Dyes.",
+      "tags": [
+        "Best Seller",
+        "Sateen",
+        "Core Sheet Set",
+        "Cotton",
+        "Hotel Quality"
+      ]
+    },
+    {
+      "id": "prod-2",
+      "name": "Stonewashed French Linen Duvet Cover",
+      "subtitle": "100% Normandy Flax • Naturally Temperature Regulating",
+      "category": "duvets",
+      "price": 310,
+      "originalPrice": 360,
+      "rating": 4.98,
+      "reviewsCount": 192,
+      "inStock": true,
+      "stockCount": 8,
+      "isNew": true,
+      "isBestSeller": true,
+      "sku": "LL-LIN-7822",
+      "featured": true,
+      "threadCount": "175 GSM Pure Linen",
+      "fabric": "100% French Normandy Flax",
+      "colors": [
+        {
+          "name": "Natural Flax",
+          "hex": "#D5C4A1",
+          "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Muted Terracotta",
+          "hex": "#C07D62",
+          "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Alabaster Milk",
+          "hex": "#F7F5F0",
+          "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Charcoal Slate",
+          "hex": "#3E424B",
+          "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Full / Queen",
+        "King / Cal King"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "Crafted from premium flax cultivated in northern France. Stonewashed in small artisanal batches for an exquisitely soft, lived-in texture that keeps you cool in summer and cozily insulated in winter.",
+      "details": [
+        "Pre-washed French flax linen with relaxed vintage drape",
+        "Hidden natural river-shell button closure",
+        "Internal corner duvet ties to keep inserts perfectly anchored",
+        "Naturally antibacterial and hypoallergenic fibers",
+        "Includes complimentary reusable linen laundry pouch"
+      ],
+      "material": "100% French Normandy Flax Linen (175 GSM)",
+      "careInstructions": "Machine wash cool with similar earth tones. Line dry in gentle breeze or tumble dry low. Natural crinkles are celebrated—no ironing needed.",
+      "sustainability": "European Flax™ Certified (100% sustainable European cultivation without artificial irrigation or GMOs).",
+      "tags": [
+        "French Linen",
+        "Duvet Cover",
+        "Temperature Regulating",
+        "Natural Living"
+      ]
+    },
+    {
+      "id": "prod-3",
+      "name": "Crisp Organic Cotton Percale Bundle",
+      "subtitle": "Classic Matte Finish • Breathable 300-Thread-Count",
+      "category": "sheets",
+      "price": 240,
+      "rating": 4.92,
+      "reviewsCount": 167,
+      "inStock": true,
+      "stockCount": 19,
+      "isNew": false,
+      "sku": "LL-PER-1102",
+      "featured": true,
+      "threadCount": "300 Thread Count",
+      "fabric": "100% GOTS Certified Organic Percale",
+      "colors": [
+        {
+          "name": "Crisp Chalk White",
+          "hex": "#FFFFFF",
+          "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Soft Oatmeal",
+          "hex": "#ECE6DC",
+          "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Dawn Sky Tint",
+          "hex": "#D2DBE2",
+          "image": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Twin",
+        "Full",
+        "Queen",
+        "King",
+        "Cal King"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "The definitive crisp hotel sheet experience. Woven with a one-over-one percale weave from organically farmed cotton. Unmatched breathability with a cool, airy crunch that guarantees restorative sleep for warm sleepers.",
+      "details": [
+        "1 Flat Sheet, 1 Fitted Sheet, and 2 Pillowcases",
+        "300-thread-count breathable structure",
+        "Deep pocket fitted sheet accommodating up to 16\" mattresses",
+        "100% pesticide-free organic farming practices"
+      ],
+      "material": "100% GOTS Certified Organic Cotton",
+      "careInstructions": "Machine wash warm. Tumble dry medium. For a pristine boutique hotel finish, warm iron with light steam.",
+      "sustainability": "Global Organic Textile Standard (GOTS) Certified & Fair Trade Certified Factory.",
+      "tags": [
+        "Crisp Cotton",
+        "Percale",
+        "Cool Sleeping",
+        "Eco Luxury"
+      ]
+    },
+    {
+      "id": "prod-4",
+      "name": "Waffle Weave Bedspread & Pillow Shams",
+      "subtitle": "Dimensional Honeycomb Weave • Medium Weight Layering",
+      "category": "blankets",
+      "price": 285,
+      "rating": 4.89,
+      "reviewsCount": 84,
+      "inStock": true,
+      "stockCount": 11,
+      "isNew": true,
+      "sku": "LL-WAF-3301",
+      "featured": true,
+      "threadCount": "420 GSM Textured Weave",
+      "fabric": "100% Combed Turkish Cotton",
+      "colors": [
+        {
+          "name": "Sand Dunes",
+          "hex": "#DFD5C6",
+          "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Warm Ochre",
+          "hex": "#C99E68",
+          "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Bone White",
+          "hex": "#F4F1EA",
+          "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Full / Queen",
+        "King / Cal King"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "An architectural tactile layer for contemporary bed styling. Loomed from pure Turkish combed cotton in an intricate honeycomb waffle grid that traps gentle pockets of air for sublime year-round warmth.",
+      "details": [
+        "Dimensional honeycomb thermal pocket construction",
+        "Pre-shrunk to retain architectural texture through washing",
+        "Includes 2 matching flange-edge standard/king pillow shams",
+        "Generous drape on all four bed sides"
+      ],
+      "material": "100% Long-Staple Turkish Cotton (420 GSM)",
+      "careInstructions": "Machine wash cool on gentle cycle. Tumble dry low to encourage dimensional texture.",
+      "sustainability": "OEKO-TEX® Made in Green certified.",
+      "tags": [
+        "Waffle Weave",
+        "Bedspread",
+        "Texture",
+        "Turkish Cotton"
+      ]
+    },
+    {
+      "id": "prod-5",
+      "name": "Bespoke Belgian Linen Drapery Panels",
+      "subtitle": "Made-to-Measure Custom Header • Light-Filtering Elegance",
+      "category": "curtains",
+      "price": 210,
+      "rating": 4.95,
+      "reviewsCount": 112,
+      "inStock": true,
+      "stockCount": 16,
+      "isBestSeller": true,
+      "sku": "LL-CUR-9012",
+      "featured": true,
+      "threadCount": "280 GSM Heavyweight Linen",
+      "fabric": "100% Belgian Master Flax",
+      "colors": [
+        {
+          "name": "Warm Ivory Sheer",
+          "hex": "#FAF6EE",
+          "image": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Natural Flax",
+          "hex": "#D7C7B3",
+          "image": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Muted Oatmeal",
+          "hex": "#DDD6CA",
+          "image": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "50\" x 84\"",
+        "50\" x 96\"",
+        "50\" x 108\"",
+        "Custom Bespoke"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "Bespoke drapery panels loomed from weighty Belgian flax. Softens harsh sunlight while maintaining luminous natural illumination throughout bedrooms and living retreats. Tailored with weighted hems for effortless architectural puddling.",
+      "details": [
+        "Versatile 3-in-1 header: Rod Pocket, Back Tabs, or Drapery Pin Rings",
+        "Blind-stitched side seams and 4\" bottom weighted hems",
+        "Filters UV radiation while protecting furniture and flooring",
+        "Sold as individual panels with complimentary fabric sample swatch included"
+      ],
+      "material": "100% Belgian Flax Linen (280 GSM)",
+      "careInstructions": "Dry clean recommended, or machine wash gentle cold and hang dry while slightly damp.",
+      "sustainability": "Masters of Linen® certified 100% European traceability.",
+      "tags": [
+        "Curtains",
+        "Belgian Linen",
+        "Bespoke",
+        "Drapery",
+        "Light Filtering"
+      ]
+    },
+    {
+      "id": "prod-6",
+      "name": "Alpaca & Cashmere Bedside Throw",
+      "subtitle": "Whisper-Soft Andean Alpaca with Scottish Cashmere Trim",
+      "category": "throws",
+      "price": 195,
+      "rating": 4.97,
+      "reviewsCount": 76,
+      "inStock": true,
+      "stockCount": 7,
+      "isNew": true,
+      "sku": "LL-THR-5541",
+      "featured": true,
+      "threadCount": "340 GSM Plied Yarn",
+      "fabric": "70% Baby Alpaca, 30% Cashmere",
+      "colors": [
+        {
+          "name": "Oatmeal Melange",
+          "hex": "#E0D7C6",
+          "image": "https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Soft Charcoal",
+          "hex": "#4A4C50",
+          "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Warm Camel",
+          "hex": "#B89772",
+          "image": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "50\" x 70\"",
+        "60\" x 80\""
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "An indulgent layer for the foot of the bed. Hand-spun baby alpaca blended with whisper-soft cashmere for weightless thermal comfort. Finished with classic hand-twisted fringed edges.",
+      "details": [
+        "Hypoallergenic baby alpaca fiber containing zero lanolin",
+        "Naturally flame-retardant and thermal-insulating",
+        "Delicate 3\" twisted fringe detailing along ends",
+        "Packaged in a debossed organic cotton preservation box"
+      ],
+      "material": "70% Baby Alpaca, 30% Pure Scottish Cashmere",
+      "careInstructions": "Dry clean only. Air out in fresh shaded air between seasons.",
+      "sustainability": "Sustainably sheared under Certified Responsible Wool & Alpaca guidelines.",
+      "tags": [
+        "Alpaca",
+        "Cashmere",
+        "Throw Blanket",
+        "Bed Styling"
+      ]
+    },
+    {
+      "id": "prod-7",
+      "name": "Pure Mulberry Silk Pillowcase Pair",
+      "subtitle": "Grade 6A 22-Momme 100% Pure Mulberry Silk",
+      "category": "pillows",
+      "price": 135,
+      "originalPrice": 160,
+      "rating": 4.99,
+      "reviewsCount": 310,
+      "inStock": true,
+      "stockCount": 22,
+      "isBestSeller": true,
+      "isSale": true,
+      "discountPercent": 15,
+      "sku": "LL-SLK-2200",
+      "featured": true,
+      "threadCount": "22-Momme Silk",
+      "fabric": "100% Grade 6A Long-Fiber Mulberry Silk",
+      "colors": [
+        {
+          "name": "Champagne Ivory",
+          "hex": "#F3EDE0",
+          "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Pearl Rose",
+          "hex": "#EADCD7",
+          "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Onyx Black",
+          "hex": "#1C1C1E",
+          "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Standard / Queen (Pair)",
+        "King (Pair)"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "Dermatologist recommended beauty sleep essentials. Crafted from highest grade 6A long-fiber 22-momme mulberry silk. Eliminates bedhead friction, preserves overnight skin moisture, and stays soothingly cool all night.",
+      "details": [
+        "Includes set of 2 pillowcases in bespoke presentation gift box",
+        "Hidden zipper enclosure to keep pillows from sliding out",
+        "Naturally hypoallergenic, anti-dust mite, and anti-creasing",
+        "Natural amino acid proteins nourish skin barrier while sleeping"
+      ],
+      "material": "100% Grade 6A Pure Mulberry Silk (22 Momme)",
+      "careInstructions": "Hand wash or machine wash on delicate silk setting using pH-neutral silk wash. Hang to dry in shade.",
+      "sustainability": "OEKO-TEX® Standard 100 Class I Certified (Safe for infants).",
+      "tags": [
+        "Silk Pillowcase",
+        "Beauty Sleep",
+        "Mulberry Silk",
+        "Anti Aging"
+      ]
+    },
+    {
+      "id": "prod-8",
+      "name": "All-Season European Goose Down Comforter",
+      "subtitle": "750 Fill Power • Baffle Box 100% Cotton Shell",
+      "category": "bedding",
+      "price": 440,
+      "rating": 4.98,
+      "reviewsCount": 142,
+      "inStock": true,
+      "stockCount": 5,
+      "isBestSeller": true,
+      "sku": "LL-DWN-8810",
+      "featured": true,
+      "threadCount": "750 Fill Power / 400TC Shell",
+      "fabric": "100% RDS White Goose Down",
+      "colors": [
+        {
+          "name": "Crisp Cloud White",
+          "hex": "#FFFFFF",
+          "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Twin",
+        "Full / Queen",
+        "King / Cal King"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "The crowning jewel of bedtime luxury. Generously filled with ethically sourced 750 fill power European white goose down in a 3D baffle box construction that prevents cold spots and maintains loft forever.",
+      "details": [
+        "750 Fill Power certified ethical European white goose down",
+        "400-thread-count down-proof German batiste cotton casing",
+        "14\" Baffle box grid ensuring equal loft distribution",
+        "8 reinforced corner loops for secure duvet cover anchoring"
+      ],
+      "material": "RDS Certified European White Goose Down with 100% Organic Cotton Shell",
+      "careInstructions": "Professional laundering or specialist dry clean. Fluff daily.",
+      "sustainability": "Responsible Down Standard (RDS) Certified & Downpass Certified.",
+      "tags": [
+        "Goose Down",
+        "Duvet Insert",
+        "Cloud Comfort",
+        "Winter Warmth"
+      ]
+    },
+    {
+      "id": "prod-towel-1",
+      "name": "Plush Ribbed Turkish Bath Sheet Set",
+      "subtitle": "700 GSM Long-Staple Aegean Cotton",
+      "category": "towels",
+      "price": 135,
+      "originalPrice": 165,
+      "rating": 4.95,
+      "reviewsCount": 112,
+      "inStock": true,
+      "stockCount": 22,
+      "isBestSeller": true,
+      "isNew": true,
+      "sku": "BOS-TWL-7001",
+      "featured": true,
+      "threadCount": "700 GSM Density",
+      "fabric": "100% Certified Organic Aegean Turkish Cotton",
+      "colors": [
+        {
+          "name": "Warm Ivory",
+          "hex": "#F5EFEB",
+          "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Oatmeal Taupe",
+          "hex": "#D7C7B3",
+          "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Slate Charcoal",
+          "hex": "#383838",
+          "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Bath Sheet (40x70\")",
+        "Bath Towel (30x56\")",
+        "Complete 4-Piece Set"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "Immensely thick, cloud-soft, and remarkably absorbent. Spun from rare long-staple Aegean Turkish cotton with a sculptural rib weave that dries swiftly and maintains loft wash after wash.",
+      "details": [
+        "700 GSM heavy-weight luxury density",
+        "Woven in Denizli, Turkey using zero-twist combed yarns",
+        "Subtle double-stitched reinforced borders",
+        "OEKO-TEX Standard 100 Class 1 Certified"
+      ],
+      "material": "100% Organic Aegean Long-Staple Cotton",
+      "careInstructions": "Machine wash warm with mild detergent. Tumble dry medium. Avoid silicone fabric softeners.",
+      "sustainability": "GOTS Certified Organic & Water-Conscious Dyeing.",
+      "tags": [
+        "Bath Towels",
+        "Turkish Cotton",
+        "Luxury Bath",
+        "Plush Towel"
+      ]
+    },
+    {
+      "id": "prod-towel-2",
+      "name": "Waffle Weave Organic Cotton Bath Towel Duo",
+      "subtitle": "Dimensional Honeycomb Weave · Fast Drying",
+      "category": "towels",
+      "price": 95,
+      "originalPrice": 120,
+      "rating": 4.88,
+      "reviewsCount": 78,
+      "inStock": true,
+      "stockCount": 18,
+      "isSale": true,
+      "discountPercent": 20,
+      "sku": "BOS-TWL-8022",
+      "featured": true,
+      "fabric": "100% Organic Honeycomb Cotton",
+      "colors": [
+        {
+          "name": "Chalk White",
+          "hex": "#FAF9F6",
+          "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+        },
+        {
+          "name": "Sand Dune",
+          "hex": "#C8B9A6",
+          "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+        }
+      ],
+      "sizes": [
+        "Set of 2 (30x54\")",
+        "Set of 4 (Mixed Sizes)"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85",
+        "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+      ],
+      "description": "A tactile, Japanese-inspired honeycomb waffle weave that gently exfoliates while drying in half the time of conventional terry towels. Lightweight and architecturally minimal.",
+      "details": [
+        "Dimensional honeycomb weave pre-shrunk for texture",
+        "3x faster drying time than standard terry",
+        "Self-hemmed edges with cotton hanging loop"
+      ],
+      "material": "100% GOTS Certified Organic Cotton",
+      "careInstructions": "Machine wash warm, tumble dry low to restore waffle honeycomb texture.",
+      "sustainability": "Carbon-Neutral Crafted.",
+      "tags": [
+        "Waffle Towel",
+        "Fast Drying",
+        "Minimalist Bath"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-ll-4921",
+      "firstName": "Victoria",
+      "lastName": "Kensington",
+      "email": "victoria.kensington@luxuryclient.com",
+      "phone": "+1 (555) 234-8921",
+      "role": "client",
+      "vipTier": "Diamond Concierge",
+      "pointsBalance": 12450,
+      "joinedDate": "October 2023",
+      "passwordHash": "$2b$10$90tIjYN1E4jlSMoUejcbDu0szxG67ubfgAU7tAxLvP7GtvgSEeR56",
+      "addresses": [
+        {
+          "id": "addr-1",
+          "label": "Primary Residence (Penthouse)",
+          "firstName": "Victoria",
+          "lastName": "Kensington",
+          "addressLine1": "740 Park Avenue, Apt 14B",
+          "addressLine2": "Private Elevator Landing",
+          "city": "New York",
+          "state": "NY",
+          "zipCode": "10021",
+          "country": "United States",
+          "phone": "+1 (555) 234-8921",
+          "isDefault": true
+        },
+        {
+          "id": "addr-2",
+          "label": "Summer Villa",
+          "firstName": "Victoria",
+          "lastName": "Kensington",
+          "addressLine1": "42 Meadow Lane",
+          "city": "Southampton",
+          "state": "NY",
+          "zipCode": "11968",
+          "country": "United States",
+          "phone": "+1 (555) 234-8921",
+          "isDefault": false
+        }
+      ]
+    },
+    {
+      "id": "usr-admin-001",
+      "firstName": "Atelier",
+      "lastName": "Director",
+      "email": "concierge@boskilimited.com",
+      "phone": "+44 20 7946 0991",
+      "role": "admin",
+      "vipTier": "Diamond Concierge",
+      "pointsBalance": 999999,
+      "joinedDate": "January 2022",
+      "passwordHash": "$2b$10$90tIjYN1E4jlSMoUejcbDu0szxG67ubfgAU7tAxLvP7GtvgSEeR56",
+      "addresses": []
+    },
+    {
+      "id": "usr-1788322295242-5sgw",
+      "firstName": "Master",
+      "lastName": "Weaver",
+      "email": "test.artisan.1788322294996@boskilimited.com",
+      "phone": "+44 20 7946 0992",
+      "role": "client",
+      "vipTier": "Silver",
+      "pointsBalance": 5679,
+      "joinedDate": "September 2026",
+      "addresses": [
+        {
+          "id": "addr-1788322295337-6lq",
+          "label": "Mayfair Townhouse",
+          "firstName": "Master",
+          "lastName": "Weaver",
+          "addressLine1": "12 Grosvenor Square",
+          "city": "London",
+          "state": "Greater London",
+          "zipCode": "W1K 4QQ",
+          "country": "United Kingdom",
+          "phone": "+44 20 7946 0992",
+          "isDefault": true
+        }
+      ],
+      "passwordHash": "$2b$10$lr1YrXPyfnsjc/A.bm3f6.vlGQYUdqn1oCfIpW1DtK0yPm9wMnzoe"
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "LL-2026-7096",
+      "date": "September 2, 2026",
+      "customer": {
+        "firstName": "Eleanor",
+        "lastName": "Vance",
+        "email": "eleanor.vance@boski-limited.com"
+      },
+      "shippingMethod": {
+        "name": "Complimentary Atelier Express",
+        "price": 0
+      },
+      "paymentMethod": "Credit Card",
+      "items": [],
+      "subtotal": 0,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 0,
+      "trackingNumber": "BOSKI-STD-212582-EXP",
+      "status": "Processing"
+    },
+    {
+      "orderId": "LL-2026-8613",
+      "date": "September 2, 2026",
+      "customer": {
+        "firstName": "Eleanor",
+        "lastName": "Vance",
+        "email": "eleanor.vance@boski-limited.com"
+      },
+      "shippingMethod": {
+        "name": "Complimentary Atelier Express",
+        "price": 0
+      },
+      "paymentMethod": "Credit Card",
+      "items": [],
+      "subtotal": 0,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 0,
+      "trackingNumber": "BOSKI-STD-656785-EXP",
+      "status": "Processing"
+    },
+    {
+      "orderId": "LL-2026-6625",
+      "date": "September 2, 2026",
+      "customer": {
+        "firstName": "Eleanor",
+        "lastName": "Vance",
+        "email": "eleanor.vance@boski-limited.com"
+      },
+      "shippingMethod": {
+        "name": "Complimentary Atelier Express",
+        "price": 0
+      },
+      "paymentMethod": "Credit Card",
+      "items": [],
+      "subtotal": 0,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 0,
+      "trackingNumber": "BOSKI-STD-130234-EXP",
+      "status": "Processing"
+    },
+    {
+      "orderId": "LL-2026-9049",
+      "date": "September 2, 2026",
+      "customer": {
+        "firstName": "Eleanor",
+        "lastName": "Vance",
+        "email": "eleanor.vance@boski-limited.com"
+      },
+      "shippingMethod": {
+        "name": "Complimentary Atelier Express",
+        "price": 0
+      },
+      "paymentMethod": "Credit Card",
+      "items": [],
+      "subtotal": 0,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 0,
+      "trackingNumber": "BOSKI-STD-116522-EXP",
+      "status": "Processing"
+    },
+    {
+      "orderId": "LL-2026-7508",
+      "date": "September 2, 2026",
+      "customer": {
+        "firstName": "Master",
+        "lastName": "Weaver",
+        "email": "test.artisan.1788322294996@boskilimited.com",
+        "phone": "+44 20 7946 0992",
+        "address": "12 Grosvenor Square",
+        "city": "London",
+        "state": "Greater London",
+        "zipCode": "W1K 4QQ",
+        "country": "United Kingdom"
+      },
+      "shippingMethod": {
+        "id": "express",
+        "name": "Priority White Glove Air Express",
+        "price": 45,
+        "estimatedDays": "1-2 Days"
+      },
+      "paymentMethod": "Mastercard Platinum •••• 9921",
+      "items": [
+        {
+          "id": "prod-1-test-item",
+          "product": {
+            "id": "prod-1",
+            "name": "Signature Sateen Core Sheet Set",
+            "subtitle": "480-Thread-Count Long-Staple Egyptian Cotton",
+            "category": "sheets",
+            "price": 265,
+            "originalPrice": 320,
+            "rating": 4.96,
+            "reviewsCount": 248,
+            "inStock": true,
+            "stockCount": 14,
+            "isBestSeller": true,
+            "isSale": true,
+            "discountPercent": 17,
+            "sku": "LL-SAT-4921",
+            "featured": true,
+            "threadCount": "480 Thread Count",
+            "fabric": "100% Long-Staple Cotton Sateen",
+            "colors": [
+              {
+                "name": "Warm Ivory",
+                "hex": "#F5EFEB",
+                "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Cloud White",
+                "hex": "#FAF9F6",
+                "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "French Flax",
+                "hex": "#D7C7B3",
+                "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Sage Herb",
+                "hex": "#8C9A86",
+                "image": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+              }
+            ],
+            "sizes": [
+              "Twin",
+              "Full",
+              "Queen",
+              "King",
+              "Cal King"
+            ],
+            "images": [
+              "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+            ],
+            "description": "Our iconic bedding foundation. Woven from single-ply, long-staple Egyptian cotton in a luminous 480-thread-count sateen weave. Silky to the touch with an understated sheen, designed to soften gracefully with every laundering cycle.",
+            "details": [
+              "Includes 1 Flat Sheet, 1 Deep-Pocket Fitted Sheet (up to 18\" mattress depth), and 2 Envelope Pillowcases",
+              "Luminous 480-thread-count four-over-one sateen weave",
+              "Continuous 360° elastic hem ensuring a snug, slip-free mattress fit",
+              "Discreet directional \"Short Side / Long Side\" woven identification tags",
+              "Pre-washed with organic mountain mineral water for immediate out-of-box drape"
+            ],
+            "material": "100% Certified Long-Staple Egyptian Cotton",
+            "careInstructions": "Machine wash warm on gentle cycle with mild detergent. Tumble dry low and remove promptly to minimize wrinkles. Warm iron if desired.",
+            "sustainability": "OEKO-TEX® Standard 100 Certified (Free from 300+ harmful substances) & GOTS Certified Organic Dyes.",
+            "tags": [
+              "Best Seller",
+              "Sateen",
+              "Core Sheet Set",
+              "Cotton",
+              "Hotel Quality"
+            ]
+          },
+          "selectedColor": {
+            "name": "Warm Ivory",
+            "hex": "#F5EFEB",
+            "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+          },
+          "selectedSize": "King",
+          "quantity": 2
+        }
+      ],
+      "subtotal": 530,
+      "discount": 106,
+      "shipping": 60,
+      "tax": 33.88,
+      "total": 517.88,
+      "trackingNumber": "BOSKI-EXPRESS-295369-EXP",
+      "status": "Processing"
+    },
+    {
+      "orderId": "LL-2025-8841",
+      "date": "February 18, 2025",
+      "customer": {
+        "firstName": "Victoria",
+        "lastName": "Kensington",
+        "email": "victoria.kensington@luxuryclient.com",
+        "phone": "+1 (555) 234-8921",
+        "address": "740 Park Avenue, Apt 14B",
+        "city": "New York",
+        "state": "NY",
+        "zipCode": "10021",
+        "country": "United States"
+      },
+      "shippingMethod": {
+        "id": "concierge",
+        "name": "White Glove Concierge Delivery",
+        "price": 75,
+        "estimatedDays": "Delivered by Hand"
+      },
+      "paymentMethod": "Visa Platinum •••• 4892",
+      "items": [
+        {
+          "id": "prod-1-warm-ivory-king",
+          "product": {
+            "id": "prod-1",
+            "name": "Signature Sateen Core Sheet Set",
+            "subtitle": "480-Thread-Count Long-Staple Egyptian Cotton",
+            "category": "sheets",
+            "price": 265,
+            "originalPrice": 320,
+            "rating": 4.96,
+            "reviewsCount": 248,
+            "inStock": true,
+            "stockCount": 14,
+            "isBestSeller": true,
+            "isSale": true,
+            "discountPercent": 17,
+            "sku": "LL-SAT-4921",
+            "featured": true,
+            "threadCount": "480 Thread Count",
+            "fabric": "100% Long-Staple Cotton Sateen",
+            "colors": [
+              {
+                "name": "Warm Ivory",
+                "hex": "#F5EFEB",
+                "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Cloud White",
+                "hex": "#FAF9F6",
+                "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "French Flax",
+                "hex": "#D7C7B3",
+                "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Sage Herb",
+                "hex": "#8C9A86",
+                "image": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+              }
+            ],
+            "sizes": [
+              "Twin",
+              "Full",
+              "Queen",
+              "King",
+              "Cal King"
+            ],
+            "images": [
+              "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1540518614846-7ede433c4550?auto=format&fit=crop&w=1200&q=85"
+            ],
+            "description": "Our iconic bedding foundation. Woven from single-ply, long-staple Egyptian cotton in a luminous 480-thread-count sateen weave. Silky to the touch with an understated sheen, designed to soften gracefully with every laundering cycle.",
+            "details": [
+              "Includes 1 Flat Sheet, 1 Deep-Pocket Fitted Sheet (up to 18\" mattress depth), and 2 Envelope Pillowcases",
+              "Luminous 480-thread-count four-over-one sateen weave",
+              "Continuous 360° elastic hem ensuring a snug, slip-free mattress fit",
+              "Discreet directional \"Short Side / Long Side\" woven identification tags",
+              "Pre-washed with organic mountain mineral water for immediate out-of-box drape"
+            ],
+            "material": "100% Certified Long-Staple Egyptian Cotton",
+            "careInstructions": "Machine wash warm on gentle cycle with mild detergent. Tumble dry low and remove promptly to minimize wrinkles. Warm iron if desired.",
+            "sustainability": "OEKO-TEX® Standard 100 Certified (Free from 300+ harmful substances) & GOTS Certified Organic Dyes.",
+            "tags": [
+              "Best Seller",
+              "Sateen",
+              "Core Sheet Set",
+              "Cotton",
+              "Hotel Quality"
+            ]
+          },
+          "selectedColor": {
+            "name": "Warm Ivory",
+            "hex": "#F5EFEB",
+            "image": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85"
+          },
+          "selectedSize": "King",
+          "quantity": 2
+        },
+        {
+          "id": "prod-2-flax-natural-king",
+          "product": {
+            "id": "prod-2",
+            "name": "Stonewashed French Linen Duvet Cover",
+            "subtitle": "100% Normandy Flax • Naturally Temperature Regulating",
+            "category": "duvets",
+            "price": 310,
+            "originalPrice": 360,
+            "rating": 4.98,
+            "reviewsCount": 192,
+            "inStock": true,
+            "stockCount": 8,
+            "isNew": true,
+            "isBestSeller": true,
+            "sku": "LL-LIN-7822",
+            "featured": true,
+            "threadCount": "175 GSM Pure Linen",
+            "fabric": "100% French Normandy Flax",
+            "colors": [
+              {
+                "name": "Natural Flax",
+                "hex": "#D5C4A1",
+                "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Muted Terracotta",
+                "hex": "#C07D62",
+                "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Alabaster Milk",
+                "hex": "#F7F5F0",
+                "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85"
+              },
+              {
+                "name": "Charcoal Slate",
+                "hex": "#3E424B",
+                "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+              }
+            ],
+            "sizes": [
+              "Full / Queen",
+              "King / Cal King"
+            ],
+            "images": [
+              "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85",
+              "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=85"
+            ],
+            "description": "Crafted from premium flax cultivated in northern France. Stonewashed in small artisanal batches for an exquisitely soft, lived-in texture that keeps you cool in summer and cozily insulated in winter.",
+            "details": [
+              "Pre-washed French flax linen with relaxed vintage drape",
+              "Hidden natural river-shell button closure",
+              "Internal corner duvet ties to keep inserts perfectly anchored",
+              "Naturally antibacterial and hypoallergenic fibers",
+              "Includes complimentary reusable linen laundry pouch"
+            ],
+            "material": "100% French Normandy Flax Linen (175 GSM)",
+            "careInstructions": "Machine wash cool with similar earth tones. Line dry in gentle breeze or tumble dry low. Natural crinkles are celebrated—no ironing needed.",
+            "sustainability": "European Flax™ Certified (100% sustainable European cultivation without artificial irrigation or GMOs).",
+            "tags": [
+              "French Linen",
+              "Duvet Cover",
+              "Temperature Regulating",
+              "Natural Living"
+            ]
+          },
+          "selectedColor": {
+            "name": "Natural Flax",
+            "hex": "#D5C4A1",
+            "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+          },
+          "selectedSize": "King / Cal King",
+          "quantity": 1
+        }
+      ],
+      "subtotal": 890,
+      "discount": 178,
+      "shipping": 75,
+      "tax": 62.3,
+      "total": 849.3,
+      "trackingNumber": "ATELIER-WG-90218-EXP",
+      "status": "Delivered"
+    }
+  ],
+  "bespokeInquiries": [
+    {
+      "id": "inq-b-1788322295383",
+      "fullName": "Lady Arabella Cavendish",
+      "email": "arabella.cavendish@chatsworth.org",
+      "projectType": "Grand Salon Drapery Drops",
+      "details": "18ft drop silk-linen blend with hand-stitched blackout lining.",
+      "submittedAt": "2026-09-02T04:11:35.383Z"
+    },
+    {
+      "id": "inq-b-1",
+      "fullName": "Julian Vance",
+      "email": "julian.vance@architecturaldigest.com",
+      "projectType": "Penthouse Drapery & Custom Drops",
+      "details": "Custom 14ft ceiling drop Belgian weighted linens in Natural Oatmeal.",
+      "submittedAt": "2026-08-31T04:00:48.999Z"
+    }
+  ],
+  "tradeInquiries": [
+    {
+      "id": "inq-t-1788322295400",
+      "companyName": "Ritz-Carlton Heritage Collection",
+      "contactPerson": "Sebastian Thorne",
+      "businessEmail": "sthorne@ritzcarlton-heritage.com",
+      "phone": "+1 212 555 8820",
+      "professionalId": "US-EIN-882941092",
+      "orderVolume": "500+ Suites",
+      "projectDetails": "Complete luxury linen refresh for flagship properties.",
+      "submittedAt": "2026-09-02T04:11:35.400Z"
+    },
+    {
+      "id": "inq-t-1",
+      "companyName": "The Beaumont Hotel & Suites",
+      "contactPerson": "Claire St. John",
+      "businessEmail": "claire.stjohn@thebeaumonthotel.co.uk",
+      "phone": "+44 20 7123 4567",
+      "professionalId": "UK-VAT-99214482",
+      "orderVolume": "100-250 Suites",
+      "projectDetails": "Complete guest suite textile overhaul with 600TC Egyptian sateen.",
+      "submittedAt": "2026-08-29T04:00:49.000Z"
+    }
+  ],
+  "promoCodes": [
+    {
+      "code": "LUXE20",
+      "discountPercent": 20,
+      "description": "20% off your entire linen order"
+    },
+    {
+      "code": "LINEN15",
+      "discountPercent": 15,
+      "description": "15% off bedding bundles"
+    },
+    {
+      "code": "WELCOME10",
+      "discountPercent": 10,
+      "description": "10% off for new atelier clients"
+    }
+  ],
+  "lookbooks": [
+    {
+      "id": "lb-1",
+      "title": "The Serene Master Suite",
+      "season": "Autumn / Winter Collection",
+      "subtitle": "Layering warm ivory sateen sheets with stonewashed French linen and waffle weave textures.",
+      "image": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=85",
+      "hotspots": [
+        {
+          "id": "hs-1",
+          "productId": "prod-1",
+          "xPercent": 48,
+          "yPercent": 62,
+          "title": "Signature Sateen Core Sheet Set in Warm Ivory",
+          "price": 265
+        },
+        {
+          "id": "hs-2",
+          "productId": "prod-2",
+          "xPercent": 68,
+          "yPercent": 45,
+          "title": "French Flax Linen Duvet in Natural",
+          "price": 310
+        },
+        {
+          "id": "hs-3",
+          "productId": "prod-6",
+          "xPercent": 28,
+          "yPercent": 78,
+          "title": "Alpaca Bedside Throw in Oatmeal",
+          "price": 195
+        }
+      ]
+    },
+    {
+      "id": "lb-2",
+      "title": "Sunlit Coastal Sanctuary",
+      "season": "Spring / Summer Light",
+      "subtitle": "Airy organic percale and custom Belgian linen drapery framing floor-to-ceiling garden light.",
+      "image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85",
+      "hotspots": [
+        {
+          "id": "hs-4",
+          "productId": "prod-3",
+          "xPercent": 52,
+          "yPercent": 68,
+          "title": "Crisp Percale Sheet Set in Chalk White",
+          "price": 240
+        },
+        {
+          "id": "hs-5",
+          "productId": "prod-5",
+          "xPercent": 82,
+          "yPercent": 32,
+          "title": "Belgian Linen Drapery Panels",
+          "price": 210
+        }
+      ]
+    }
+  ],
+  "categories": [
+    "bedding",
+    "sheets",
+    "duvets",
+    "curtains",
+    "throws",
+    "blankets",
+    "pillows"
+  ],
+  "contactInquiries": [
+    {
+      "id": "inq-c-1788329212999",
+      "name": "Lord Henry",
+      "email": "henry@mayfair.co.uk",
+      "subject": "Custom Atelier Consultation",
+      "message": "Inquiring about full residence bespoke drapery.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T06:06:52.999Z"
+    },
+    {
+      "id": "inq-c-1788328656925",
+      "name": "Lord Henry",
+      "email": "henry@mayfair.co.uk",
+      "subject": "Custom Atelier Consultation",
+      "message": "Inquiring about full residence bespoke drapery.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T05:57:36.925Z"
+    },
+    {
+      "id": "inq-c-1788328130313",
+      "name": "Lord Henry",
+      "email": "henry@mayfair.co.uk",
+      "subject": "Custom Atelier Consultation",
+      "message": "Inquiring about full residence bespoke drapery.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T05:48:50.313Z"
+    },
+    {
+      "id": "inq-c-1788328116606",
+      "name": "Lord Henry",
+      "email": "henry@mayfair.co.uk",
+      "subject": "Custom Atelier Consultation",
+      "message": "Inquiring about full residence bespoke drapery.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T05:48:36.606Z"
+    },
+    {
+      "id": "inq-c-1788328097661",
+      "name": "Lord Henry",
+      "email": "henry@mayfair.co.uk",
+      "subject": "Custom Atelier Consultation",
+      "message": "Inquiring about full residence bespoke drapery.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T05:48:17.661Z"
+    },
+    {
+      "id": "inq-c-1788323971470",
+      "name": "Lady Genevieve Hastings",
+      "email": "genevieve.hastings@mayfair.co.uk",
+      "phone": "+44 20 7946 0888",
+      "subject": "Master Suite Custom Commission",
+      "message": "Looking for a bespoke Emperor linen ensemble with hand-stitched borders.",
+      "status": "pending",
+      "submittedAt": "2026-09-02T04:39:31.470Z"
+    },
+    {
+      "id": "inq-c-1788322939562",
+      "name": "Lord Hamilton Grey",
+      "email": "hamilton.grey@mayfair-manor.com",
+      "phone": "+44 20 7946 0123",
+      "subject": "Custom Atelier Bedframe Commission",
+      "message": "Interested in commissioning a bespoke Emperor frame in bespoke Sage Velvet.",
+      "status": "contacted",
+      "submittedAt": "2026-09-02T04:22:19.562Z"
+    }
+  ]
+}

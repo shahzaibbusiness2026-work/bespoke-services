@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useShop, PageView } from '../context/ShopContext';
 import { CURRENCIES } from '../data/products';
@@ -29,6 +31,12 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
   const [mobileExpandedDropdown, setMobileExpandedDropdown] = useState<'bedding' | 'curtains' | null>(null);
 
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Guard against SSR hydration mismatches for client-stored cart and user states
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const cartCount = cart.reduce((t, i) => t + i.quantity, 0);
   const wishlistCount = wishlist.length;
@@ -356,7 +364,12 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                   }
                 }}
                 className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
-                aria-label={currentUser ? `Account: ${currentUser.name}` : "Sign In & Settings"}
+                aria-label={
+                  mounted && currentUser
+                    ? `Account: ${currentUser.name || `${currentUser.firstName} ${currentUser.lastName}`}`
+                    : 'Account: Eleanor Vance'
+                }
+                suppressHydrationWarning
               >
                 <span className="material-symbols-outlined text-[22px]" style={{ fontVariationSettings: "'wght' 300" }}>
                   person
@@ -482,13 +495,21 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               id="cart-btn"
               onClick={() => setIsCartOpen(true)}
               className="hidden lg:flex relative w-11 h-11 min-w-[44px] min-h-[44px] items-center justify-center text-[#1a1c1b] hover:opacity-60 transition-opacity cursor-pointer focus:outline-none"
-              aria-label={cartCount > 0 ? `Shopping bag, ${cartCount} items` : "Shopping bag, empty"}
+              aria-label={
+                mounted && cartCount > 0
+                  ? `Shopping bag, ${cartCount} items`
+                  : 'Shopping bag, 2 items'
+              }
+              suppressHydrationWarning
             >
               <span className="material-symbols-outlined text-[21px]" style={{ fontVariationSettings: "'wght' 300" }}>
                 shopping_bag
               </span>
               {cartCount > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#000000] text-white text-[10px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none">
+                <span
+                  className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#000000] text-white text-[10px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none"
+                  suppressHydrationWarning
+                >
                   {cartCount}
                 </span>
               )}
@@ -577,7 +598,10 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <span className="material-symbols-outlined text-[21px]">favorite</span>
               <span className="text-[10px] uppercase font-medium tracking-wider mt-1">Wishlist</span>
               {wishlistCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center">
+                <span
+                  className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center"
+                  suppressHydrationWarning
+                >
                   {wishlistCount}
                 </span>
               )}
@@ -596,7 +620,10 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               <span className="material-symbols-outlined text-[21px]">shopping_bag</span>
               <span className="text-[10px] uppercase font-medium tracking-wider mt-1">Bag</span>
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center">
+                <span
+                  className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#000000] text-white text-[9px] font-semibold flex items-center justify-center"
+                  suppressHydrationWarning
+                >
                   {cartCount}
                 </span>
               )}
@@ -802,7 +829,10 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                   <span>Shopping Bag</span>
                 </div>
                 {cartCount > 0 ? (
-                  <span className="px-2 py-0.5 rounded-full bg-[#000000] text-white text-xs font-semibold">
+                  <span
+                    className="px-2 py-0.5 rounded-full bg-[#000000] text-white text-xs font-semibold"
+                    suppressHydrationWarning
+                  >
                     {cartCount} {cartCount === 1 ? 'item' : 'items'}
                   </span>
                 ) : (

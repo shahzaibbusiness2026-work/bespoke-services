@@ -1,4 +1,7 @@
+'use client';
+
 import React, { useState, useMemo } from 'react';
+import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
 import { ProductCard } from './ProductCard';
 
@@ -7,7 +10,7 @@ interface ProductCatalogProps {
   onCategoryChange: (cat: string) => void;
 }
 
-const CATEGORIES = [
+const DEFAULT_CATALOG_CATEGORIES = [
   { id: 'all', label: 'All Collections' },
   { id: 'sheets', label: 'Bedding' },
   { id: 'duvets', label: 'Duvet Covers' },
@@ -27,6 +30,7 @@ const SORT_OPTIONS: { id: string; label: string }[] = [
 ];
 
 export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, onCategoryChange }) => {
+  const { products, categories } = useShop();
   const [sort, setSort] = useState('featured');
   const [visibleCount, setVisibleCount] = useState(8);
   const [onlyInStock, setOnlyInStock] = useState(false);
@@ -34,10 +38,30 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
-  const activeCategory_label = CATEGORIES.find((c) => c.id === activeCategory)?.label || 'Collections';
+  // Dynamically assemble categories from context (includes newly added categories)
+  const catalogCategories = useMemo(() => {
+    const list = [{ id: 'all', label: 'All Collections' }];
+    if (categories && categories.length > 0) {
+      categories.forEach((c) => {
+        const key = c.category.toLowerCase();
+        const label = c.label || key.charAt(0).toUpperCase() + key.slice(1).replace(/-/g, ' ');
+        if (!list.some((item) => item.id === key)) {
+          list.push({ id: key, label });
+        }
+      });
+    } else {
+      DEFAULT_CATALOG_CATEGORIES.forEach((c) => {
+        if (c.id !== 'all') list.push(c);
+      });
+    }
+    return list;
+  }, [categories]);
+
+  const activeCategory_label = catalogCategories.find((c) => c.id === activeCategory)?.label || 'Collections';
 
   const filteredProducts = useMemo(() => {
-    let result = [...PRODUCTS];
+    const sourceProducts = products && products.length > 0 ? products : PRODUCTS;
+    let result = [...sourceProducts];
 
     // Category
     if (activeCategory !== 'all') {
@@ -133,7 +157,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
                 role="listbox"
                 aria-label="Category list"
               >
-                {CATEGORIES.map((cat) => (
+                {catalogCategories.map((cat) => (
                   <button
                     key={cat.id}
                     role="option"

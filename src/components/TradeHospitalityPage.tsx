@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 
@@ -13,6 +15,7 @@ export const TradeHospitalityPage: React.FC = () => {
     volume: '',
     projectDetails: '',
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,7 +36,9 @@ export const TradeHospitalityPage: React.FC = () => {
       orderVolume: formData.volume,
       projectDetails: formData.projectDetails,
     });
+    setSubmitted(true);
     setFormData({ companyName: '', contactPerson: '', email: '', phone: '', professionalId: '', volume: '', projectDetails: '' });
+    showToast('Application Submitted', 'Trade application dispatched to hospitality team', 'success');
   };
 
   const inputClass = "w-full font-body-md text-body-md text-[#000000] bg-transparent focus:ring-0 focus:border-[#000000] border-b border-[#c4c7c7] py-3 outline-none transition-colors placeholder-transparent";
@@ -64,7 +69,7 @@ export const TradeHospitalityPage: React.FC = () => {
         <div className="w-full md:w-7/12 h-[400px] md:h-[600px] relative">
           <img
             src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=85"
-            alt="Luxury boutique hotel room with Linen & Loft premium textiles"
+            alt="Luxury boutique hotel room with Boski Limited premium textiles"
             className="w-full h-full object-cover absolute inset-0"
           />
           <div className="absolute inset-0 bg-[#faf9f7]/10 pointer-events-none" />
@@ -100,7 +105,7 @@ export const TradeHospitalityPage: React.FC = () => {
             },
           ].map((benefit) => (
             <div key={benefit.title} className="flex flex-col items-center text-center gap-6 group">
-              <div className="w-16 h-16 rounded-full border border-[#c4c7c7] flex items-center justify-center bg-[#faf9f7] group-hover:bg-[#000000] group-hover:text-white transition-colors duration-500">
+              <div className="w-16 h-16 rounded-none border border-[#c4c7c7] flex items-center justify-center bg-[#faf9f7] group-hover:bg-[#000000] group-hover:text-white transition-colors duration-500">
                 <span
                   className="material-symbols-outlined text-3xl"
                   style={{ fontVariationSettings: "'wght' 200" }}
@@ -151,75 +156,102 @@ export const TradeHospitalityPage: React.FC = () => {
         </div>
 
         <div className="w-full md:w-7/12 mt-12 md:mt-0">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-            {/* Row 1 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="companyName">Company Name *</label>
-                <input id="companyName" name="companyName" type="text" required value={formData.companyName} onChange={handleChange} className={inputClass} placeholder="Company" />
-              </div>
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="contactPerson">Contact Person *</label>
-                <input id="contactPerson" name="contactPerson" type="text" required value={formData.contactPerson} onChange={handleChange} className={inputClass} placeholder="Name" />
-              </div>
-            </div>
-            {/* Row 2 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="email">Business Email *</label>
-                <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="email@company.com" />
-              </div>
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="phone">Phone Number</label>
-                <input id="phone" name="phone" type="text" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="+1 (555) 000-0000" />
-              </div>
-            </div>
-            {/* Row 3 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="professionalId">Professional ID / Website *</label>
-                <input id="professionalId" name="professionalId" type="text" required value={formData.professionalId} onChange={handleChange} className={inputClass} placeholder="Resale Certificate, AIA Number, or URL" />
-              </div>
-              <div className="flex flex-col relative pt-4">
-                <label className={labelClass} htmlFor="volume">Estimated Order Volume</label>
-                <select
-                  id="volume"
-                  name="volume"
-                  value={formData.volume}
-                  onChange={handleChange}
-                  className="w-full text-body-md text-[#000000] bg-transparent border-b border-[#c4c7c7] py-3 outline-none appearance-none cursor-pointer"
-                >
-                  <option value="">Select an option</option>
-                  <option value="tier1">$5,000 – $25,000</option>
-                  <option value="tier2">$25,000 – $100,000</option>
-                  <option value="tier3">$100,000+</option>
-                </select>
-              </div>
-            </div>
-            {/* Textarea */}
-            <div className="flex flex-col relative pt-4">
-              <label className={labelClass} htmlFor="projectDetails">Project Details (Optional)</label>
-              <textarea
-                id="projectDetails"
-                name="projectDetails"
-                rows={4}
-                value={formData.projectDetails}
-                onChange={handleChange}
-                placeholder="Briefly describe your upcoming projects..."
-                className="w-full text-body-md text-[#000000] bg-transparent border-b border-[#c4c7c7] py-3 outline-none resize-none focus:border-[#000000] transition-colors placeholder-[#444748]/30"
-              />
-            </div>
-            {/* Submit */}
-            <div className="mt-8 flex justify-end">
-              <button
-                type="submit"
-                id="trade-submit-btn"
-                className="px-10 py-4 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors duration-300"
+          {submitted ? (
+            <div className="p-8 sm:p-12 bg-white border border-[#c4c7c7] text-center space-y-4 rounded-none shadow-sm">
+              <span
+                className="material-symbols-outlined text-5xl text-emerald-800 mx-auto block"
+                style={{ fontVariationSettings: "'wght' 200" }}
               >
-                Submit Application
+                verified
+              </span>
+              <h3
+                className="text-[28px] text-[#000000] font-normal leading-tight"
+                style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              >
+                Trade Application Received
+              </h3>
+              <p className="text-body-md text-[#444748] max-w-md mx-auto font-light leading-relaxed">
+                Thank you for applying to the BOSKI LIMITED Trade &amp; Hospitality Program. A dedicated trade director has received your credentials and will be in touch within 2 business days with your wholesale tier login.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSubmitted(false)}
+                className="mt-6 px-8 py-3.5 border border-black text-label-caps uppercase hover:bg-black hover:text-white transition-colors cursor-pointer rounded-none font-semibold"
+              >
+                Submit Another Application
               </button>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+              {/* Row 1 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="companyName">Company Name *</label>
+                  <input id="companyName" name="companyName" type="text" required value={formData.companyName} onChange={handleChange} className={inputClass} placeholder="Company" />
+                </div>
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="contactPerson">Contact Person *</label>
+                  <input id="contactPerson" name="contactPerson" type="text" required value={formData.contactPerson} onChange={handleChange} className={inputClass} placeholder="Name" />
+                </div>
+              </div>
+              {/* Row 2 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="email">Business Email *</label>
+                  <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="email@company.com" />
+                </div>
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="phone">Phone Number</label>
+                  <input id="phone" name="phone" type="text" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="+1 (555) 000-0000" />
+                </div>
+              </div>
+              {/* Row 3 */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="professionalId">Professional ID / Website *</label>
+                  <input id="professionalId" name="professionalId" type="text" required value={formData.professionalId} onChange={handleChange} className={inputClass} placeholder="Resale Certificate, AIA Number, or URL" />
+                </div>
+                <div className="flex flex-col relative pt-4">
+                  <label className={labelClass} htmlFor="volume">Estimated Order Volume</label>
+                  <select
+                    id="volume"
+                    name="volume"
+                    value={formData.volume}
+                    onChange={handleChange}
+                    className="w-full text-body-md text-[#000000] bg-transparent border-b border-[#c4c7c7] py-3 outline-none appearance-none cursor-pointer"
+                  >
+                    <option value="">Select an option</option>
+                    <option value="tier1">$5,000 – $25,000</option>
+                    <option value="tier2">$25,000 – $100,000</option>
+                    <option value="tier3">$100,000+</option>
+                  </select>
+                </div>
+              </div>
+              {/* Textarea */}
+              <div className="flex flex-col relative pt-4">
+                <label className={labelClass} htmlFor="projectDetails">Project Details (Optional)</label>
+                <textarea
+                  id="projectDetails"
+                  name="projectDetails"
+                  rows={4}
+                  value={formData.projectDetails}
+                  onChange={handleChange}
+                  placeholder="Briefly describe your upcoming projects..."
+                  className="w-full text-body-md text-[#000000] bg-transparent border-b border-[#c4c7c7] py-3 outline-none resize-none focus:border-[#000000] transition-colors placeholder-[#444748]/30"
+                />
+              </div>
+              {/* Submit */}
+              <div className="mt-8 flex justify-end">
+                <button
+                  type="submit"
+                  id="trade-submit-btn"
+                  className="px-10 py-4 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors duration-300 rounded-none cursor-pointer"
+                >
+                  Submit Application
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </section>
     </main>

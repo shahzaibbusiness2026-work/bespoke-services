@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { ProductColor } from '../types';
@@ -179,23 +181,26 @@ export const ViewInRoomModal: React.FC = () => {
     return selectedColor.image || arProduct.images[0];
   };
 
-  // Approximate real-world metric dimensions
+  // Approximate real-world metric dimensions for luxury textiles & bedding
   const getDimensions = () => {
     switch (arProduct.category) {
-      case 'outerwear':
-        return { height: '115 cm', width: '60 cm', depth: '15 cm', weight: '1.4 kg' };
-      case 'bags':
-        return { height: '34 cm', width: '42 cm', depth: '18 cm', weight: '0.85 kg' };
-      case 'tailoring':
-        return { height: '78 cm', width: '52 cm', depth: '12 cm', weight: '0.9 kg' };
-      case 'footwear':
-        return { height: '18 cm', width: '31 cm', depth: '11 cm', weight: '0.95 kg' };
-      case 'accessories':
-        return { height: '4.2 cm', width: '4.0 cm', depth: '1.1 cm', weight: '145 g' };
-      case 'fragrance':
-        return { height: '14 cm', width: '6.5 cm', depth: '6.5 cm', weight: '320 g' };
+      case 'sheets':
+      case 'bedding':
+        return { height: '203 cm (80")', width: '152 cm (60")', depth: '45 cm (18" pocket)', weight: '1.85 kg' };
+      case 'duvets':
+        return { height: '234 cm (92")', width: '228 cm (90")', depth: '3 cm (flange)', weight: '2.20 kg' };
+      case 'curtains':
+        return { height: '244 cm (96" drop)', width: '127 cm (50" panel)', depth: '8 cm (header)', weight: '2.60 kg' };
+      case 'towels':
+        return { height: '180 cm (70")', width: '100 cm (40")', depth: '700 GSM density', weight: '1.10 kg' };
+      case 'throws':
+        return { height: '178 cm (70")', width: '127 cm (50")', depth: '340 GSM plied', weight: '1.40 kg' };
+      case 'blankets':
+        return { height: '230 cm (90")', width: '230 cm (90")', depth: '420 GSM waffle', weight: '2.10 kg' };
+      case 'pillows':
+        return { height: '51 cm (20")', width: '76 cm (30" pair)', depth: '22 Momme Silk', weight: '0.42 kg' };
       default:
-        return { height: '65 cm', width: '45 cm', depth: '25 cm', weight: '1.2 kg' };
+        return { height: '200 cm', width: '150 cm', depth: '30 cm', weight: '1.80 kg' };
     }
   };
 
@@ -214,7 +219,7 @@ export const ViewInRoomModal: React.FC = () => {
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.25 }}
           id="ar-view-modal-content"
-          className="relative w-full max-w-6xl h-[92vh] max-h-[850px] bg-neutral-950 rounded-3xl border border-neutral-800 shadow-2xl overflow-hidden flex flex-col"
+          className="relative w-full max-w-6xl h-[92vh] max-h-[850px] bg-[#121313] rounded-none border border-[#383838] shadow-2xl overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Flash Snapshot Effect */}
@@ -223,21 +228,24 @@ export const ViewInRoomModal: React.FC = () => {
           )}
 
           {/* Top Bar Navigation */}
-          <div className="px-6 py-4 bg-neutral-900/90 border-b border-neutral-800 backdrop-blur-md flex items-center justify-between z-20">
+          <div className="px-6 py-4 bg-[#1a1c1b] border-b border-[#383838] backdrop-blur-md flex items-center justify-between z-20">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300">
+              <div className="w-8 h-8 rounded-none bg-[#252726] border border-white/15 flex items-center justify-center text-[#efe0cf]">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-amber-400">
-                    Atelier Spatial AR
+                  <span className="text-label-caps uppercase font-bold tracking-[0.2em] text-[#efe0cf]">
+                    BOSKI SPATIAL AR
                   </span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-[10px] text-neutral-400 font-mono">1:1 SCALE TRUE MATRIX</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  <span className="text-[10px] text-white/50 font-mono">1:1 SCALE TRUE MATRIX</span>
                 </div>
-                <h3 className="font-serif text-lg text-white font-medium">
-                  {arProduct.name} &bull; <span className="text-neutral-400 text-sm font-sans">{formatPrice(arProduct.price)}</span>
+                <h3
+                  className="text-[17px] text-white font-normal"
+                  style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+                >
+                  {arProduct.name} &bull; <span className="text-white/60 text-body-sm font-sans">{formatPrice(arProduct.price)}</span>
                 </h3>
               </div>
             </div>
@@ -247,10 +255,10 @@ export const ViewInRoomModal: React.FC = () => {
               <button
                 id="ar-camera-toggle-btn"
                 onClick={isCameraActive ? stopCamera : startCamera}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors flex items-center gap-1.5 border ${
+                className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider transition-colors flex items-center gap-1.5 border cursor-pointer ${
                   isCameraActive
-                    ? 'bg-emerald-500 text-white border-emerald-400'
-                    : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border-neutral-700'
+                    ? 'bg-white text-[#000000] border-white'
+                    : 'bg-[#252726] hover:bg-[#333534] text-white border-[#383838]'
                 }`}
               >
                 <Camera className="w-3.5 h-3.5" />
@@ -261,7 +269,7 @@ export const ViewInRoomModal: React.FC = () => {
               <button
                 id="ar-capture-snapshot-btn"
                 onClick={handleCaptureSnapshot}
-                className="p-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-full transition-colors border border-neutral-700"
+                className="p-2 bg-[#252726] hover:bg-[#333534] text-white rounded-none transition-colors border border-[#383838] cursor-pointer"
                 title="Capture Room Snapshot"
               >
                 <Download className="w-4 h-4" />
@@ -271,7 +279,7 @@ export const ViewInRoomModal: React.FC = () => {
               <button
                 id="ar-close-modal-btn"
                 onClick={() => setIsAROpen(false)}
-                className="p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white rounded-full transition-colors border border-neutral-700 ml-2"
+                className="p-2 bg-[#252726] hover:bg-[#333534] text-white/80 hover:text-white rounded-none transition-colors border border-[#383838] ml-2 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -315,8 +323,8 @@ export const ViewInRoomModal: React.FC = () => {
                     transformOrigin: 'bottom center',
                   }}
                 />
-                <div className="absolute bottom-6 left-6 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-white text-[11px]">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <div className="absolute bottom-6 left-6 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-none border border-white/10 text-white text-[11px]">
+                  <span className="w-2 h-2 rounded-none bg-emerald-400 animate-ping" />
                   <span>Floor Plane Calibrated &bull; {activeRoom.name}</span>
                 </div>
               </div>
@@ -326,7 +334,7 @@ export const ViewInRoomModal: React.FC = () => {
             <div
               ref={stageRef}
               id="ar-draggable-product-stage"
-              className="relative z-10 cursor-grab active:cursor-grabbing transition-shadow"
+              className="relative z-10 cursor-grab active:cursor-grabbing transition-shadow touch-none"
               style={{
                 transform: `translate(${position.x}px, ${position.y}px)`,
               }}
@@ -351,6 +359,32 @@ export const ViewInRoomModal: React.FC = () => {
                 window.addEventListener('mousemove', onMouseMove);
                 window.addEventListener('mouseup', onMouseUp);
               }}
+              onTouchStart={(e) => {
+                if (e.touches.length === 1) {
+                  setIsDragging(true);
+                  const touch = e.touches[0];
+                  const startX = touch.clientX - position.x;
+                  const startY = touch.clientY - position.y;
+
+                  const onTouchMove = (moveEvent: TouchEvent) => {
+                    if (moveEvent.touches.length === 1) {
+                      setPosition({
+                        x: moveEvent.touches[0].clientX - startX,
+                        y: moveEvent.touches[0].clientY - startY,
+                      });
+                    }
+                  };
+
+                  const onTouchEnd = () => {
+                    setIsDragging(false);
+                    window.removeEventListener('touchmove', onTouchMove);
+                    window.removeEventListener('touchend', onTouchEnd);
+                  };
+
+                  window.addEventListener('touchmove', onTouchMove, { passive: false });
+                  window.addEventListener('touchend', onTouchEnd);
+                }
+              }}
             >
               <div
                 className="relative flex flex-col items-center transition-transform duration-75 ease-out"
@@ -360,7 +394,7 @@ export const ViewInRoomModal: React.FC = () => {
               >
                 {/* Simulated Soft Ambient Shadow */}
                 <div
-                  className="absolute -bottom-8 w-4/5 h-8 bg-black/50 blur-xl rounded-full transform scale-y-50"
+                  className="absolute -bottom-8 w-4/5 h-8 bg-black/50 blur-xl rounded-none transform scale-y-50"
                   style={{
                     opacity: (scale / 100) * 0.7,
                   }}
@@ -375,7 +409,7 @@ export const ViewInRoomModal: React.FC = () => {
                 />
 
                 {/* Spatial Anchor Pill Tag */}
-                <div className="mt-2 px-3 py-1 bg-black/75 backdrop-blur-md rounded-full border border-white/20 text-white text-[10px] font-mono tracking-wider flex items-center gap-1.5 shadow-lg">
+                <div className="mt-2 px-3 py-1 bg-black/75 backdrop-blur-md rounded-none border border-white/20 text-white text-[10px] font-mono tracking-wider flex items-center gap-1.5 shadow-lg">
                   <Move className="w-3 h-3 text-amber-300" />
                   <span>
                     Scale {scale}% &bull; {rotation}°
@@ -389,7 +423,7 @@ export const ViewInRoomModal: React.FC = () => {
               <button
                 id="ar-reset-position-btn"
                 onClick={handleResetPlacement}
-                className="absolute top-6 left-6 z-20 px-3 py-1.5 bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/10 text-white rounded-full text-xs flex items-center gap-1.5 transition-colors"
+                className="absolute top-6 left-6 z-20 px-3 py-1.5 bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/10 text-white rounded-none text-xs flex items-center gap-1.5 transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Re-center Object</span>
@@ -398,55 +432,55 @@ export const ViewInRoomModal: React.FC = () => {
           </div>
 
           {/* Bottom Interactive AR Control Console */}
-          <div className="bg-neutral-900 border-t border-neutral-800 p-4 sm:p-5 z-20 flex flex-col gap-4">
+          <div className="bg-neutral-900 border-t border-[#383838] p-4 sm:p-5 z-20 flex flex-col gap-4">
             {/* Nav tabs for bottom bar */}
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+            <div className="flex items-center justify-between border-b border-[#383838] pb-3">
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setActiveTab('room')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
                     activeTab === 'room'
-                      ? 'bg-neutral-100 text-neutral-950'
-                      : 'text-neutral-400 hover:text-neutral-200'
+                      ? 'bg-white text-[#000000]'
+                      : 'text-white/60 hover:text-white'
                   }`}
                 >
                   Spaces ({ROOM_PRESETS.length})
                 </button>
                 <button
                   onClick={() => setActiveTab('controls')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
                     activeTab === 'controls'
-                      ? 'bg-neutral-100 text-neutral-950'
-                      : 'text-neutral-400 hover:text-neutral-200'
+                      ? 'bg-white text-[#000000]'
+                      : 'text-white/60 hover:text-white'
                   }`}
                 >
-                  Scale & Orbit
+                  Scale &amp; Orbit
                 </button>
                 <button
                   onClick={() => setActiveTab('dimensions')}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
                     activeTab === 'dimensions'
-                      ? 'bg-neutral-100 text-neutral-950'
-                      : 'text-neutral-400 hover:text-neutral-200'
+                      ? 'bg-white text-[#000000]'
+                      : 'text-white/60 hover:text-white'
                   }`}
                 >
-                  Specs & Proportions
+                  Specs &amp; Proportions
                 </button>
               </div>
 
               {/* Color variant selectors */}
               <div className="flex items-center gap-2">
-                <span className="text-[11px] text-neutral-400 uppercase font-medium hidden sm:inline">
+                <span className="text-[11px] text-white/60 uppercase font-medium hidden sm:inline">
                   Finish:
                 </span>
                 {arProduct.colors.map((c) => (
                   <button
                     key={c.name}
                     onClick={() => setSelectedColor(c)}
-                    className={`w-6 h-6 rounded-full border transition-all ${
+                    className={`w-6 h-6 rounded-full border transition-all cursor-pointer ${
                       selectedColor.name === c.name
-                        ? 'ring-2 ring-amber-400 ring-offset-2 ring-offset-neutral-900 scale-110'
-                        : 'border-neutral-600 hover:scale-105'
+                        ? 'ring-2 ring-white ring-offset-2 ring-offset-[#121313] scale-110'
+                        : 'border-[#555] hover:scale-105'
                     }`}
                     style={{ backgroundColor: c.hex }}
                     title={c.name}
@@ -467,68 +501,65 @@ export const ViewInRoomModal: React.FC = () => {
                       setLighting(room.lightingTone);
                       setIsCameraActive(false);
                     }}
-                    className={`p-2.5 rounded-2xl border text-left transition-all flex items-center gap-3 ${
+                    className={`p-2.5 rounded-none border text-left transition-all flex items-center gap-3 cursor-pointer ${
                       activeRoom.id === room.id && !isCameraActive
-                        ? 'bg-neutral-800 border-amber-400/60 shadow-lg'
-                        : 'bg-neutral-950/60 hover:bg-neutral-800/60 border-neutral-800'
+                        ? 'bg-[#252726] border-white/70 shadow-lg'
+                        : 'bg-[#1a1c1b] hover:bg-[#252726] border-[#383838]'
                     }`}
                   >
                     <img
                       src={room.bgImage}
                       alt={room.name}
-                      className="w-11 h-11 rounded-xl object-cover shrink-0"
+                      className="w-11 h-11 rounded-none object-cover shrink-0"
                     />
                     <div className="truncate">
-                      <p className="text-xs font-bold text-white truncate">{room.name}</p>
-                      <p className="text-[10px] text-neutral-400 truncate">{room.category}</p>
+                      <p className="text-body-sm font-semibold text-white truncate">{room.name}</p>
+                      <p className="text-[10px] text-white/50 truncate uppercase tracking-wider">{room.category}</p>
                     </div>
                   </button>
                 ))}
               </div>
             )}
 
-            {/* Tab 2: Spatial Scale & Orbit Controls */}
+            {/* Tab 2: Precision Scale, Rotation, and Lighting Controls */}
             {activeTab === 'controls' && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-white">
-                {/* Scale */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-neutral-400">
-                    <span>Spatial Scale: {scale}%</span>
-                    <button onClick={() => setScale(100)} className="underline text-amber-300">
-                      100% (True 1:1)
-                    </button>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-white">
+                <div>
+                  <div className="flex justify-between text-label-caps uppercase text-white/60 mb-1">
+                    <span>Scale Matrix</span>
+                    <span className="font-mono text-white">{Math.round(scale * 100)}%</span>
                   </div>
                   <input
                     type="range"
-                    min={40}
-                    max={180}
+                    min="0.5"
+                    max="1.6"
+                    step="0.05"
                     value={scale}
-                    onChange={(e) => setScale(Number(e.target.value))}
-                    className="w-full accent-amber-400 cursor-pointer"
+                    onChange={(e) => setScale(parseFloat(e.target.value))}
+                    className="w-full accent-white cursor-pointer"
                   />
                 </div>
 
-                {/* Rotation Orbit */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-neutral-400">
-                    <span>Rotation: {rotation}°</span>
-                    <button onClick={() => setRotation(0)} className="underline text-amber-300">
-                      Frontal
-                    </button>
+                <div>
+                  <div className="flex justify-between text-label-caps uppercase text-white/60 mb-1">
+                    <span>Atelier Orbit</span>
+                    <span className="font-mono text-white">{rotation}°</span>
                   </div>
                   <input
                     type="range"
-                    min={-180}
-                    max={180}
+                    min="-45"
+                    max="45"
+                    step="1"
                     value={rotation}
-                    onChange={(e) => setRotation(Number(e.target.value))}
-                    className="w-full accent-amber-400 cursor-pointer"
+                    onChange={(e) => setRotation(parseInt(e.target.value))}
+                    className="w-full accent-white cursor-pointer"
                   />
                 </div>
 
-                {/* Lighting ambience switch */}
-                <div className="space-y-1.5">
-                  <span className="text-neutral-400 block">Lighting Atmosphere:</span>
+                <div>
+                  <div className="text-label-caps uppercase text-white/60 mb-1">
+                    <span>Ambient Light Engine</span>
+                  </div>
                   <div className="grid grid-cols-4 gap-1">
                     {[
                       { id: 'daylight', label: 'Day' },
@@ -539,10 +570,10 @@ export const ViewInRoomModal: React.FC = () => {
                       <button
                         key={tone.id}
                         onClick={() => setLighting(tone.id as any)}
-                        className={`py-1 text-[11px] rounded-lg font-medium transition-colors ${
+                        className={`py-1 text-[11px] rounded-none font-medium transition-colors cursor-pointer ${
                           lighting === tone.id
-                            ? 'bg-amber-400 text-neutral-950 font-bold'
-                            : 'bg-neutral-800 text-neutral-300 hover:bg-neutral-700'
+                            ? 'bg-white text-[#000000] font-semibold'
+                            : 'bg-[#252726] text-white/70 hover:bg-[#333534]'
                         }`}
                       >
                         {tone.label}
@@ -556,43 +587,43 @@ export const ViewInRoomModal: React.FC = () => {
             {/* Tab 3: Dimensions & Architectural Proportions */}
             {activeTab === 'dimensions' && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-neutral-950 p-3 rounded-xl border border-neutral-800 text-center">
-                  <span className="text-[10px] text-neutral-400 uppercase font-bold block">Height</span>
-                  <span className="text-sm font-bold text-white mt-0.5 block">{dims.height}</span>
+                <div className="bg-[#1a1c1b] p-3 rounded-none border border-[#383838] text-center">
+                  <span className="text-label-caps uppercase font-semibold text-white/60 block">Height</span>
+                  <span className="text-body-md font-bold text-white mt-0.5 block">{dims.height}</span>
                 </div>
-                <div className="bg-neutral-950 p-3 rounded-xl border border-neutral-800 text-center">
-                  <span className="text-[10px] text-neutral-400 uppercase font-bold block">Width</span>
-                  <span className="text-sm font-bold text-white mt-0.5 block">{dims.width}</span>
+                <div className="bg-[#1a1c1b] p-3 rounded-none border border-[#383838] text-center">
+                  <span className="text-label-caps uppercase font-semibold text-white/60 block">Width</span>
+                  <span className="text-body-md font-bold text-white mt-0.5 block">{dims.width}</span>
                 </div>
-                <div className="bg-neutral-950 p-3 rounded-xl border border-neutral-800 text-center">
-                  <span className="text-[10px] text-neutral-400 uppercase font-bold block">Depth</span>
-                  <span className="text-sm font-bold text-white mt-0.5 block">{dims.depth}</span>
+                <div className="bg-[#1a1c1b] p-3 rounded-none border border-[#383838] text-center">
+                  <span className="text-label-caps uppercase font-semibold text-white/60 block">Depth</span>
+                  <span className="text-body-md font-bold text-white mt-0.5 block">{dims.depth}</span>
                 </div>
-                <div className="bg-neutral-950 p-3 rounded-xl border border-neutral-800 text-center">
-                  <span className="text-[10px] text-neutral-400 uppercase font-bold block">Weight</span>
-                  <span className="text-sm font-bold text-white mt-0.5 block">{dims.weight}</span>
+                <div className="bg-[#1a1c1b] p-3 rounded-none border border-[#383838] text-center">
+                  <span className="text-label-caps uppercase font-semibold text-white/60 block">Weight</span>
+                  <span className="text-body-md font-bold text-white mt-0.5 block">{dims.weight}</span>
                 </div>
               </div>
             )}
 
             {/* Bottom Actions: Add to Bag or Wishlist */}
-            <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
-              <div className="text-xs text-neutral-400 hidden sm:block">
-                <span>Selected: <strong>{arProduct.name}</strong> ({selectedColor.name})</span>
+            <div className="flex items-center justify-between pt-3 border-t border-[#383838]">
+              <div className="text-body-sm text-white/70 hidden sm:block">
+                <span>Selected: <strong className="text-white">{arProduct.name}</strong> ({selectedColor.name})</span>
               </div>
 
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <button
                   id="ar-wishlist-toggle-btn"
                   onClick={() => toggleWishlist(arProduct.id)}
-                  className={`p-3 rounded-xl border transition-colors ${
+                  className={`p-3 rounded-none border transition-colors cursor-pointer ${
                     isLiked
-                      ? 'bg-rose-950/60 border-rose-600 text-rose-400'
-                      : 'bg-neutral-800 border-neutral-700 hover:bg-neutral-700 text-neutral-200'
+                      ? 'bg-white text-[#000000] border-white'
+                      : 'bg-[#252726] border-[#383838] hover:bg-[#333534] text-white'
                   }`}
                   aria-label="Save to Wishlist"
                 >
-                  <Heart className={`w-4 h-4 ${isLiked ? 'fill-rose-500 text-rose-500' : ''}`} />
+                  <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
                 </button>
 
                 <button
@@ -601,7 +632,7 @@ export const ViewInRoomModal: React.FC = () => {
                     addToCart(arProduct, selectedColor, arProduct.sizes[0], 1);
                     setIsAROpen(false);
                   }}
-                  className="flex-1 sm:flex-none px-6 py-3 bg-amber-400 hover:bg-amber-300 text-neutral-950 font-bold text-xs uppercase tracking-[0.2em] rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+                  className="flex-1 sm:flex-none px-6 py-3 bg-white hover:bg-[#efeeec] text-[#000000] font-semibold text-label-caps uppercase tracking-[0.16em] rounded-none shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Acquire Piece &bull; {formatPrice(arProduct.price)}</span>

@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import { useShop } from '../context/ShopContext';
-import { ShoppingBag, Heart, CheckCircle2, Info, X } from 'lucide-react';
+import { ShoppingBag, Heart, CheckCircle2, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const Toast: React.FC = () => {
@@ -11,24 +13,24 @@ export const Toast: React.FC = () => {
       <AnimatePresence>
         {toast && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            exit={{ opacity: 0, y: 15, scale: 0.98 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             id={`toast-${toast.id}`}
-            className="pointer-events-auto bg-neutral-900 text-white p-4 rounded-xl shadow-2xl border border-neutral-800 flex items-start gap-3.5 backdrop-blur-md bg-opacity-95"
+            className="pointer-events-auto bg-[#1a1c1b] text-white p-4 shadow-2xl border border-[#383838] flex items-start gap-3.5 rounded-none"
           >
-            <div className="p-2 rounded-lg bg-neutral-800 text-amber-300 shrink-0 mt-0.5">
+            <div className="p-2 bg-[#252726] text-white shrink-0 mt-0.5 rounded-none border border-white/10">
               {toast.type === 'cart' && <ShoppingBag className="w-4 h-4" />}
-              {toast.type === 'wishlist' && <Heart className="w-4 h-4 fill-rose-500 text-rose-500" />}
-              {toast.type === 'success' && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
-              {toast.type === 'info' && <Info className="w-4 h-4 text-neutral-300" />}
+              {toast.type === 'wishlist' && <Heart className="w-4 h-4 fill-white text-white" />}
+              {toast.type === 'success' && <CheckCircle2 className="w-4 h-4 text-[#efe0cf]" />}
+              {toast.type === 'info' && <Info className="w-4 h-4 text-white/80" />}
             </div>
 
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold tracking-wide text-neutral-100">{toast.title}</h4>
+              <h4 className="text-body-sm font-semibold tracking-wide text-white">{toast.title}</h4>
               {toast.subtitle && (
-                <p className="text-xs text-neutral-400 mt-0.5 truncate">{toast.subtitle}</p>
+                <p className="text-[12px] text-white/70 mt-0.5 truncate font-light">{toast.subtitle}</p>
               )}
             </div>
           </motion.div>

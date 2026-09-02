@@ -1,35 +1,53 @@
 {
-  "name": "react-example",
+  "name": "boski-limited",
+  "description": "BOSKI LIMITED — Luxury Master-Loom Linens, Bedding & Bespoke Textile Services",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit"
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "dev:vite": "vite --port=3000 --host=0.0.0.0",
+    "server": "tsx server/index.ts",
+    "lint": "tsc --noEmit",
+    "db:seed": "node scripts/seed-supabase.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
+    "@supabase/ssr": "^0.12.5",
+    "@supabase/supabase-js": "^2.112.4",
     "@tailwindcss/vite": "^4.1.14",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "bcryptjs": "^3.0.3",
+    "concurrently": "^10.0.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "multer": "^2.3.0",
+    "next": "^16.3.4",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
-    "vite": "^6.2.3",
-    "express": "^4.21.2",
-    "dotenv": "^17.2.3",
-    "motion": "^12.23.24"
+    "vite": "^6.2.3"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.14.0",
+    "@types/react": "19.2.18",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
+    "postcss": "^8.5.26",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
-    "vite": "^6.2.3",
-    "@types/express": "^4.17.21"
+    "vite": "^6.2.3"
   }
 }

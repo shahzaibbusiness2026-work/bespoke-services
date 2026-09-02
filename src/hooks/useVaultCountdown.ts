@@ -15,6 +15,17 @@ const STORAGE_KEY = 'boski_vault_end_time';
 // Default drop window: 18 hours, 42 minutes, 19 seconds
 const DEFAULT_DROP_DURATION_MS = (18 * 3600 + 42 * 60 + 19) * 1000;
 
+const INITIAL_STATE: CountdownState = {
+  hours: 18,
+  minutes: 42,
+  seconds: 19,
+  isExpired: false,
+  formattedHours: '18',
+  formattedMinutes: '42',
+  formattedSeconds: '19',
+  totalSecondsRemaining: 18 * 3600 + 42 * 60 + 19,
+};
+
 export const useVaultCountdown = (initialTargetTimestamp?: number): CountdownState => {
   const getTargetTimestamp = (): number => {
     if (initialTargetTimestamp) return initialTargetTimestamp;
@@ -61,10 +72,8 @@ export const useVaultCountdown = (initialTargetTimestamp?: number): CountdownSta
     };
   };
 
-  const [state, setState] = useState<CountdownState>(() => {
-    const target = getTargetTimestamp();
-    return calculateTimeRemaining(target);
-  });
+  // Deterministic initial state ensures server and initial client render match identically
+  const [state, setState] = useState<CountdownState>(INITIAL_STATE);
 
   useEffect(() => {
     const target = getTargetTimestamp();

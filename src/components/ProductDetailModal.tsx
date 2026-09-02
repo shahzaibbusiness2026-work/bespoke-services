@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { ProductColor } from '../types';
+import { FALLBACK_IMAGE } from '../data/products';
 
 export const ProductDetailModal: React.FC = () => {
   const {
@@ -11,6 +14,7 @@ export const ProductDetailModal: React.FC = () => {
     toggleWishlist,
     isInWishlist,
     setIsSizeGuideOpen,
+    openARView,
   } = useShop();
 
   const product = selectedProductForQuickView;
@@ -86,7 +90,14 @@ export const ProductDetailModal: React.FC = () => {
                       selectedImageIndex === idx ? 'border-[#000000]' : 'border-transparent hover:border-[#c4c7c7]'
                     }`}
                   >
-                    <img src={img} alt={`${product.name} thumbnail`} className="w-full h-full object-cover" />
+                    <img
+                      src={img}
+                      alt={`${product.name} thumbnail`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = FALLBACK_IMAGE;
+                      }}
+                    />
                   </button>
                 ))}
               </div>
@@ -97,6 +108,9 @@ export const ProductDetailModal: React.FC = () => {
                   src={imagesToDisplay[selectedImageIndex] || product.images[0]}
                   alt={product.name}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = FALLBACK_IMAGE;
+                  }}
                 />
                 {product.isNew && (
                   <div className="absolute top-4 left-4 z-10 bg-[#ffffff] px-2.5 py-1 border border-[#c4c7c7]">
@@ -152,8 +166,7 @@ export const ProductDetailModal: React.FC = () => {
                         key={color.name}
                         onClick={() => {
                           setSelectedColor(color);
-                          const idx = imagesToDisplay.indexOf(color.image);
-                          if (idx !== -1) setSelectedImageIndex(idx);
+                          setSelectedImageIndex(0);
                         }}
                         className={`w-8 h-8 rounded-full border p-[2px] transition-all ${
                           selectedColor?.name === color.name
@@ -205,31 +218,31 @@ export const ProductDetailModal: React.FC = () => {
               )}
 
               {/* Actions */}
-              <div className="flex gap-3 mb-6">
+              <div className="flex gap-3 mb-3">
                 <div className="flex items-center border border-[#c4c7c7] px-3 py-2 shrink-0">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-[#000000] hover:opacity-70 transition-opacity px-1"
+                    className="text-[#000000] hover:opacity-70 transition-opacity px-1 cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[16px]">remove</span>
                   </button>
                   <span className="text-body-md px-3 text-center">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="text-[#000000] hover:opacity-70 transition-opacity px-1"
+                    className="text-[#000000] hover:opacity-70 transition-opacity px-1 cursor-pointer"
                   >
                     <span className="material-symbols-outlined text-[16px]">add</span>
                   </button>
                 </div>
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 bg-[#000000] text-white text-label-caps tracking-widest uppercase hover:bg-[#2f3130] transition-colors py-3.5"
+                  className="flex-1 bg-[#000000] text-white text-label-caps tracking-widest uppercase hover:bg-[#2f3130] transition-colors py-3.5 cursor-pointer"
                 >
                   Add to Bag
                 </button>
                 <button
                   onClick={() => toggleWishlist(product.id)}
-                  className="px-4 border border-[#c4c7c7] hover:border-[#000000] text-[#000000] transition-colors flex items-center justify-center shrink-0"
+                  className="px-4 border border-[#c4c7c7] hover:border-[#000000] text-[#000000] transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                   aria-label="Save to Wishlist"
                 >
                   <span
@@ -240,6 +253,19 @@ export const ProductDetailModal: React.FC = () => {
                   </span>
                 </button>
               </div>
+
+              {/* View in Room (3D AR Visualizer) Interactive Trigger */}
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedProductForQuickView(null);
+                  openARView(product);
+                }}
+                className="w-full py-3 mb-6 border border-[#000000] bg-transparent text-[#000000] hover:bg-[#000000] hover:text-white transition-colors flex items-center justify-center gap-2 text-label-caps uppercase tracking-wider cursor-pointer font-medium"
+              >
+                <span className="material-symbols-outlined text-[18px]">view_in_ar</span>
+                <span>Experience In Room (3D / AR)</span>
+              </button>
 
               {/* Accordions */}
               <div className="border-t border-[#e3e2e0] text-body-sm divide-y divide-[#e3e2e0]">

@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 import { useShop, PageView } from '../context/ShopContext';
 
 export const Footer: React.FC = () => {
-  const { setActivePage } = useShop();
+  const { setActivePage, setIsContactOpen } = useShop();
 
   const navigate = (page: PageView) => {
     setActivePage(page);
@@ -110,9 +112,22 @@ export const Footer: React.FC = () => {
             <span className="text-label-caps text-[#000000] uppercase tracking-widest mb-1 font-semibold">
               Concierge
             </span>
+            <button
+              onClick={() => setIsContactOpen(true)}
+              className="text-body-sm text-[#2b2d2c] hover:text-[#000000] text-left underline underline-offset-4 decoration-[#d7c7b3] transition-colors"
+            >
+              Contact Atelier Concierge
+            </button>
             <p className="text-body-sm text-[#2b2d2c]">concierge@boskilimited.com</p>
-            <p className="text-body-sm text-[#2b2d2c]">+1 (800) 555-0199</p>
-            <p className="text-body-sm text-[#505252]">Monday &ndash; Friday, 9:00am &ndash; 6:00pm EST</p>
+            <p className="text-body-sm text-[#2b2d2c]">+44 20 7946 0991</p>
+            <p className="text-body-sm text-[#505252]">Monday &ndash; Saturday, 10:00am &ndash; 6:30pm GMT</p>
+
+            <button
+              onClick={() => navigate('admin')}
+              className="text-body-xs text-[#8c9a86] hover:text-[#1a1c1b] text-left pt-2 font-mono uppercase tracking-wider flex items-center gap-1 transition-colors"
+            >
+              <span>⚙ Atelier Portal (Admin)</span>
+            </button>
           </div>
 
           <div className="mt-8 pt-6 border-t border-[#c4c7c7]/60">

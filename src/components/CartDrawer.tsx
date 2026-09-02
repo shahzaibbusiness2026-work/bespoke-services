@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { FALLBACK_IMAGE } from '../data/products';
 
 export const CartDrawer: React.FC = () => {
   const {
@@ -132,6 +135,9 @@ export const CartDrawer: React.FC = () => {
                     src={item.selectedColor?.image || item.product.images[0]}
                     alt={item.product.name}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = FALLBACK_IMAGE;
+                    }}
                   />
                 </div>
 
