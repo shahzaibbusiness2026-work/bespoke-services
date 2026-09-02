@@ -52,6 +52,14 @@ export const Footer: React.FC = () => {
             Collections
           </span>
           <button
+            onClick={() => navigate('collections')}
+            className={`text-body-sm transition-colors text-left py-1 cursor-pointer font-medium ${
+              isDarkMode ? 'text-[#FAF8F5] hover:text-[#C5A059]' : 'text-[#000000] hover:text-[#555]'
+            }`}
+          >
+            All Collections
+          </button>
+          <button
             onClick={() => navigate('new-arrivals')}
             className={`text-body-sm transition-colors text-left py-1 cursor-pointer ${
               isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#2b2d2c] hover:text-[#000000]'

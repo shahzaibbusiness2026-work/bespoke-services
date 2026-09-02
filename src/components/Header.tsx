@@ -130,7 +130,28 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               />
             </button>
 
-            {/* 2. New Arrivals */}
+            {/* 2. All Collections */}
+            <button
+              id="nav-all-collections"
+              onClick={() => handleNavClick('collections')}
+              className={`relative py-2 transition-colors duration-200 cursor-pointer ${
+                activePage === 'collections'
+                  ? isDarkMode ? 'text-[#FAF8F5] font-semibold' : 'text-[#000000] font-semibold'
+                  : isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#2b2d2c] hover:text-[#000000]'
+              }`}
+            >
+              All Collections
+              <span
+                className={`absolute bottom-0 left-0 w-full h-[1.5px] transition-all duration-300 ${
+                  isDarkMode ? 'bg-[#C5A059]' : 'bg-[#000000]'
+                } ${
+                  activePage === 'collections' ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0 group-hover:scale-x-100'
+                }`}
+                style={{ transformOrigin: 'center' }}
+              />
+            </button>
+
+            {/* 3. New Arrivals */}
             <button
               id="nav-new-arrivals"
               onClick={() => handleNavClick('new-arrivals')}
@@ -847,7 +868,22 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               </button>
             </div>
 
-            {/* 2. New Arrivals */}
+            {/* 2. All Collections */}
+            <div className="pt-2">
+              <button
+                onClick={() => handleNavClick('collections')}
+                className={`w-full text-left py-3 text-body-lg flex justify-between items-center cursor-pointer ${
+                  activePage === 'collections'
+                    ? isDarkMode ? 'text-[#FAF8F5] font-semibold' : 'text-[#000000] font-semibold'
+                    : isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+                }`}
+              >
+                <span>All Collections</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            </div>
+
+            {/* 3. New Arrivals */}
             <div className="pt-2">
               <button
                 onClick={() => handleNavClick('new-arrivals')}

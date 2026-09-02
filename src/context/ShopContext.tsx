@@ -30,6 +30,7 @@ interface Totals {
 
 export type PageView =
   | 'home'
+  | 'collections'
   | 'new-arrivals'
   | 'shop'
   | 'bedding'

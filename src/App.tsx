@@ -18,9 +18,10 @@ import { MyAccountPage } from './components/MyAccountPage';
 import { AdminDashboard } from './components/AdminDashboard';
 import { NewsletterSubscription } from './components/NewsletterSubscription';
 
+import { AllCollectionsPage } from './components/AllCollectionsPage';
+
 // Luxury Homepage Editorial Sections
 import { BrandPhilosophy } from './components/home/BrandPhilosophy';
-import { FeaturedCollectionsSection } from './components/home/FeaturedCollectionsSection';
 import { CraftsmanshipSection } from './components/home/CraftsmanshipSection';
 import { EditorialJournalSection } from './components/home/EditorialJournalSection';
 
@@ -75,30 +76,32 @@ export const MainLayout: React.FC = () => {
           {/* 3. The Textile Sanctuary — Featured Bedding Suite + 7 luxury categories */}
           <CategoryGrid onSelectCategory={handleSelectCategory} />
 
-          {/* 4. Featured Collections — Curated seasonal suites */}
-          <FeaturedCollectionsSection />
-
-          {/* 5. Craftsmanship Storytelling — Loom techniques & fiber honesty */}
+          {/* 4. Craftsmanship Storytelling — Loom techniques & fiber honesty */}
           <CraftsmanshipSection />
 
-          {/* 6. Product Catalog — filterable 4-column grid */}
+          {/* 5. Product Catalog — filterable 4-column grid */}
           <ProductCatalog
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
           />
 
-          {/* 7. Lookbook Hotspots — Interactive room view */}
+          {/* 6. Lookbook Hotspots — Interactive room view */}
           <LookbookHotspots />
 
-          {/* 8. Editorial Journal — Magazine-grade essays on restful living */}
+          {/* 7. Editorial Journal — Magazine-grade essays on restful living */}
           <EditorialJournalSection />
 
-          {/* 9. Customer Reviews */}
+          {/* 8. Customer Reviews */}
           <CustomerReviews />
 
-          {/* 11. Instagram / UGC Visual Diary */}
+          {/* 9. Instagram / UGC Visual Diary */}
           <InstagramFeed />
         </main>
+      )}
+
+      {/* All Collections Page — Full Collection Suites */}
+      {activePage === 'collections' && (
+        <AllCollectionsPage />
       )}
 
       {/* Dedicated Collection Pages for each Navbar button */}
