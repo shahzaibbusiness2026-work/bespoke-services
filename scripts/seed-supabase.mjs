@@ -127,15 +127,15 @@ async function runMigration() {
     // 3. Seed Default Master Concierge Admin User
     console.log('\n🔐 3. Seeding Concierge Admin User...');
     const adminUser = {
-      email: 'concierge@boskilimited.com',
-      password_hash: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password123
+      email: 'boskilimited@boskilimited.info',
+      password_hash: '$2b$10$XgflG1o2tf9isryPOrsQoOZ4aAzsdk4Ha1y0AiSsqEAi69n86Mxy2', // Barking12345@
       first_name: 'Master',
       last_name: 'Concierge',
       role: 'superadmin',
     };
     const { error: adminErr } = await supabase.from('admin_users').upsert(adminUser, { onConflict: 'email' });
     if (adminErr) console.warn('   Admin user error:', adminErr.message);
-    else console.log('   ✓ Admin user seeded: concierge@boskilimited.com (password: password123)');
+    else console.log('   ✓ Admin user seeded: boskilimited@boskilimited.info (password: Barking12345@)');
 
     // 4. Seed VIP Customer
     console.log('\n👤 4. Seeding Default VIP Customer (Eleanor Vance)...');

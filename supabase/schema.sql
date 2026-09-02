@@ -333,11 +333,11 @@ INSERT INTO public.categories (name, slug, description) VALUES
 ('Pillows & Shams', 'pillows', '6A grade 22-Momme mulberry silk and down inserts.')
 ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, description = EXCLUDED.description;
 
--- Seed 2: Default Admin User (Password: password123)
--- bcrypt hash: $2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
+-- Seed 2: Default Admin User (Password: Barking12345@)
+-- bcrypt hash: $2b$10$XgflG1o2tf9isryPOrsQoOZ4aAzsdk4Ha1y0AiSsqEAi69n86Mxy2
 INSERT INTO public.admin_users (email, password_hash, first_name, last_name, role) VALUES
-('concierge@boskilimited.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Master', 'Concierge', 'superadmin')
-ON CONFLICT (email) DO UPDATE SET role = 'superadmin';
+('boskilimited@boskilimited.info', '$2b$10$XgflG1o2tf9isryPOrsQoOZ4aAzsdk4Ha1y0AiSsqEAi69n86Mxy2', 'Master', 'Concierge', 'superadmin')
+ON CONFLICT (email) DO UPDATE SET role = 'superadmin', password_hash = EXCLUDED.password_hash;
 
 -- Seed 3: Default VIP Patron (Eleanor Vance)
 INSERT INTO public.customers (email, first_name, last_name, phone, vip_tier, points_balance, addresses) VALUES

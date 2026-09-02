@@ -644,13 +644,13 @@
       "id": "usr-admin-001",
       "firstName": "Atelier",
       "lastName": "Director",
-      "email": "concierge@boskilimited.com",
-      "phone": "+44 20 7946 0991",
+      "email": "boskilimited@boskilimited.info",
+      "phone": "+44 7738 761016",
       "role": "admin",
       "vipTier": "Diamond Concierge",
       "pointsBalance": 999999,
       "joinedDate": "January 2022",
-      "passwordHash": "$2b$10$90tIjYN1E4jlSMoUejcbDu0szxG67ubfgAU7tAxLvP7GtvgSEeR56",
+      "passwordHash": "$2b$10$XgflG1o2tf9isryPOrsQoOZ4aAzsdk4Ha1y0AiSsqEAi69n86Mxy2",
       "addresses": []
     },
     {
