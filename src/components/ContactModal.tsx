@@ -91,15 +91,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             <div className="space-y-4 text-body-xs text-[#faf9f7]/90 font-light">
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#d7c7b3] shrink-0 mt-0.5" />
-                <span>Mayfair Flagship Atelier<br />12 Grosvenor Square, London</span>
+                <span>Unit 4, Balmoral Trading Estate<br />113 River Road, Barking, IG11 0EG</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#d7c7b3] shrink-0" />
-                <span>+44 20 7946 0991</span>
+                <a href="tel:+447738761016" className="hover:text-white transition-colors">+44 7738 761016</a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#d7c7b3] shrink-0" />
-                <span>concierge@boskilimited.com</span>
+                <a href="mailto:boskilimited@boskilimited.info" className="hover:text-white transition-colors">boskilimited@boskilimited.info</a>
               </div>
             </div>
           </div>
@@ -185,7 +185,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+44 20 7946 0991"
+                    placeholder="+44 7738 761016"
                     className="w-full bg-white border border-[#c4c7c7] px-3 py-2 text-body-sm text-[#1a1c1b] focus:border-[#000000] outline-none transition-colors"
                   />
                 </div>

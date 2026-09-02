@@ -125,13 +125,22 @@ export async function DELETE(req: NextRequest) {
         );
       }
 
-      const { error: delErr } = await supabase
+      // Use separate parameterized deletes to avoid string-interpolation injection risk
+      const { error: delErrBySlug } = await supabase
         .from('categories')
         .delete()
-        .or(`slug.eq.${slug},name.ilike.${decoded}`);
+        .eq('slug', slug);
 
-      if (delErr) {
-        return NextResponse.json({ success: false, error: delErr.message }, { status: 500 });
+      if (delErrBySlug) {
+        // Try by name if slug delete failed
+        const { error: delErrByName } = await supabase
+          .from('categories')
+          .delete()
+          .ilike('name', decoded);
+
+        if (delErrByName) {
+          return NextResponse.json({ success: false, error: delErrByName.message }, { status: 500 });
+        }
       }
     }
 

@@ -1,11 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
-import { supabase, isSupabaseConfigured } from '@/src/lib/supabase';
+import { getAdminClient, isSupabaseConfigured } from '@/src/lib/supabase';
+import { verifyAdmin, isAuthError } from '@/src/lib/auth-guard';
 
 const UPLOADS_DIR = path.resolve(process.cwd(), 'public', 'uploads');
 
+// Allowed MIME types for upload
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/avif',
+  'image/gif',
+]);
+
+// Allowed extensions (secondary check)
+const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
+
+// Max file size: 10 MB
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+
 export async function POST(req: NextRequest) {
+  // Require admin authentication
+  const authResult = verifyAdmin(req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     const formData = await req.formData();
     const file = formData.get('image') as File | null;
@@ -14,24 +35,51 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'No image file uploaded.' }, { status: 400 });
     }
 
-    const ext = path.extname(file.name).toLowerCase() || '.jpg';
-    const cleanBase = path.basename(file.name, ext).toLowerCase().replace(/[^a-z0-9]/g, '-');
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { success: false, error: `File size exceeds the 10 MB limit. Uploaded: ${(file.size / 1024 / 1024).toFixed(1)} MB.` },
+        { status: 400 }
+      );
+    }
+
+    // Validate MIME type (server-side — not trusting user header)
+    const declaredMime = file.type || '';
+    if (!ALLOWED_MIME_TYPES.has(declaredMime)) {
+      return NextResponse.json(
+        { success: false, error: `File type '${declaredMime || 'unknown'}' is not permitted. Allowed: JPEG, PNG, WebP, AVIF, GIF.` },
+        { status: 400 }
+      );
+    }
+
+    // Validate file extension
+    const ext = path.extname(file.name).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.has(ext)) {
+      return NextResponse.json(
+        { success: false, error: `File extension '${ext || 'none'}' is not permitted.` },
+        { status: 400 }
+      );
+    }
+
+    // Sanitize filename
+    const cleanBase = path.basename(file.name, ext).toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 80);
     const filename = `${cleanBase}-${Date.now()}${ext}`;
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // 1. If Supabase is configured, upload to Supabase Storage
+    // 1. If Supabase is configured, upload to Supabase Storage using admin client
     if (isSupabaseConfigured()) {
-      const { data: uploadData, error: uploadErr } = await supabase.storage
+      const adminClient = getAdminClient();
+      const { data: uploadData, error: uploadErr } = await adminClient.storage
         .from('product-media')
         .upload(filename, buffer, {
-          contentType: file.type || 'image/jpeg',
-          upsert: true,
+          contentType: declaredMime || 'image/jpeg',
+          upsert: false, // prevent overwriting existing files silently
         });
 
       if (!uploadErr && uploadData) {
-        const { data: publicUrlData } = supabase.storage
+        const { data: publicUrlData } = adminClient.storage
           .from('product-media')
           .getPublicUrl(filename);
 
@@ -42,14 +90,16 @@ export async function POST(req: NextRequest) {
             url: publicUrlData.publicUrl,
             filename,
             size: file.size,
-            mimetype: file.type,
+            mimetype: declaredMime,
             provider: 'supabase-storage',
           },
         });
+      } else if (uploadErr) {
+        console.error('[Upload] Supabase upload error:', uploadErr.message);
       }
     }
 
-    // 2. Local disk fallback
+    // 2. Local disk fallback (development only)
     if (!fs.existsSync(UPLOADS_DIR)) {
       fs.mkdirSync(UPLOADS_DIR, { recursive: true });
     }
@@ -59,12 +109,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Image uploaded successfully to local CDN.',
+      message: 'Image uploaded successfully.',
       data: {
         url: `/uploads/${filename}`,
         filename,
         size: file.size,
-        mimetype: file.type,
+        mimetype: declaredMime,
         provider: 'local-disk',
       },
     });
@@ -73,14 +123,19 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  // Require admin authentication to list media
+  const authResult = verifyAdmin(req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     // 1. Try Supabase Storage
     if (isSupabaseConfigured()) {
-      const { data, error } = await supabase.storage.from('product-media').list();
+      const adminClient = getAdminClient();
+      const { data, error } = await adminClient.storage.from('product-media').list();
       if (!error && data && data.length > 0) {
         const mediaList = data.map((item) => {
-          const { data: urlData } = supabase.storage
+          const { data: urlData } = adminClient.storage
             .from('product-media')
             .getPublicUrl(item.name);
 

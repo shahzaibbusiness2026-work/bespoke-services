@@ -63,17 +63,17 @@ export const CheckoutModal: React.FC = () => {
   // Step indicator: 1 = Shipping, 2 = Delivery, 3 = Payment, 4 = Confirmation
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
 
-  // Form State
+  // Form State — starts blank, pre-filled from logged-in user profile by useEffect below
   const [formData, setFormData] = useState({
-    firstName: 'Eleanor',
-    lastName: 'Vance',
-    email: 'eleanor.vance@boski-limited.com',
-    phone: '+1 (617) 555-0192',
-    address: '142 Hill House Lane, Apt 3B',
-    city: 'Boston',
-    state: 'MA',
-    zipCode: '02116',
-    country: 'United States',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
   });
 
   // Sync with logged in client if available

@@ -33,8 +33,8 @@ export const Footer: React.FC = () => {
             Handcrafted luxury textiles, pure organic flax linens, and bespoke architectural drapery for quiet, restorative sanctuaries.
           </p>
           <div className="pt-2 text-body-sm text-[#505252]">
-            <p className="font-medium text-[#000000]">Loom Studio &amp; Atelier</p>
-            <p>Porto &middot; Normandy &middot; New York</p>
+            <p className="font-medium text-[#000000]">Registered Atelier &amp; Office</p>
+            <p className="leading-snug">Unit 4, Balmoral Trading Estate<br />113 River Road, Barking, IG11 0EG</p>
           </div>
         </div>
 
@@ -118,16 +118,29 @@ export const Footer: React.FC = () => {
             >
               Contact Atelier Concierge
             </button>
-            <p className="text-body-sm text-[#2b2d2c]">concierge@boskilimited.com</p>
-            <p className="text-body-sm text-[#2b2d2c]">+44 20 7946 0991</p>
+            <a
+              href="mailto:boskilimited@boskilimited.info"
+              className="text-body-sm text-[#2b2d2c] hover:text-[#000000] transition-colors"
+            >
+              boskilimited@boskilimited.info
+            </a>
+            <a
+              href="tel:+447738761016"
+              className="text-body-sm text-[#2b2d2c] hover:text-[#000000] transition-colors"
+            >
+              +44 7738 761016
+            </a>
             <p className="text-body-sm text-[#505252]">Monday &ndash; Saturday, 10:00am &ndash; 6:30pm GMT</p>
 
-            <button
-              onClick={() => navigate('admin')}
+            <a
+              href="/admin"
+              onClick={(e) => {
+                navigate('admin');
+              }}
               className="text-body-xs text-[#8c9a86] hover:text-[#1a1c1b] text-left pt-2 font-mono uppercase tracking-wider flex items-center gap-1 transition-colors"
             >
               <span>⚙ Atelier Portal (Admin)</span>
-            </button>
+            </a>
           </div>
 
           <div className="mt-8 pt-6 border-t border-[#c4c7c7]/60">

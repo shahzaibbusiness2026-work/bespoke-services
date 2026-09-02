@@ -274,12 +274,12 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   // Deterministic initial states (identical on server and initial client render to prevent hydration mismatches)
-  const [currentUser, setCurrentUser] = useState<User | null>(DEFAULT_VIP_USER);
-  const [cart, setCart] = useState<CartItem[]>(INITIAL_CART);
-  const [wishlist, setWishlist] = useState<string[]>(['prod-1', 'prod-2', 'prod-5']);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [wishlist, setWishlist] = useState<string[]>([]);
   const [currency, setCurrencyState] = useState<Currency>(CURRENCIES.GBP);
-  const [orderHistory, setOrderHistory] = useState<OrderDetails[]>(INITIAL_ORDER_HISTORY);
-  const [recentOrder, setRecentOrder] = useState<OrderDetails | null>(INITIAL_ORDER_HISTORY[0]);
+  const [orderHistory, setOrderHistory] = useState<OrderDetails[]>([]);
+  const [recentOrder, setRecentOrder] = useState<OrderDetails | null>(null);
 
   // Safely hydrate stored client state from LocalStorage after initial mount
   useEffect(() => {
@@ -314,6 +314,16 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (savedOrders) {
         const parsedOrders = JSON.parse(savedOrders);
         if (Array.isArray(parsedOrders)) setOrderHistory(parsedOrders);
+      }
+
+      // Auto-detect admin view from URL path, hash, or query parameter
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname.toLowerCase();
+        const hash = window.location.hash.toLowerCase();
+        const search = window.location.search.toLowerCase();
+        if (path === '/admin' || path.endsWith('/admin') || hash.includes('admin') || search.includes('admin')) {
+          setActivePage('admin');
+        }
       }
     } catch (e) {
       console.warn('[ShopContext] Error hydrating client state from localStorage:', e);
@@ -497,7 +507,7 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const toggleWishlist = (productId: string) => {
-    const product = PRODUCTS.find((p) => p.id === productId);
+    const product = products.find((p) => p.id === productId);
     setWishlist((prev) => {
       const exists = prev.includes(productId);
       if (exists) {

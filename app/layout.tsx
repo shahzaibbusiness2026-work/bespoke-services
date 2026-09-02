@@ -6,8 +6,41 @@ export const metadata: Metadata = {
   title: 'BOSKI LIMITED • Luxury Master-Loom Linens, Bedding & Bespoke Textile Services',
   description:
     'Purveyor of rare long-staple Egyptian sateen, Belgian flax linens, architectural bedroom furniture and bespoke made-to-measure interior drapery.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://boskilimited.com'),
   icons: {
     icon: '/favicon.svg',
+  },
+  openGraph: {
+    title: 'BOSKI LIMITED • Luxury Master-Loom Linens & Bespoke Textiles',
+    description:
+      'Purveyor of rare long-staple Egyptian sateen, Belgian flax linens, architectural bedroom furniture and bespoke made-to-measure interior drapery.',
+    siteName: 'BOSKI LIMITED',
+    type: 'website',
+    locale: 'en_GB',
+    url: '/',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BOSKI LIMITED — Luxury Master-Loom Linens & Bespoke Textiles',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BOSKI LIMITED • Luxury Linens & Bespoke Textiles',
+    description: 'Purveyor of rare long-staple Egyptian sateen, Belgian flax linens and bespoke made-to-measure interior drapery.',
+    images: ['/og-image.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+    },
   },
 };
 

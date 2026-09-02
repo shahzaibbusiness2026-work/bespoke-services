@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase, isSupabaseConfigured } from '@/src/lib/supabase';
 import { ProductRepository } from '@/server/repositories/productRepository';
 import { mapDbProductToProduct, mapProductToDbProduct } from '@/src/lib/db-mappers';
+import { verifyAdmin, isAuthError } from '@/src/lib/auth-guard';
 
 export async function GET(req: NextRequest) {
   try {
@@ -65,14 +66,31 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// ── POST: Create product — Admin only ────────────────────────────────────────
 export async function POST(req: NextRequest) {
+  // Verify admin token
+  const authResult = verifyAdmin(req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     const body = await req.json();
     const { name, category, price } = body;
 
-    if (!name || !category || price === undefined) {
+    if (!name || typeof name !== 'string' || !name.trim()) {
       return NextResponse.json(
-        { success: false, error: 'Product name, category, and price are required.' },
+        { success: false, error: 'Product name is required.' },
+        { status: 400 }
+      );
+    }
+    if (!category || typeof category !== 'string') {
+      return NextResponse.json(
+        { success: false, error: 'Product category is required.' },
+        { status: 400 }
+      );
+    }
+    if (price === undefined || price === null || isNaN(Number(price)) || Number(price) < 0) {
+      return NextResponse.json(
+        { success: false, error: 'A valid product price is required.' },
         { status: 400 }
       );
     }

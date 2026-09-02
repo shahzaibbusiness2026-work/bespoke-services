@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase, isSupabaseConfigured } from '@/src/lib/supabase';
 import { ProductRepository } from '@/server/repositories/productRepository';
 import { mapDbProductToProduct, mapProductToDbProduct } from '@/src/lib/db-mappers';
+import { verifyAdmin, isAuthError } from '@/src/lib/auth-guard';
 
+// ── GET: Fetch single product — Public ───────────────────────────────────────
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
@@ -35,7 +37,11 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
   }
 }
 
+// ── PUT: Update product — Admin only ─────────────────────────────────────────
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const authResult = verifyAdmin(req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     const { id } = await params;
     const body = await req.json();
@@ -52,7 +58,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
         .single();
 
       if (!error && data) {
-        // If images provided, update product_images
+        // If images provided, replace product_images rows
         if (Array.isArray(body.images)) {
           await supabase.from('product_images').delete().eq('product_id', id);
           if (body.images.length > 0) {
@@ -92,7 +98,11 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   }
 }
 
+// ── DELETE: Remove product — Admin only ──────────────────────────────────────
 export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const authResult = verifyAdmin(_req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     const { id } = await params;
 
@@ -101,7 +111,6 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
       await supabase.from('product_images').delete().eq('product_id', id);
       const { error } = await supabase.from('products').delete().eq('id', id);
       if (!error) {
-        // Also remove from local fallback for consistency
         ProductRepository.delete(id);
         return NextResponse.json({
           success: true,
@@ -123,12 +132,33 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   }
 }
 
+// ── PATCH: Toggle product status field — Admin only ──────────────────────────
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const authResult = verifyAdmin(req);
+  if (isAuthError(authResult)) return authResult;
+
   try {
     const { id } = await params;
-    const { field } = await req.json();
+    const body = await req.json();
+    const { field } = body;
 
-    // Field mapping from camelCase to snake_case if applicable
+    if (!field || typeof field !== 'string') {
+      return NextResponse.json(
+        { success: false, error: 'A valid field name is required.' },
+        { status: 400 }
+      );
+    }
+
+    // Whitelist allowed toggle fields
+    const allowedFields = ['inStock', 'featured', 'isNew', 'isBestSeller', 'isSale'];
+    if (!allowedFields.includes(field)) {
+      return NextResponse.json(
+        { success: false, error: `Field '${field}' is not a toggleable status field.` },
+        { status: 400 }
+      );
+    }
+
+    // Field mapping from camelCase to snake_case
     const fieldMap: Record<string, string> = {
       inStock: 'in_stock',
       isNew: 'is_new',
@@ -139,7 +169,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 
     const dbField = fieldMap[field] || field;
 
-    const updated = ProductRepository.toggleStatus(id, field);
+    const updated = ProductRepository.toggleStatus(id, field as 'inStock' | 'featured');
     if (!updated) {
       return NextResponse.json({ success: false, error: `Product '${id}' not found.` }, { status: 404 });
     }

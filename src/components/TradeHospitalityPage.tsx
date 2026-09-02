@@ -142,14 +142,27 @@ export const TradeHospitalityPage: React.FC = () => {
               <span className="material-symbols-outlined text-[#000000] mt-1" style={{ fontVariationSettings: "'wght' 200" }}>mail</span>
               <div>
                 <p className="text-label-caps text-[#444748] mb-1">Email</p>
-                <p className="text-body-md text-[#000000]">trade@boskilimited.com</p>
+                <a href="mailto:boskilimited@boskilimited.info" className="text-body-md text-[#000000] hover:underline">
+                  boskilimited@boskilimited.info
+                </a>
               </div>
             </div>
             <div className="flex gap-4 items-start">
               <span className="material-symbols-outlined text-[#000000] mt-1" style={{ fontVariationSettings: "'wght' 200" }}>call</span>
               <div>
                 <p className="text-label-caps text-[#444748] mb-1">Phone</p>
-                <p className="text-body-md text-[#000000]">+1 (800) 555-0199</p>
+                <a href="tel:+447738761016" className="text-body-md text-[#000000] hover:underline">
+                  +44 7738 761016
+                </a>
+              </div>
+            </div>
+            <div className="flex gap-4 items-start">
+              <span className="material-symbols-outlined text-[#000000] mt-1" style={{ fontVariationSettings: "'wght' 200" }}>location_on</span>
+              <div>
+                <p className="text-label-caps text-[#444748] mb-1">Atelier &amp; Trade Office</p>
+                <p className="text-body-sm text-[#000000] leading-snug">
+                  Unit 4, Balmoral Trading Estate<br />113 River Road, Barking, IG11 0EG
+                </p>
               </div>
             </div>
           </div>

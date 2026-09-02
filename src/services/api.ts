@@ -169,7 +169,7 @@ class ApiClient {
     },
 
     toggleStatus: async (id: string, field: 'inStock' | 'featured') => {
-      return this.request<Product>(`/products/${id}/status`, {
+      return this.request<Product>(`/products/${id}`, {
         method: 'PATCH',
         body: JSON.stringify({ field }),
       });
@@ -189,7 +189,7 @@ class ApiClient {
     },
 
     getMediaList: async () => {
-      return this.request<MediaFile[]>('/upload/media');
+      return this.request<MediaFile[]>('/upload');
     },
   };
 

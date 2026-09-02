@@ -37,9 +37,10 @@ export const AdminDashboard: React.FC = () => {
 
   // Admin Authentication State
   const isAdmin = currentUser?.role === 'admin';
-  const [adminEmail, setAdminEmail] = useState('concierge@boskilimited.com');
-  const [adminPassword, setAdminPassword] = useState('password123');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   // Active Workspace Tab
   const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'upload' | 'categories' | 'inquiries'>('overview');
@@ -147,61 +148,39 @@ export const AdminDashboard: React.FC = () => {
     }
   }, [isAdmin]);
 
-  // Master Admin Object
-  const grantMasterAdmin = () => {
-    const adminUser = {
-      id: 'usr-admin-001',
-      firstName: 'Master',
-      lastName: 'Concierge',
-      name: 'Master Concierge',
-      email: adminEmail.trim() || 'concierge@boskilimited.com',
-      role: 'admin' as const,
-      vipTier: 'Diamond Concierge' as const,
-      pointsBalance: 10000,
-      joinedDate: 'Atelier Founding',
-      addresses: [],
-    };
-    setCurrentUser(adminUser);
-    showToast('Atelier Admin Access Granted', 'Welcome to Master Administrator Console', 'success');
-  };
 
-  // Handle Admin Login
+  // Handle Admin Login — validates credentials via the API
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError('');
+
+    const cleanEmail = adminEmail.trim();
+    const cleanPass = adminPassword.trim();
+
+    if (!cleanEmail || !cleanPass) {
+      setLoginError('Email and password are required.');
+      return;
+    }
+
     setIsLoggingIn(true);
     try {
-      const cleanEmail = adminEmail.trim().toLowerCase();
-      const cleanPass = adminPassword.trim();
+      const success = await login(cleanEmail, cleanPass);
 
-      // Master Admin direct bypass
-      if (
-        cleanEmail === 'concierge@boskilimited.com' ||
-        cleanEmail.includes('admin') ||
-        cleanPass === 'password123'
-      ) {
-        grantMasterAdmin();
-        return;
-      }
-
-      const success = await login(adminEmail, adminPassword);
-      if (success) {
-        grantMasterAdmin();
+      if (success && currentUser?.role === 'admin') {
+        // Successfully authenticated as admin — refreshData will be triggered by useEffect
+        showToast('Atelier Admin Access Granted', 'Welcome to the Master Administrator Console', 'success');
+      } else if (success && currentUser?.role !== 'admin') {
+        // Authenticated but not an admin — sign them out
+        logout();
+        setLoginError('Your account does not have administrator privileges.');
       } else {
-        // Fallback grant if credentials match demo
-        grantMasterAdmin();
+        setLoginError('Invalid email or password. Please try again.');
       }
     } catch {
-      grantMasterAdmin();
+      setLoginError('An error occurred. Please try again.');
     } finally {
       setIsLoggingIn(false);
     }
-  };
-
-  // Quick Demo Login Pre-fill
-  const fillDemoCredentials = () => {
-    setAdminEmail('concierge@boskilimited.com');
-    setAdminPassword('password123');
-    grantMasterAdmin();
   };
 
   // Image File Selection
@@ -495,45 +474,33 @@ export const AdminDashboard: React.FC = () => {
             <button
               type="submit"
               disabled={isLoggingIn}
-              className="w-full py-3 bg-[#d7c7b3] text-[#1a1c1b] font-medium text-label-caps tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center gap-2 mt-4"
+              className="w-full py-3 bg-[#d7c7b3] text-[#1a1c1b] font-medium text-label-caps tracking-widest uppercase hover:bg-white transition-colors flex items-center justify-center gap-2 mt-4 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               <ShieldCheck className="w-4 h-4" />
-              <span>{isLoggingIn ? 'Verifying Atelier Session...' : 'Authenticate as Admin'}</span>
+              <span>{isLoggingIn ? 'Verifying Credentials...' : 'Authenticate as Admin'}</span>
             </button>
 
-            {/* Instant 1-Click Master Admin Entry */}
-            <button
-              type="button"
-              onClick={grantMasterAdmin}
-              className="w-full py-3 bg-[#8c9a86] text-white font-medium text-label-caps tracking-widest uppercase hover:bg-[#9eb098] transition-colors flex items-center justify-center gap-2 mt-2 cursor-pointer border border-[#8c9a86]/50"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>⚡ Instant 1-Click Master Admin Access</span>
-            </button>
+            {/* Error message display */}
+            {loginError && (
+              <div className="mt-3 p-3 bg-red-900/30 border border-red-800/50 text-red-300 text-[12px] font-mono text-center">
+                {loginError}
+              </div>
+            )}
           </form>
 
-          {/* Quick Demo Pre-fill Helper */}
-          <div className="mt-6 pt-6 border-t border-[#383838] text-center">
-            <button
-              type="button"
-              onClick={fillDemoCredentials}
-              className="text-[11px] text-[#d7c7b3] hover:underline font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 mx-auto"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Fill Pre-Configured Demo Credentials</span>
-            </button>
-            <div className="text-[10px] text-[#8c9a86] mt-2 font-mono">
-              Demo: concierge@boskilimited.com • password123
-            </div>
-          </div>
-
           <div className="mt-6 text-center">
-            <button
-              onClick={() => setActivePage('home')}
-              className="text-body-xs text-[#e3e2e0]/50 hover:text-white transition-colors"
+            <a
+              href="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  setActivePage('home');
+                }
+              }}
+              className="text-body-xs text-[#e3e2e0]/60 hover:text-white transition-colors underline-offset-4 hover:underline inline-block"
             >
               ← Return to Client Storefront
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -572,13 +539,19 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button
-              onClick={() => setActivePage('home')}
-              className="text-body-xs text-[#d7c7b3] hover:text-white flex items-center gap-1.5 transition-colors"
+            <a
+              href="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  setActivePage('home');
+                }
+              }}
+              className="text-body-xs text-[#d7c7b3] hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <span>View Storefront</span>
               <ExternalLink className="w-3.5 h-3.5" />
-            </button>
+            </a>
             <div className="h-4 w-px bg-[#383838]" />
             <button
               onClick={logout}

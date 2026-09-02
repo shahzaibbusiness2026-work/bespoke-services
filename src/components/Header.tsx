@@ -484,6 +484,21 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                           ))}
                         </div>
                       </div>
+
+                      {/* Direct link to Atelier Admin Portal */}
+                      <div className="border-t border-[#c4c7c7]/50 pt-2.5 mt-2">
+                        <a
+                          href="/admin"
+                          onClick={(e) => {
+                            setActiveDropdown(null);
+                            handleNavClick('admin');
+                          }}
+                          className="text-left py-1 text-[11.5px] font-mono text-[#8c9a86] hover:text-[#000000] uppercase tracking-wider flex items-center justify-between transition-colors"
+                        >
+                          <span>⚙ Atelier Portal (Admin)</span>
+                          <span className="material-symbols-outlined text-[15px]">lock</span>
+                        </a>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -908,11 +923,33 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
 
           </div>
 
-          {/* Sidebar Bottom Concierge */}
-          <div className="p-6 border-t border-[#c4c7c7] bg-[#f4f3f1] shrink-0">
-            <p className="text-label-caps text-[#505252] uppercase mb-1 font-semibold">Concierge Support</p>
-            <p className="text-body-sm text-[#000000] font-medium">+1 (800) 555-0199</p>
-            <p className="text-body-sm text-[#505252] text-xs mt-1">concierge@boskilimited.com</p>
+          {/* Sidebar Bottom Concierge & Admin */}
+          <div className="p-6 border-t border-[#c4c7c7] bg-[#f4f3f1] shrink-0 space-y-3">
+            <div>
+              <p className="text-label-caps text-[#505252] uppercase mb-1 font-semibold">Concierge Support</p>
+              <a href="tel:+447738761016" className="text-body-sm text-[#000000] font-medium block hover:underline">
+                +44 7738 761016
+              </a>
+              <a href="mailto:boskilimited@boskilimited.info" className="text-body-sm text-[#505252] text-xs block mt-0.5 hover:underline">
+                boskilimited@boskilimited.info
+              </a>
+              <p className="text-[11px] text-[#505252] mt-1 leading-snug">
+                Unit 4, Balmoral Trading Estate, 113 River Road, Barking, IG11 0EG
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-[#c4c7c7]/50">
+              <a
+                href="/admin"
+                onClick={(e) => {
+                  setIsSidebarOpen(false);
+                  handleNavClick('admin');
+                }}
+                className="w-full py-2.5 px-3 bg-[#1a1c1b] text-white text-label-caps tracking-wider uppercase text-[11px] flex items-center justify-center gap-2"
+              >
+                <span>⚙ Atelier Portal (Admin)</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
