@@ -1,5 +1,7 @@
 import { db } from '../data/store';
 import { Product, LookbookItem } from '../types';
+import { supabase, isSupabaseConfigured } from '../../src/lib/supabase';
+import { mapDbProductToProduct, mapProductToDbProduct } from '../../src/lib/db-mappers';
 
 export interface ProductQueryFilters {
   category?: string;
@@ -175,5 +177,118 @@ export class ProductRepository {
 
       return product;
     });
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Supabase PostgreSQL Primary Operations (falls back to local JSON store)
+  // ════════════════════════════════════════════════════════════════════════
+
+  public static async findAllAsync(filters: ProductQueryFilters = {}): Promise<{
+    products: Product[];
+    total: number;
+    source: 'supabase' | 'local-store';
+  }> {
+    if (isSupabaseConfigured()) {
+      try {
+        let query = supabase.from('products').select('*', { count: 'exact' });
+
+        if (filters.category && filters.category !== 'all') {
+          const cat = filters.category.toLowerCase();
+          if (cat === 'bedding') {
+            query = query.in('category', ['bedding', 'sheets', 'duvets']);
+          } else {
+            query = query.ilike('category', cat);
+          }
+        }
+
+        if (filters.inStock !== undefined) {
+          query = query.eq('in_stock', filters.inStock);
+        }
+
+        if (filters.search && filters.search.trim()) {
+          const q = filters.search.trim();
+          query = query.or(`name.ilike.%${q}%,subtitle.ilike.%${q}%,description.ilike.%${q}%`);
+        }
+
+        if (filters.minPrice !== undefined) {
+          query = query.gte('price', filters.minPrice);
+        }
+        if (filters.maxPrice !== undefined) {
+          query = query.lte('price', filters.maxPrice);
+        }
+
+        const limit = filters.limit || 50;
+        const offset = filters.offset || 0;
+
+        const { data, count, error } = await query
+          .order('created_at', { ascending: false })
+          .range(offset, offset + limit - 1);
+
+        if (!error && data) {
+          return {
+            products: data.map(mapDbProductToProduct),
+            total: count || data.length,
+            source: 'supabase',
+          };
+        }
+      } catch {
+        // Fallback to local
+      }
+    }
+
+    const local = ProductRepository.findAll(filters);
+    return { ...local, source: 'local-store' };
+  }
+
+  public static async findByIdAsync(id: string): Promise<{ product: Product | null; source: 'supabase' | 'local-store' }> {
+    if (isSupabaseConfigured()) {
+      try {
+        const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
+        if (!error && data) {
+          return { product: mapDbProductToProduct(data), source: 'supabase' };
+        }
+      } catch {}
+    }
+    return { product: ProductRepository.findById(id), source: 'local-store' };
+  }
+
+  public static async createAsync(data: Omit<Product, 'id'>): Promise<{ product: Product; source: 'supabase' | 'local-store' }> {
+    const id = `prod-${Date.now()}`;
+    const productPayload = { ...data, id };
+
+    if (isSupabaseConfigured()) {
+      try {
+        const dbRecord = mapProductToDbProduct(productPayload);
+        const { data: created, error } = await supabase.from('products').insert([dbRecord]).select().single();
+        if (!error && created) {
+          if (Array.isArray(productPayload.images) && productPayload.images.length > 0) {
+            const imageRows = productPayload.images.map((url: string, idx: number) => ({
+              product_id: id,
+              url,
+              display_order: idx,
+              is_primary: idx === 0,
+            }));
+            await supabase.from('product_images').insert(imageRows);
+          }
+          // Also sync to local memory
+          ProductRepository.create(data);
+          return { product: mapDbProductToProduct(created), source: 'supabase' };
+        }
+      } catch {}
+    }
+
+    return { product: ProductRepository.create(data), source: 'local-store' };
+  }
+
+  public static async deleteAsync(id: string): Promise<boolean> {
+    if (isSupabaseConfigured()) {
+      try {
+        await supabase.from('product_images').delete().eq('product_id', id);
+        const { error } = await supabase.from('products').delete().eq('id', id);
+        ProductRepository.delete(id);
+        return !error;
+      } catch {}
+    }
+    return ProductRepository.delete(id);
   }
 }

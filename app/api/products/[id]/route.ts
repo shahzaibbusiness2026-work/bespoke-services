@@ -14,7 +14,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
         return NextResponse.json({
           success: true,
           data: mapDbProductToProduct(data),
-          meta: { source: 'supabase-postgresql' },
+          meta: { source: 'supabase' },
         });
       }
     }
@@ -70,7 +70,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
           success: true,
           data: mapDbProductToProduct(data),
           message: 'Product updated in Supabase PostgreSQL.',
-          meta: { source: 'supabase-postgresql' },
+          meta: { source: 'supabase' },
         });
       }
     }
@@ -106,7 +106,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
         return NextResponse.json({
           success: true,
           message: `Product '${id}' deleted from Supabase catalog.`,
-          meta: { source: 'supabase-postgresql' },
+          meta: { source: 'supabase' },
         });
       }
     }

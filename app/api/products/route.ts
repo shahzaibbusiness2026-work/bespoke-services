@@ -29,15 +29,15 @@ export async function GET(req: NextRequest) {
         .order('created_at', { ascending: false })
         .limit(limit);
 
-      if (!error && data && data.length > 0) {
+      if (!error && data) {
         const mappedProducts = data.map(mapDbProductToProduct);
         return NextResponse.json({
           success: true,
           data: mappedProducts,
           meta: {
-            total: count || data.length,
+            total: count !== null && count !== undefined ? count : mappedProducts.length,
             count: mappedProducts.length,
-            source: 'supabase-postgresql',
+            source: 'supabase',
           },
         });
       }
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
           success: true,
           data: mapDbProductToProduct(data),
           message: `Product '${name}' created in Supabase PostgreSQL.`,
-          meta: { source: 'supabase-postgresql' },
+          meta: { source: 'supabase' },
         });
       }
     }
