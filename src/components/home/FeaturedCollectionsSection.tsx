@@ -3,6 +3,7 @@
 import React from 'react';
 import { useShop } from '../../context/ShopContext';
 import { ArrowRight, Layers, Calendar, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Collection } from '../../types';
 
 export const FeaturedCollectionsSection: React.FC = () => {
@@ -59,13 +60,19 @@ export const FeaturedCollectionsSection: React.FC = () => {
   };
 
   return (
-    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${sectionBg}`}>
+    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 transition-colors duration-300 ${sectionBg} overflow-hidden`}>
       <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-inherit">
+        {/* Section Header with In-View Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-inherit"
+        >
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] animate-pulse" />
               <span className="text-[11px] uppercase font-mono tracking-[0.28em] font-medium" style={{ color: gold }}>
                 Curated Releases &bull; Seasonal Editions
               </span>
@@ -86,28 +93,33 @@ export const FeaturedCollectionsSection: React.FC = () => {
               setActivePage('new-arrivals');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-semibold hover:underline cursor-pointer self-start md:self-auto"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] font-semibold hover:underline cursor-pointer self-start md:self-auto group"
             style={{ color: gold }}
           >
             <span>View All Curations</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
-        </div>
+        </motion.div>
 
-        {/* 3 Large Editorial Collection Showcases */}
+        {/* 3 Large Editorial Collection Showcases with Staggered Entrance */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {items.map((col) => (
-            <div
+          {items.map((col, idx) => (
+            <motion.div
               key={col.id}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.8, delay: idx * 0.14, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
               onClick={() => handleOpenCollection(col.name)}
-              className={`border group cursor-pointer flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#C9A227] ${cardBg}`}
+              className={`border group cursor-pointer flex flex-col justify-between overflow-hidden transition-colors duration-500 hover:border-[#C9A227] ${cardBg}`}
             >
               {/* Cover Image Canvas */}
               <div className="aspect-[16/11] relative overflow-hidden bg-black/40 border-b border-inherit">
                 <img
                   src={col.coverImage}
                   alt={col.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 will-change-transform"
+                  className="w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 will-change-transform"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
@@ -145,11 +157,11 @@ export const FeaturedCollectionsSection: React.FC = () => {
                   </span>
                   <div className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider font-semibold group-hover:text-[#C9A227] transition-colors">
                     <span>Explore Suite</span>
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

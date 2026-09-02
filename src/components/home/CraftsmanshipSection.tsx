@@ -3,6 +3,7 @@
 import React from 'react';
 import { useShop } from '../../context/ShopContext';
 import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Feather, Layers } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export const CraftsmanshipSection: React.FC = () => {
   const { isDarkMode, setActivePage } = useShop();
@@ -32,17 +33,23 @@ export const CraftsmanshipSection: React.FC = () => {
   ];
 
   return (
-    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 border-y transition-colors duration-300 ${sectionBg} border-inherit`}>
+    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 border-y transition-colors duration-300 ${sectionBg} border-inherit overflow-hidden`}>
       <div className="max-w-7xl mx-auto space-y-20">
         {/* Split Editorial Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Left Column: Macro Textile Photography */}
-          <div className="lg:col-span-5 relative">
-            <div className="aspect-[4/5] border overflow-hidden relative border-inherit">
+          {/* Left Column: Macro Textile Photography with Slide-In */}
+          <motion.div
+            initial={{ opacity: 0, x: -36 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 relative"
+          >
+            <div className="aspect-[4/5] border overflow-hidden relative border-inherit group">
               <img
                 src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1600&q=90"
                 alt="Master Loom Textile Weave Macro"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 will-change-transform"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
@@ -56,7 +63,11 @@ export const CraftsmanshipSection: React.FC = () => {
             </div>
 
             {/* Overlapping Atelier Accent Card */}
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 15 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className={`absolute -bottom-6 -right-6 hidden sm:block p-6 border shadow-2xl max-w-xs ${
                 isDarkMode ? 'bg-[#141716] border-[#222624] text-[#F5F1E8]' : 'bg-white border-[#E6E1D8] text-[#171717]'
               }`}
@@ -70,14 +81,20 @@ export const CraftsmanshipSection: React.FC = () => {
               <p className={`text-[11px] font-light leading-snug mt-1 ${textSecondary}`}>
                 Free from harmful chemicals, petroleum softeners, or heavy metals.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Column: Craftsmanship Narrative & Pillars */}
-          <div className="lg:col-span-7 space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: 36 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 space-y-8"
+          >
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] animate-pulse" />
                 <span className="text-[11px] uppercase font-mono tracking-[0.28em] font-medium" style={{ color: gold }}>
                   Artisanal Integrity &bull; European Loom Masters
                 </span>
@@ -93,12 +110,19 @@ export const CraftsmanshipSection: React.FC = () => {
               </p>
             </div>
 
-            {/* 4 Pillars List */}
+            {/* 4 Pillars List with Staggered Cascades */}
             <div className="space-y-6 pt-2">
               {craftPillars.map((p, idx) => (
-                <div key={idx} className="flex items-start gap-4">
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.65, delay: 0.15 + idx * 0.11, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-start gap-4 group"
+                >
                   <span
-                    className="w-7 h-7 rounded-none border border-inherit flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-1"
+                    className="w-7 h-7 rounded-none border border-inherit flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-1 transition-all duration-300 group-hover:scale-110"
                     style={{ color: gold, borderColor: `${gold}50`, backgroundColor: `${gold}10` }}
                   >
                     0{idx + 1}
@@ -111,7 +135,7 @@ export const CraftsmanshipSection: React.FC = () => {
                       {p.desc}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -121,14 +145,14 @@ export const CraftsmanshipSection: React.FC = () => {
                   setActivePage('canvas');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] font-bold px-8 py-3.5 border transition-all hover:bg-[#C9A227] hover:text-black cursor-pointer shadow-sm"
+                className="inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] font-bold px-8 py-3.5 border transition-all duration-300 hover:bg-[#C9A227] hover:text-black cursor-pointer shadow-sm group"
                 style={{ borderColor: gold }}
               >
                 <span>Read The Atelier Chronicle</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

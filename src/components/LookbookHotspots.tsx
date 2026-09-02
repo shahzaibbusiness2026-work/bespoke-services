@@ -88,20 +88,20 @@ export const LookbookHotspots: React.FC = () => {
                 style={{ top: `${spot.yPercent}%`, left: `${spot.xPercent}%` }}
                 className="absolute z-30 -translate-x-1/2 -translate-y-1/2"
               >
-                {/* Pin Button with Pulse Ring */}
+                {/* Pin Button with Ambient Luxury Pulse Ring */}
                 <div className="relative">
-                  <div className="absolute -inset-2 bg-white/30 animate-ping pointer-events-none" />
+                  <div className="absolute -inset-1 rounded-none bg-[#C9A227]/30 animate-ambient-pulse pointer-events-none" />
                   <button
                     id={`hotspot-pin-${spot.id}`}
                     onClick={() => setActiveHotspotId(isOpen ? null : spot.id)}
-                    className={`relative w-8 h-8 flex items-center justify-center shadow-xl transition-all duration-300 border cursor-pointer rounded-none ${
+                    className={`relative w-8 h-8 flex items-center justify-center shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border cursor-pointer rounded-none ${
                       isOpen
-                        ? 'bg-[#000000] text-white border-white scale-110'
-                        : 'bg-white text-[#000000] border-[#c4c7c7] hover:scale-110'
+                        ? 'bg-[#C9A227] text-black border-[#C9A227] scale-110 shadow-[0_0_20px_rgba(201,162,39,0.5)]'
+                        : 'bg-white/90 backdrop-blur-sm text-black border-white/80 hover:bg-[#C9A227] hover:border-[#C9A227] hover:scale-115'
                     }`}
                     aria-label={`View ${spot.title}`}
                   >
-                    <Plus className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`} />
+                    <Plus className={`w-4 h-4 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'rotate-45' : ''}`} />
                   </button>
                 </div>
 

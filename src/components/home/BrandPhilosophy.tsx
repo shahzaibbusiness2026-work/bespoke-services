@@ -3,9 +3,10 @@
 import React from 'react';
 import { useShop } from '../../context/ShopContext';
 import { Compass, Sparkles, Feather, ShieldCheck } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export const BrandPhilosophy: React.FC = () => {
-  const { isDarkMode, setActivePage } = useShop();
+  const { isDarkMode } = useShop();
 
   const gold = '#C9A227';
   const sectionBg = isDarkMode ? 'bg-[#101312] text-[#F5F1E8]' : 'bg-[#FAF8F3] text-[#171717]';
@@ -40,12 +41,18 @@ export const BrandPhilosophy: React.FC = () => {
   ];
 
   return (
-    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 border-y transition-colors duration-300 ${sectionBg} border-inherit`}>
+    <section className={`py-28 sm:py-36 px-4 sm:px-6 lg:px-8 border-y transition-colors duration-300 ${sectionBg} border-inherit overflow-hidden`}>
       <div className="max-w-7xl mx-auto space-y-20 sm:space-y-24">
-        {/* Editorial Narrative Block */}
-        <div className="max-w-4xl mx-auto text-center space-y-6">
+        {/* Editorial Narrative Block with In-View Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl mx-auto text-center space-y-6"
+        >
           <div className="inline-flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227] animate-pulse" />
             <span className="text-[11px] uppercase font-mono tracking-[0.28em] font-semibold" style={{ color: gold }}>
               Atelier Philosophy &bull; Quiet Luxury
             </span>
@@ -61,23 +68,28 @@ export const BrandPhilosophy: React.FC = () => {
           <p className={`text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto ${textSecondary}`}>
             At BOSKI LIMITED, we reject the disposable cadence of modern commerce. We curate architectural textiles designed to age with graceful dignity, growing softer and more luminous across decades of living.
           </p>
-        </div>
+        </motion.div>
 
-        {/* 3 Pillars Grid */}
+        {/* 3 Pillars Grid with Staggered Kinetic Entrance */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {pillars.map((pillar) => {
+          {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
-              <div
+              <motion.div
                 key={pillar.num}
-                className={`p-8 sm:p-10 border flex flex-col justify-between group transition-all duration-300 hover:border-[#C9A227] ${cardBg}`}
+                initial={{ opacity: 0, y: 36 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.8, delay: idx * 0.14, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -6, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
+                className={`p-8 sm:p-10 border flex flex-col justify-between group transition-colors duration-300 hover:border-[#C9A227] ${cardBg}`}
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between pb-4 border-b border-inherit">
                     <span className="font-mono text-xs tracking-widest text-[#C9A227]">
                       {pillar.num}
                     </span>
-                    <Icon className="w-5 h-5 text-[#C9A227]" />
+                    <Icon className="w-5 h-5 text-[#C9A227] transition-transform duration-300 group-hover:scale-110" />
                   </div>
 
                   <div>
@@ -98,11 +110,12 @@ export const BrandPhilosophy: React.FC = () => {
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-inherit">
-                  <span className="text-[11px] uppercase tracking-wider font-semibold opacity-60 group-hover:opacity-100 group-hover:text-[#C9A227] transition-all">
-                    Atelier Standard &rarr;
+                  <span className="text-[11px] uppercase tracking-wider font-semibold opacity-60 group-hover:opacity-100 group-hover:text-[#C9A227] transition-all flex items-center gap-1">
+                    <span>Atelier Standard</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
                   </span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

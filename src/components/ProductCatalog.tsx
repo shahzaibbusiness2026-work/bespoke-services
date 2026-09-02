@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { useShop } from '../context/ShopContext';
 import { PRODUCTS } from '../data/products';
 import { ProductCard } from './ProductCard';
+import { motion } from 'motion/react';
 
 interface ProductCatalogProps {
   activeCategory: string;
@@ -381,11 +382,22 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 sm:gap-x-8 gap-y-12 sm:gap-y-16">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 sm:gap-x-8 gap-y-12 sm:gap-y-16"
+        >
+          {visibleProducts.map((product, idx) => (
+            <motion.div
+              key={product.id}
+              layout
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: (idx % 4) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       {/* Load More Button */}

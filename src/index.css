@@ -475,4 +475,110 @@ html.dark .input-minimal::placeholder {
 /* Smooth transition when switching themes */
 html, body {
   transition: background-color 0.25s ease, color 0.25s ease;
+  scroll-behavior: smooth;
+}
+
+/* =====================================================
+   INDUSTRIAL-LEVEL LUXURY ANIMATION SYSTEM
+   Engineered with cubic-bezier(0.16, 1, 0.3, 1) ease-out
+   GPU-accelerated, zero layout shift (CLS = 0)
+   ===================================================== */
+
+@keyframes luxuryFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes luxuryFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ambientPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.45);
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(201, 162, 39, 0);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes goldGlint {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-luxury-fade-up {
+  animation: luxuryFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-luxury-fade-in {
+  animation: luxuryFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-ambient-pulse {
+  animation: ambientPulse 3s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 5s ease-in-out infinite;
+}
+
+/* Industrial ease curve: fast out, ultra-gentle deceleration */
+.ease-luxury {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hardware accelerated layer */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+/* Subtle gold border illuminate on hover */
+.hover-gold-rim {
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-gold-rim:hover {
+  border-color: #C9A227 !important;
+  box-shadow: 0 8px 32px -8px rgba(201, 162, 39, 0.18);
+}
+
+/* Image reveal curtain effect */
+.editorial-curtain {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.editorial-curtain:hover img {
+  transform: scale(1.05);
 }
