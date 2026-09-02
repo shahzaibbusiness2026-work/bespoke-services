@@ -32,7 +32,7 @@ import { ContactModal } from './components/ContactModal';
 import { Toast } from './components/Toast';
 
 export const MainLayout: React.FC = () => {
-  const { activePage, currentUser, setActivePage, isContactOpen, setIsContactOpen } = useShop();
+  const { activePage, currentUser, setActivePage, isContactOpen, setIsContactOpen, isDarkMode } = useShop();
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
   const handleSelectCategory = (category: string) => {
@@ -41,7 +41,7 @@ export const MainLayout: React.FC = () => {
 
   if (activePage === 'admin') {
     return (
-      <div className="min-h-screen bg-[#faf9f7] text-[#1a1c1b]">
+      <div className={`min-h-screen ${isDarkMode ? 'bg-[#111312] text-[#FAF8F5]' : 'bg-[#faf9f7] text-[#1a1c1b]'}`}>
         <AdminDashboard />
         <Toast />
       </div>
@@ -50,7 +50,9 @@ export const MainLayout: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-[#faf9f7] text-[#1a1c1b] flex flex-col"
+      className={`min-h-screen flex flex-col transition-colors duration-200 ${
+        isDarkMode ? 'bg-[#111312] text-[#FAF8F5]' : 'bg-[#faf9f7] text-[#1a1c1b]'
+      }`}
       style={{ fontFamily: "'DM Sans', -apple-system, sans-serif" }}
     >
       {/* Navigation Header — always visible with BOSKI LIMITED on front */}

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
 
 export const AuthModal: React.FC = () => {
-  const { isAuthOpen, setIsAuthOpen, authMode, setAuthMode, login, signup, showToast } = useShop();
+  const { isAuthOpen, setIsAuthOpen, authMode, setAuthMode, login, signup, showToast, isDarkMode } = useShop();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,8 +31,13 @@ export const AuthModal: React.FC = () => {
     signup(firstName, lastName, email, password);
   };
 
-  const inputClass = "w-full bg-transparent border-0 border-b border-[#e3e2e0] focus:border-[#000000] py-2 px-0 text-body-md text-[#000000] placeholder-[#444748]/50 transition-colors outline-none";
-  const labelClass = "text-label-caps text-[#444748] group-focus-within:text-[#000000] transition-colors";
+  const inputClass = isDarkMode
+    ? "w-full bg-transparent border-0 border-b border-[#383D3A] focus:border-[#C5A059] py-2 px-0 text-body-md text-[#FAF8F5] placeholder-[#6E6B65] transition-colors outline-none"
+    : "w-full bg-transparent border-0 border-b border-[#e3e2e0] focus:border-[#000000] py-2 px-0 text-body-md text-[#000000] placeholder-[#444748]/50 transition-colors outline-none";
+
+  const labelClass = isDarkMode
+    ? "text-label-caps text-[#A8A49C] group-focus-within:text-[#C5A059] transition-colors"
+    : "text-label-caps text-[#444748] group-focus-within:text-[#000000] transition-colors";
 
   return (
     <div
@@ -42,7 +47,11 @@ export const AuthModal: React.FC = () => {
     >
       <div
         id="auth-modal-content"
-        className="bg-[#faf9f7] w-full max-w-4xl shadow-2xl border border-[#c4c7c7] overflow-hidden grid grid-cols-1 md:grid-cols-2 relative my-auto will-change-transform"
+        className={`w-full max-w-4xl shadow-2xl border overflow-hidden grid grid-cols-1 md:grid-cols-2 relative my-auto will-change-transform ${
+          isDarkMode
+            ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
+            : 'bg-[#faf9f7] border-[#c4c7c7] text-[#000000]'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Left Column: Bedroom Image */}
@@ -78,21 +87,27 @@ export const AuthModal: React.FC = () => {
         <div className="p-8 sm:p-12 flex flex-col justify-between relative">
           <button
             onClick={() => setIsAuthOpen(false)}
-            className="absolute top-6 right-6 p-2 text-[#444748] hover:text-[#000000] transition-colors"
+            className={`absolute top-6 right-6 p-2 transition-colors cursor-pointer ${
+              isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#444748] hover:text-[#000000]'
+            }`}
             aria-label="Close"
           >
             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'wght' 300" }}>close</span>
           </button>
 
           <div>
-            <div className="flex border-b border-[#e3e2e0] mb-8">
+            <div className={`flex border-b mb-8 ${isDarkMode ? 'border-[#2A2E2C]' : 'border-[#e3e2e0]'}`}>
               <button
                 type="button"
                 onClick={() => setAuthMode('login')}
-                className={`pb-3 pr-6 text-label-caps transition-colors relative uppercase tracking-widest ${
+                className={`pb-3 pr-6 text-label-caps transition-colors relative uppercase tracking-widest cursor-pointer ${
                   authMode === 'login'
-                    ? 'text-[#000000] border-b-2 border-[#000000] font-bold'
-                    : 'text-[#444748] hover:text-[#000000]'
+                    ? isDarkMode
+                      ? 'text-[#C5A059] border-b-2 border-[#C5A059] font-bold'
+                      : 'text-[#000000] border-b-2 border-[#000000] font-bold'
+                    : isDarkMode
+                      ? 'text-[#A8A49C] hover:text-white'
+                      : 'text-[#444748] hover:text-[#000000]'
                 }`}
               >
                 Sign In
@@ -100,10 +115,14 @@ export const AuthModal: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setAuthMode('signup')}
-                className={`pb-3 px-6 text-label-caps transition-colors relative uppercase tracking-widest ${
+                className={`pb-3 px-6 text-label-caps transition-colors relative uppercase tracking-widest cursor-pointer ${
                   authMode === 'signup'
-                    ? 'text-[#000000] border-b-2 border-[#000000] font-bold'
-                    : 'text-[#444748] hover:text-[#000000]'
+                    ? isDarkMode
+                      ? 'text-[#C5A059] border-b-2 border-[#C5A059] font-bold'
+                      : 'text-[#000000] border-b-2 border-[#000000] font-bold'
+                    : isDarkMode
+                      ? 'text-[#A8A49C] hover:text-white'
+                      : 'text-[#444748] hover:text-[#000000]'
                 }`}
               >
                 Create Account
@@ -127,7 +146,7 @@ export const AuthModal: React.FC = () => {
                 <div className="space-y-1 group">
                   <div className="flex justify-between items-center">
                     <label className={labelClass}>Password</label>
-                    <a href="#" className="text-body-sm text-[#444748] hover:text-[#000000] underline">
+                    <a href="#" className={`text-body-sm underline ${isDarkMode ? 'text-[#A8A49C] hover:text-[#C5A059]' : 'text-[#444748] hover:text-[#000000]'}`}>
                       Forgot?
                     </a>
                   </div>
@@ -142,7 +161,11 @@ export const AuthModal: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#000000] text-white py-4 text-label-caps uppercase tracking-widest hover:bg-[#2f3130] transition-colors mt-8"
+                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-8 cursor-pointer font-medium ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                      : 'bg-[#000000] text-white hover:bg-[#2f3130]'
+                  }`}
                 >
                   Sign In
                 </button>
@@ -199,7 +222,11 @@ export const AuthModal: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#000000] text-white py-4 text-label-caps uppercase tracking-widest hover:bg-[#2f3130] transition-colors mt-6"
+                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-6 cursor-pointer font-medium ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                      : 'bg-[#000000] text-white hover:bg-[#2f3130]'
+                  }`}
                 >
                   Create Account
                 </button>
@@ -207,8 +234,8 @@ export const AuthModal: React.FC = () => {
             )}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-[#e3e2e0] text-center">
-            <p className="text-body-sm text-[#444748]">
+          <div className={`mt-8 pt-6 border-t text-center ${isDarkMode ? 'border-[#2A2E2C]' : 'border-[#e3e2e0]'}`}>
+            <p className={`text-body-sm ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#444748]'}`}>
               By proceeding, you agree to our Terms of Service and Privacy Policy.
             </p>
           </div>

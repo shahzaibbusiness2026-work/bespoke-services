@@ -15,7 +15,7 @@ interface Article {
 }
 
 export const TheCanvasPage: React.FC = () => {
-  const { setActivePage } = useShop();
+  const { setActivePage, isDarkMode } = useShop();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [activeArticleModal, setActiveArticleModal] = useState<Article | null>(null);
 
@@ -109,34 +109,44 @@ export const TheCanvasPage: React.FC = () => {
       : articles.filter((a) => a.category.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
-    <main className="flex-grow bg-[#faf9f7] animate-fadeIn pb-24">
+    <main className={`flex-grow animate-fadeIn pb-24 transition-colors ${
+      isDarkMode ? 'bg-[#111312] text-[#FAF8F5]' : 'bg-[#faf9f7] text-[#1a1c1b]'
+    }`}>
       {/* Page Header */}
       <section className="w-full px-5 md:px-12 lg:px-16 max-w-[1440px] mx-auto pt-14 md:pt-20 pb-16">
         <div className="flex flex-col gap-4">
-          <nav className="text-label-caps text-[#505252] uppercase tracking-[0.16em] flex items-center gap-2 text-xs">
+          <nav className={`text-label-caps uppercase tracking-[0.16em] flex items-center gap-2 text-xs ${
+            isDarkMode ? 'text-[#A8A49C]' : 'text-[#505252]'
+          }`}>
             <button
               onClick={() => {
                 setActivePage('home');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="hover:text-[#000000] transition-colors"
+              className={`transition-colors cursor-pointer ${isDarkMode ? 'hover:text-[#FAF8F5]' : 'hover:text-[#000000]'}`}
             >
               Home
             </button>
-            <span className="text-[#c4c7c7]">/</span>
-            <span className="text-[#000000] font-semibold">The Canvas</span>
+            <span className={isDarkMode ? 'text-[#383D3A]' : 'text-[#c4c7c7]'}>/</span>
+            <span className={`font-semibold ${isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'}`}>The Canvas</span>
           </nav>
 
-          <span className="text-label-caps text-[#000000] uppercase tracking-[0.2em] font-semibold mt-2">
+          <span className={`text-label-caps uppercase tracking-[0.2em] font-semibold mt-2 ${
+            isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+          }`}>
             The Canvas &middot; Journal &amp; Essays
           </span>
           <h1
-            className="text-[36px] sm:text-[54px] md:text-[64px] leading-[44px] sm:leading-[62px] md:leading-[72px] tracking-[-0.02em] text-[#000000] max-w-3xl font-normal"
+            className={`text-[36px] sm:text-[54px] md:text-[64px] leading-[44px] sm:leading-[62px] md:leading-[72px] tracking-[-0.02em] max-w-3xl font-normal ${
+              isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+            }`}
             style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
           >
             Perspectives on the art of fine rest
           </h1>
-          <p className="text-body-lg text-[#2b2d2c] max-w-2xl font-light leading-relaxed">
+          <p className={`text-body-lg max-w-2xl font-light leading-relaxed ${
+            isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+          }`}>
             Explorations into generational loom heritage, architectural interiors, and the physics of natural fibers that shape quiet sanctuaries.
           </p>
         </div>
@@ -144,7 +154,9 @@ export const TheCanvasPage: React.FC = () => {
 
       {/* Featured Editorial Banner */}
       <section className="w-full px-5 md:px-12 lg:px-16 max-w-[1440px] mx-auto mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 bg-[#ffffff] border border-[#c4c7c7] overflow-hidden group">
+        <div className={`grid grid-cols-1 lg:grid-cols-12 border overflow-hidden group ${
+          isDarkMode ? 'bg-[#141615] border-[#2A2E2C]' : 'bg-[#ffffff] border-[#c4c7c7]'
+        }`}>
           {/* Image */}
           <div className="lg:col-span-7 relative overflow-hidden bg-[#efeeec] min-h-[380px] lg:min-h-[500px]">
             <img
@@ -156,30 +168,40 @@ export const TheCanvasPage: React.FC = () => {
           </div>
 
           {/* Text Card with rigid typography hierarchy */}
-          <div className="lg:col-span-5 p-8 sm:p-12 lg:p-14 flex flex-col justify-between bg-[#ffffff]">
+          <div className={`lg:col-span-5 p-8 sm:p-12 lg:p-14 flex flex-col justify-between ${
+            isDarkMode ? 'bg-[#141615]' : 'bg-[#ffffff]'
+          }`}>
             <div>
               {/* Category Tag: uppercase, tracked */}
-              <span className="text-label-caps text-[#000000] uppercase tracking-[0.2em] font-semibold block mb-3">
+              <span className={`text-label-caps uppercase tracking-[0.2em] font-semibold block mb-3 ${
+                isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+              }`}>
                 {featuredArticle.category}
               </span>
 
               {/* Article Title: serif h3 */}
               <h3
-                className="text-[28px] sm:text-[34px] leading-[36px] sm:leading-[42px] tracking-[-0.01em] text-[#000000] font-normal mb-4"
+                className={`text-[28px] sm:text-[34px] leading-[36px] sm:leading-[42px] tracking-[-0.01em] font-normal mb-4 ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                }`}
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 {featuredArticle.title}
               </h3>
 
               {/* Publication Date: muted sans-serif */}
-              <div className="flex items-center gap-3 text-body-sm text-[#505252] font-sans mb-6">
+              <div className={`flex items-center gap-3 text-body-sm font-sans mb-6 ${
+                isDarkMode ? 'text-[#A8A49C]' : 'text-[#505252]'
+              }`}>
                 <time dateTime="2024-11-14">{featuredArticle.date}</time>
                 <span>&middot;</span>
                 <span>{featuredArticle.readTime}</span>
               </div>
 
               {/* Excerpt in elevated contrast body text */}
-              <p className="text-body-md text-[#2b2d2c] leading-relaxed font-light mb-8">
+              <p className={`text-body-md leading-relaxed font-light mb-8 ${
+                isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+              }`}>
                 {featuredArticle.excerpt}
               </p>
             </div>
@@ -189,7 +211,11 @@ export const TheCanvasPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveArticleModal(featuredArticle)}
-                className="inline-flex items-center justify-between gap-4 px-8 py-4 bg-[#000000] text-white text-label-caps uppercase tracking-[0.18em] border border-[#000000] hover:bg-[#252726] transition-all duration-300 active:scale-[0.99] group/btn cursor-pointer w-full sm:w-auto shadow-sm"
+                className={`inline-flex items-center justify-between gap-4 px-8 py-4 text-label-caps uppercase tracking-[0.18em] border transition-all duration-300 active:scale-[0.99] group/btn cursor-pointer w-full sm:w-auto shadow-sm font-medium ${
+                  isDarkMode
+                    ? 'bg-[#C5A059] text-black border-[#C5A059] hover:bg-[#D8B468]'
+                    : 'bg-[#000000] text-white border-[#000000] hover:bg-[#252726]'
+                }`}
               >
                 <span>Read Essay</span>
                 <span
@@ -206,8 +232,12 @@ export const TheCanvasPage: React.FC = () => {
 
       {/* Category Filter Pills */}
       <section className="w-full px-5 md:px-12 lg:px-16 max-w-[1440px] mx-auto mb-12">
-        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide border-b border-[#c4c7c7] pb-4">
-          <span className="text-label-caps text-[#000000] uppercase tracking-wider mr-2 font-semibold shrink-0">
+        <div className={`flex items-center gap-3 overflow-x-auto scrollbar-hide border-b pb-4 ${
+          isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
+        }`}>
+          <span className={`text-label-caps uppercase tracking-wider mr-2 font-semibold shrink-0 ${
+            isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+          }`}>
             Topics:
           </span>
           {categories.map((cat) => (
@@ -216,8 +246,12 @@ export const TheCanvasPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 border text-label-caps uppercase whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 selectedCategory.toLowerCase() === cat.toLowerCase()
-                  ? 'bg-[#000000] text-white border-[#000000] shadow-sm'
-                  : 'bg-transparent text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
+                  ? isDarkMode
+                    ? 'bg-[#C5A059] text-black border-[#C5A059] font-bold shadow-sm'
+                    : 'bg-[#000000] text-white border-[#000000] shadow-sm'
+                  : isDarkMode
+                    ? 'bg-transparent text-[#A8A49C] border-[#383D3A] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                    : 'bg-transparent text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
               }`}
             >
               {cat === 'all' ? 'All Stories' : cat}
@@ -232,7 +266,11 @@ export const TheCanvasPage: React.FC = () => {
           {filteredArticles.map((article) => (
             <article
               key={article.id}
-              className="bg-[#ffffff] border border-[#c4c7c7] flex flex-col justify-between group hover:border-[#000000] transition-colors duration-300"
+              className={`border flex flex-col justify-between group transition-colors duration-300 ${
+                isDarkMode
+                  ? 'bg-[#141615] border-[#2A2E2C] hover:border-[#C5A059]'
+                  : 'bg-[#ffffff] border-[#c4c7c7] hover:border-[#000000]'
+              }`}
             >
               {/* Media Header */}
               <div className="aspect-[16/10] overflow-hidden bg-[#efeeec] relative">
@@ -248,37 +286,51 @@ export const TheCanvasPage: React.FC = () => {
               <div className="p-7 sm:p-8 flex flex-col flex-grow justify-between">
                 <div>
                   {/* 1. Category Tag: uppercase, tracked */}
-                  <span className="text-label-caps text-[#000000] uppercase tracking-[0.2em] font-semibold block mb-2.5">
+                  <span className={`text-label-caps uppercase tracking-[0.2em] font-semibold block mb-2.5 ${
+                    isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+                  }`}>
                     {article.category}
                   </span>
 
                   {/* 2. Article Title: serif h3 */}
                   <h3
-                    className="text-[22px] sm:text-[24px] leading-[30px] sm:leading-[32px] text-[#000000] font-normal mb-2.5"
+                    className={`text-[22px] sm:text-[24px] leading-[30px] sm:leading-[32px] font-normal mb-2.5 ${
+                      isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                    }`}
                     style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                   >
                     {article.title}
                   </h3>
 
                   {/* 3. Publication Date: muted sans-serif */}
-                  <div className="flex items-center gap-2 text-body-sm text-[#505252] font-sans mb-4">
+                  <div className={`flex items-center gap-2 text-body-sm font-sans mb-4 ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#505252]'
+                  }`}>
                     <time dateTime={article.date}>{article.date}</time>
                     <span>&middot;</span>
                     <span>{article.readTime}</span>
                   </div>
 
                   {/* Excerpt in elevated color contrast (>= 4.5:1) */}
-                  <p className="text-body-sm text-[#2b2d2c] leading-relaxed font-light line-clamp-3 mb-6">
+                  <p className={`text-body-sm leading-relaxed font-light line-clamp-3 mb-6 ${
+                    isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+                  }`}>
                     {article.excerpt}
                   </p>
                 </div>
 
                 {/* Upgraded High-Contrast Secondary Button CTA with translate(4px) */}
-                <div className="pt-4 border-t border-[#e3e2e0]">
+                <div className={`pt-4 border-t ${
+                  isDarkMode ? 'border-[#2A2E2C]' : 'border-[#e3e2e0]'
+                }`}>
                   <button
                     type="button"
                     onClick={() => setActiveArticleModal(article)}
-                    className="w-full inline-flex items-center justify-between px-5 py-3 border border-[#000000] bg-transparent text-[#000000] text-label-caps uppercase tracking-[0.16em] hover:bg-[#000000] hover:text-white transition-all duration-300 active:scale-[0.99] group/btn cursor-pointer"
+                    className={`w-full inline-flex items-center justify-between px-5 py-3 border text-label-caps uppercase tracking-[0.16em] transition-all duration-300 active:scale-[0.99] group/btn cursor-pointer font-medium ${
+                      isDarkMode
+                        ? 'border-[#383D3A] bg-transparent text-[#FAF8F5] hover:bg-[#C5A059] hover:text-black hover:border-[#C5A059]'
+                        : 'border-[#000000] bg-transparent text-[#000000] hover:bg-[#000000] hover:text-white'
+                    }`}
                   >
                     <span>Read Essay</span>
                     <span
@@ -305,28 +357,40 @@ export const TheCanvasPage: React.FC = () => {
           aria-labelledby="modal-article-title"
         >
           <div
-            className="bg-[#faf9f7] w-full max-w-3xl max-h-[90vh] overflow-y-auto border border-[#000000] shadow-2xl p-8 sm:p-12 relative my-auto"
+            className={`w-full max-w-3xl max-h-[90vh] overflow-y-auto border shadow-2xl p-8 sm:p-12 relative my-auto ${
+              isDarkMode
+                ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
+                : 'bg-[#faf9f7] border-[#000000] text-black'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setActiveArticleModal(null)}
-              className="absolute top-6 right-6 w-11 h-11 flex items-center justify-center text-[#000000] hover:opacity-60 transition-opacity"
+              className={`absolute top-6 right-6 w-11 h-11 flex items-center justify-center transition-colors cursor-pointer ${
+                isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#000000] hover:opacity-60'
+              }`}
               aria-label="Close article"
             >
               <span className="material-symbols-outlined text-[24px]">close</span>
             </button>
 
-            <span className="text-label-caps text-[#000000] uppercase tracking-[0.2em] font-semibold block mb-2">
+            <span className={`text-label-caps uppercase tracking-[0.2em] font-semibold block mb-2 ${
+              isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+            }`}>
               {activeArticleModal.category}
             </span>
             <h2
               id="modal-article-title"
-              className="text-[32px] sm:text-[40px] leading-[40px] sm:leading-[48px] text-[#000000] font-normal mb-4"
+              className={`text-[32px] sm:text-[40px] leading-[40px] sm:leading-[48px] font-normal mb-4 ${
+                isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+              }`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               {activeArticleModal.title}
             </h2>
-            <div className="flex items-center gap-3 text-body-sm text-[#505252] mb-8 pb-6 border-b border-[#c4c7c7]">
+            <div className={`flex items-center gap-3 text-body-sm mb-8 pb-6 border-b ${
+              isDarkMode ? 'text-[#A8A49C] border-[#2A2E2C]' : 'text-[#505252] border-[#c4c7c7]'
+            }`}>
               <span>{activeArticleModal.date}</span>
               <span>&middot;</span>
               <span>{activeArticleModal.readTime}</span>
@@ -340,8 +404,12 @@ export const TheCanvasPage: React.FC = () => {
               />
             </div>
 
-            <div className="space-y-6 text-body-md text-[#2b2d2c] leading-relaxed font-light">
-              <p className="text-lg leading-relaxed font-normal text-[#000000]">
+            <div className={`space-y-6 text-body-md leading-relaxed font-light ${
+              isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+            }`}>
+              <p className={`text-lg leading-relaxed font-normal ${
+                isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+              }`}>
                 {activeArticleModal.excerpt}
               </p>
               <p>
@@ -352,11 +420,19 @@ export const TheCanvasPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="mt-10 pt-6 border-t border-[#c4c7c7] flex justify-between items-center">
-              <span className="text-label-caps text-[#505252]">BOSKI LIMITED Editorial Archive</span>
+            <div className={`mt-10 pt-6 border-t flex justify-between items-center ${
+              isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
+            }`}>
+              <span className={`text-label-caps ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#505252]'}`}>
+                BOSKI LIMITED Editorial Archive
+              </span>
               <button
                 onClick={() => setActiveArticleModal(null)}
-                className="px-6 py-2.5 bg-[#000000] text-white text-label-caps uppercase tracking-wider hover:bg-[#252726] transition-colors"
+                className={`px-6 py-2.5 text-label-caps uppercase tracking-wider transition-colors cursor-pointer font-medium ${
+                  isDarkMode
+                    ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                    : 'bg-[#000000] text-white hover:bg-[#252726]'
+                }`}
               >
                 Close Story
               </button>

@@ -122,6 +122,8 @@ interface ShopContextType {
   submitBespokeInquiry: (inquiry: Omit<BespokeInquiry, 'submittedAt'>) => void;
   tradeInquiries: TradeInquiry[];
   submitTradeApplication: (inquiry: Omit<TradeInquiry, 'submittedAt'>) => void;
+  isDarkMode: boolean;
+  toggleTheme: () => void;
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -132,6 +134,7 @@ const STORAGE_KEYS = {
   CURRENCY: 'boski_currency_v2',
   ORDERS: 'boski_orders_v2',
   USER: 'boski_user_v2',
+  THEME: 'boski_theme',
 };
 
 const DEFAULT_VIP_USER: User = {
@@ -280,10 +283,44 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [currency, setCurrencyState] = useState<Currency>(CURRENCIES.GBP);
   const [orderHistory, setOrderHistory] = useState<OrderDetails[]>([]);
   const [recentOrder, setRecentOrder] = useState<OrderDetails | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
+  const toggleTheme = useCallback(() => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      if (typeof window !== 'undefined') {
+        try {
+          localStorage.setItem(STORAGE_KEYS.THEME, next ? 'dark' : 'bright');
+          localStorage.setItem('boski_admin_theme', next ? 'dark' : 'bright');
+          if (next) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          console.warn('[ShopContext] Theme persist error:', e);
+        }
+      }
+      return next;
+    });
+  }, []);
 
   // Safely hydrate stored client state from LocalStorage after initial mount
   useEffect(() => {
     try {
+      const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || localStorage.getItem('boski_admin_theme');
+      if (savedTheme === 'dark') {
+        setIsDarkMode(true);
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else if (savedTheme === 'bright') {
+        setIsDarkMode(false);
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+
       const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
       if (savedUser) {
         const parsed = JSON.parse(savedUser);
@@ -880,6 +917,8 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         submitBespokeInquiry,
         tradeInquiries,
         submitTradeApplication,
+        isDarkMode,
+        toggleTheme,
       }}
     >
       {children}

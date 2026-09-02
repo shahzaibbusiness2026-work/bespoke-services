@@ -6,7 +6,7 @@ import { X, Ruler } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const SizeGuideModal: React.FC = () => {
-  const { isSizeGuideOpen, setIsSizeGuideOpen } = useShop();
+  const { isSizeGuideOpen, setIsSizeGuideOpen, isDarkMode } = useShop();
   const [unit, setUnit] = useState<'in' | 'cm'>('in');
   const [categoryTab, setCategoryTab] = useState<'sheets' | 'duvets' | 'pillows'>('sheets');
 
@@ -45,23 +45,29 @@ export const SizeGuideModal: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 15 }}
           id="size-guide-modal-content"
-          className="bg-[#faf9f7] w-full max-w-2xl rounded-none shadow-2xl border border-[#c4c7c7] overflow-hidden flex flex-col max-h-[90vh]"
+          className={`w-full max-w-2xl rounded-none shadow-2xl border overflow-hidden flex flex-col max-h-[90vh] ${
+            isDarkMode
+              ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
+              : 'bg-[#faf9f7] border-[#c4c7c7] text-[#1a1c1b]'
+          }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="p-6 border-b border-[#c4c7c7] bg-[#faf9f7] flex items-center justify-between">
+          <div className={`p-6 border-b flex items-center justify-between ${
+            isDarkMode ? 'bg-[#161817] border-[#2A2E2C]' : 'bg-[#faf9f7] border-[#c4c7c7]'
+          }`}>
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#000000] text-white rounded-none">
+              <div className={`p-2 rounded-none ${isDarkMode ? 'bg-[#C5A059] text-black font-bold' : 'bg-[#000000] text-white'}`}>
                 <Ruler className="w-5 h-5" />
               </div>
               <div>
                 <h3
-                  className="text-headline-sm text-[#000000] font-normal"
+                  className={`text-headline-sm font-normal ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >
                   Bedding &amp; Mattress Size Guide
                 </h3>
-                <p className="text-body-sm text-[#444748] font-light">
+                <p className={`text-body-sm font-light ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                   Precise architectural dimensions for our linens, duvet covers, and pillows
                 </p>
               </div>
@@ -69,7 +75,9 @@ export const SizeGuideModal: React.FC = () => {
 
             <button
               onClick={() => setIsSizeGuideOpen(false)}
-              className="p-2 text-[#444748] hover:text-[#000000] hover:bg-[#efeeec] transition-colors rounded-none cursor-pointer"
+              className={`p-2 rounded-none transition-colors cursor-pointer ${
+                isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5] hover:bg-[#1A1D1C]' : 'text-[#444748] hover:text-[#000000] hover:bg-[#efeeec]'
+              }`}
               aria-label="Close size guide"
             >
               <X className="w-5 h-5" />
@@ -77,13 +85,21 @@ export const SizeGuideModal: React.FC = () => {
           </div>
 
           {/* Controls Bar */}
-          <div className="p-4 border-b border-[#e3e2e0] flex items-center justify-between bg-[#f4f3f1] text-xs">
+          <div className={`p-4 border-b flex items-center justify-between text-xs ${
+            isDarkMode ? 'bg-[#1A1D1C] border-[#2A2E2C]' : 'bg-[#f4f3f1] border-[#e3e2e0]'
+          }`}>
             {/* Tabs */}
             <div className="flex gap-2">
               <button
                 onClick={() => setCategoryTab('sheets')}
                 className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
-                  categoryTab === 'sheets' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
+                  categoryTab === 'sheets'
+                    ? isDarkMode
+                      ? 'bg-[#C5A059] text-black font-bold'
+                      : 'bg-[#000000] text-white'
+                    : isDarkMode
+                      ? 'text-[#A8A49C] hover:bg-[#252827]'
+                      : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
                 Sheet Sets
@@ -91,7 +107,13 @@ export const SizeGuideModal: React.FC = () => {
               <button
                 onClick={() => setCategoryTab('duvets')}
                 className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
-                  categoryTab === 'duvets' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
+                  categoryTab === 'duvets'
+                    ? isDarkMode
+                      ? 'bg-[#C5A059] text-black font-bold'
+                      : 'bg-[#000000] text-white'
+                    : isDarkMode
+                      ? 'text-[#A8A49C] hover:bg-[#252827]'
+                      : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
                 Duvets &amp; Covers
@@ -99,7 +121,13 @@ export const SizeGuideModal: React.FC = () => {
               <button
                 onClick={() => setCategoryTab('pillows')}
                 className={`px-3.5 py-1.5 rounded-none text-label-caps uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
-                  categoryTab === 'pillows' ? 'bg-[#000000] text-white' : 'text-[#444748] hover:bg-[#efeeec]'
+                  categoryTab === 'pillows'
+                    ? isDarkMode
+                      ? 'bg-[#C5A059] text-black font-bold'
+                      : 'bg-[#000000] text-white'
+                    : isDarkMode
+                      ? 'text-[#A8A49C] hover:bg-[#252827]'
+                      : 'text-[#444748] hover:bg-[#efeeec]'
                 }`}
               >
                 Pillows &amp; Shams
@@ -107,11 +135,19 @@ export const SizeGuideModal: React.FC = () => {
             </div>
 
             {/* Unit Toggle */}
-            <div className="flex items-center border border-[#c4c7c7] rounded-none p-0.5 bg-white">
+            <div className={`flex items-center border rounded-none p-0.5 ${
+              isDarkMode ? 'border-[#383D3A] bg-[#161817]' : 'border-[#c4c7c7] bg-white'
+            }`}>
               <button
                 onClick={() => setUnit('in')}
                 className={`px-2.5 py-1 rounded-none text-[11px] font-semibold cursor-pointer ${
-                  unit === 'in' ? 'bg-[#000000] text-white' : 'text-[#505252]'
+                  unit === 'in'
+                    ? isDarkMode
+                      ? 'bg-[#C5A059] text-black font-bold'
+                      : 'bg-[#000000] text-white'
+                    : isDarkMode
+                      ? 'text-[#A8A49C]'
+                      : 'text-[#505252]'
                 }`}
               >
                 IN
@@ -119,7 +155,13 @@ export const SizeGuideModal: React.FC = () => {
               <button
                 onClick={() => setUnit('cm')}
                 className={`px-2.5 py-1 rounded-none text-[11px] font-semibold cursor-pointer ${
-                  unit === 'cm' ? 'bg-[#000000] text-white' : 'text-[#505252]'
+                  unit === 'cm'
+                    ? isDarkMode
+                      ? 'bg-[#C5A059] text-black font-bold'
+                      : 'bg-[#000000] text-white'
+                    : isDarkMode
+                      ? 'text-[#A8A49C]'
+                      : 'text-[#505252]'
                 }`}
               >
                 CM
@@ -128,26 +170,28 @@ export const SizeGuideModal: React.FC = () => {
           </div>
 
           {/* Content Table */}
-          <div className="p-6 overflow-y-auto flex-1 bg-white">
+          <div className={`p-6 overflow-y-auto flex-1 ${isDarkMode ? 'bg-[#161817]' : 'bg-white'}`}>
             {categoryTab === 'sheets' && (
               <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
+                  <tr className={`border-b uppercase text-label-caps ${
+                    isDarkMode ? 'border-[#2A2E2C] text-[#C5A059]' : 'border-[#c4c7c7] text-[#505252]'
+                  }`}>
                     <th className="pb-3 font-semibold">Size</th>
                     <th className="pb-3 font-semibold">Mattress Fit</th>
                     <th className="pb-3 font-semibold">Fitted Pocket</th>
                     <th className="pb-3 font-semibold">Flat Sheet</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
+                <tbody className={`divide-y ${isDarkMode ? 'divide-[#2A2E2C]' : 'divide-[#e3e2e0]'}`}>
                   {sheetsData.map((row) => (
-                    <tr key={row.size} className="hover:bg-[#faf9f7] transition-colors">
-                      <td className="py-3.5 font-medium text-[#000000]">{row.size}</td>
-                      <td className="py-3.5 text-[#444748]">
+                    <tr key={row.size} className={`transition-colors ${isDarkMode ? 'hover:bg-[#1A1D1C]' : 'hover:bg-[#faf9f7]'}`}>
+                      <td className={`py-3.5 font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>{row.size}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {unit === 'in' ? row.mattressIn : row.mattressCm}
                       </td>
-                      <td className="py-3.5 text-[#444748]">{row.fittedIn}</td>
-                      <td className="py-3.5 text-[#444748]">{row.flatIn}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{row.fittedIn}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{row.flatIn}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -157,20 +201,22 @@ export const SizeGuideModal: React.FC = () => {
             {categoryTab === 'duvets' && (
               <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
+                  <tr className={`border-b uppercase text-label-caps ${
+                    isDarkMode ? 'border-[#2A2E2C] text-[#C5A059]' : 'border-[#c4c7c7] text-[#505252]'
+                  }`}>
                     <th className="pb-3 font-semibold">Size</th>
                     <th className="pb-3 font-semibold">Duvet Dimensions</th>
                     <th className="pb-3 font-semibold">Fits Mattress</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
+                <tbody className={`divide-y ${isDarkMode ? 'divide-[#2A2E2C]' : 'divide-[#e3e2e0]'}`}>
                   {duvetsData.map((row) => (
-                    <tr key={row.size} className="hover:bg-[#faf9f7] transition-colors">
-                      <td className="py-3.5 font-medium text-[#000000]">{row.size}</td>
-                      <td className="py-3.5 text-[#444748]">
+                    <tr key={row.size} className={`transition-colors ${isDarkMode ? 'hover:bg-[#1A1D1C]' : 'hover:bg-[#faf9f7]'}`}>
+                      <td className={`py-3.5 font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>{row.size}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {unit === 'in' ? row.duvetIn : row.duvetCm}
                       </td>
-                      <td className="py-3.5 text-[#444748]">{row.fits}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{row.fits}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -180,28 +226,32 @@ export const SizeGuideModal: React.FC = () => {
             {categoryTab === 'pillows' && (
               <table className="w-full text-left text-body-sm border-collapse">
                 <thead>
-                  <tr className="border-b border-[#c4c7c7] text-[#505252] uppercase text-label-caps">
+                  <tr className={`border-b uppercase text-label-caps ${
+                    isDarkMode ? 'border-[#2A2E2C] text-[#C5A059]' : 'border-[#c4c7c7] text-[#505252]'
+                  }`}>
                     <th className="pb-3 font-semibold">Item Style</th>
                     <th className="pb-3 font-semibold">Dimensions</th>
                     <th className="pb-3 font-semibold">Usage &amp; Layering</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#e3e2e0] text-[#1a1c1b]">
+                <tbody className={`divide-y ${isDarkMode ? 'divide-[#2A2E2C]' : 'divide-[#e3e2e0]'}`}>
                   {pillowsData.map((row) => (
-                    <tr key={row.type} className="hover:bg-[#faf9f7] transition-colors">
-                      <td className="py-3.5 font-medium text-[#000000]">{row.type}</td>
-                      <td className="py-3.5 text-[#444748]">
+                    <tr key={row.type} className={`transition-colors ${isDarkMode ? 'hover:bg-[#1A1D1C]' : 'hover:bg-[#faf9f7]'}`}>
+                      <td className={`py-3.5 font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>{row.type}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                         {unit === 'in' ? row.dimIn : row.dimCm}
                       </td>
-                      <td className="py-3.5 text-[#444748]">{row.notes}</td>
+                      <td className={`py-3.5 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{row.notes}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             )}
 
-            <div className="mt-8 pt-4 border-t border-[#e3e2e0] text-body-sm text-[#505252] space-y-1">
-              <p className="font-semibold text-[#000000]">Need custom drops or tailored measurements?</p>
+            <div className={`mt-8 pt-4 border-t text-body-sm space-y-1 ${
+              isDarkMode ? 'border-[#2A2E2C] text-[#A8A49C]' : 'border-[#e3e2e0] text-[#505252]'
+            }`}>
+              <p className={`font-semibold ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>Need custom drops or tailored measurements?</p>
               <p>
                 Our master atelier produces custom drapery drops, extra-deep mattress pockets (up to 24"), and bespoke dimensions upon request.
               </p>

@@ -161,6 +161,18 @@ export interface BespokeInquiry {
   projectType: string;
   details?: string;
   imageFileName?: string;
+  fabric?: string;
+  dimensions?: string;
+  pocketDepth?: string;
+  headerStyle?: string;
+  includeWeightedHems?: boolean;
+  blackoutLining?: boolean;
+  clientName?: string;
+  clientEmail?: string;
+  clientPhone?: string;
+  notes?: string;
+  estimatedPrice?: number;
+  fileName?: string;
   submittedAt: string;
 }
 

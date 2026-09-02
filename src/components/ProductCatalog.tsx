@@ -30,7 +30,7 @@ const SORT_OPTIONS: { id: string; label: string }[] = [
 ];
 
 export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, onCategoryChange }) => {
-  const { products, categories } = useShop();
+  const { products, categories, isDarkMode } = useShop();
   const [sort, setSort] = useState('featured');
   const [visibleCount, setVisibleCount] = useState(8);
   const [onlyInStock, setOnlyInStock] = useState(false);
@@ -43,46 +43,41 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
     const list = [{ id: 'all', label: 'All Collections' }];
     if (categories && categories.length > 0) {
       categories.forEach((c) => {
-        const key = c.category.toLowerCase();
-        const label = c.label || key.charAt(0).toUpperCase() + key.slice(1).replace(/-/g, ' ');
-        if (!list.some((item) => item.id === key)) {
-          list.push({ id: key, label });
+        if (!list.some((item) => item.id === c.category)) {
+          list.push({ id: c.category, label: c.label });
         }
       });
     } else {
       DEFAULT_CATALOG_CATEGORIES.forEach((c) => {
-        if (c.id !== 'all') list.push(c);
+        if (!list.some((item) => item.id === c.id)) {
+          list.push(c);
+        }
       });
     }
     return list;
   }, [categories]);
 
-  const activeCategory_label = catalogCategories.find((c) => c.id === activeCategory)?.label || 'Collections';
+  const activeCategory_label =
+    catalogCategories.find((c) => c.id === activeCategory)?.label || 'All Collections';
 
   const filteredProducts = useMemo(() => {
-    const sourceProducts = products && products.length > 0 ? products : PRODUCTS;
-    let result = [...sourceProducts];
+    let result = (products && products.length > 0 ? products : PRODUCTS).filter((p) => {
+      const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
+      const matchesStock = !onlyInStock || (p.inStock ?? true);
+      const matchesSale = !onlyOnSale || (p.isSale ?? false);
+      return matchesCategory && matchesStock && matchesSale;
+    });
 
-    // Category
-    if (activeCategory !== 'all') {
-      result = result.filter((p) => p.category === activeCategory);
-    }
-    // Stock
-    if (onlyInStock) result = result.filter((p) => p.inStock);
-    // Sale
-    if (onlyOnSale) result = result.filter((p) => p.isSale);
-
-    // Sort
     switch (sort) {
       case 'price-asc': result.sort((a, b) => a.price - b.price); break;
       case 'price-desc': result.sort((a, b) => b.price - a.price); break;
-      case 'rating': result.sort((a, b) => b.rating - a.rating); break;
+      case 'rating': result.sort((a, b) => (b.rating || 4.8) - (a.rating || 4.8)); break;
       case 'new': result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
       default: result.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
     }
 
     return result;
-  }, [activeCategory, sort, onlyInStock, onlyOnSale]);
+  }, [products, activeCategory, sort, onlyInStock, onlyOnSale]);
 
   const visibleProducts = filteredProducts.slice(0, visibleCount);
   const hasMore = visibleCount < filteredProducts.length;
@@ -96,37 +91,51 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
       {/* Breadcrumb & Section Header */}
       <div className="mb-10 md:mb-14">
         <nav
-          className="text-label-caps text-[#2b2d2c] mb-4 sm:mb-6 uppercase tracking-widest flex items-center gap-2"
+          className={`text-label-caps mb-4 sm:mb-6 uppercase tracking-widest flex items-center gap-2 ${
+            isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+          }`}
           aria-label="Breadcrumbs"
         >
           <button
             onClick={() => onCategoryChange('all')}
-            className="hover:text-[#000000] transition-colors cursor-pointer"
+            className={`transition-colors cursor-pointer ${
+              isDarkMode ? 'hover:text-[#FAF8F5]' : 'hover:text-[#000000]'
+            }`}
           >
             Home
           </button>
-          <span className="text-[#8e908f]">/</span>
-          <span className="text-[#000000] font-semibold">{activeCategory_label}</span>
+          <span className={isDarkMode ? 'text-[#6E6B65]' : 'text-[#8e908f]'}>/</span>
+          <span className={`font-semibold ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
+            {activeCategory_label}
+          </span>
         </nav>
 
         <div className="max-w-2xl">
           <h2
-            className="text-[34px] sm:text-[48px] lg:text-[58px] leading-[42px] sm:leading-[56px] lg:leading-[66px] tracking-[-0.02em] text-[#000000] mb-4"
+            className={`text-[34px] sm:text-[48px] lg:text-[58px] leading-[42px] sm:leading-[56px] lg:leading-[66px] tracking-[-0.02em] mb-4 ${
+              isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+            }`}
             style={{ fontFamily: "'Libre Caslon Text', Georgia, serif", fontWeight: 400 }}
           >
             {activeCategory_label}
           </h2>
-          <p className="text-body-md sm:text-body-lg text-[#2b2d2c] font-light leading-relaxed">
+          <p className={`text-body-md sm:text-body-lg font-light leading-relaxed ${
+            isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+          }`}>
             Elevate your rest with our collection of master-loom, sustainably sourced linens and architectural drapery. Designed for enduring tactile elegance.
           </p>
         </div>
       </div>
 
       {/* Interactive Responsive Filters & Sorting Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-5 border-y border-[#c4c7c7] mb-12 gap-5">
+      <div className={`flex flex-col md:flex-row justify-between items-start md:items-center py-5 border-y mb-12 gap-5 ${
+        isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
+      }`}>
         {/* Filter Buttons Cluster */}
         <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full md:w-auto">
-          <span className="text-label-caps text-[#000000] uppercase font-semibold text-[11px] mr-1 hidden sm:inline">
+          <span className={`text-label-caps uppercase font-semibold text-[11px] mr-1 hidden sm:inline ${
+            isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+          }`}>
             Filter:
           </span>
 
@@ -143,7 +152,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
               aria-haspopup="listbox"
               aria-expanded={isCategoryDropdownOpen}
               aria-label={`Filter by category: currently ${activeCategory_label}`}
-              className="min-h-[44px] px-4 py-2.5 border border-[#c4c7c7] bg-white text-body-sm text-[#000000] hover:border-[#000000] transition-colors flex items-center gap-2 cursor-pointer"
+              className={`min-h-[44px] px-4 py-2.5 border text-body-sm transition-colors flex items-center gap-2 cursor-pointer ${
+                isDarkMode
+                  ? 'border-[#383D3A] bg-[#1A1D1C] text-[#FAF8F5] hover:border-[#C5A059]'
+                  : 'border-[#c4c7c7] bg-white text-[#000000] hover:border-[#000000]'
+              }`}
             >
               <span>Category ({activeCategory_label})</span>
               <span className="material-symbols-outlined text-[16px]">
@@ -153,7 +166,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
 
             {isCategoryDropdownOpen && (
               <div
-                className="absolute top-full left-0 mt-1 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl z-30 py-1.5 min-w-[210px] animate-fadeIn normal-case"
+                className={`absolute top-full left-0 mt-1 border shadow-xl z-30 py-1.5 min-w-[210px] animate-fadeIn normal-case ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A]' : 'bg-[#faf9f7] border-[#c4c7c7]'
+                }`}
                 role="listbox"
                 aria-label="Category list"
               >
@@ -168,8 +183,12 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
                     }}
                     className={`block w-full text-left px-4 py-2.5 text-body-sm transition-colors cursor-pointer flex items-center justify-between ${
                       activeCategory === cat.id
-                        ? 'bg-[#000000] text-white font-medium'
-                        : 'text-[#2b2d2c] hover:bg-[#efeeec]'
+                        ? isDarkMode
+                          ? 'bg-[#C5A059] text-black font-semibold'
+                          : 'bg-[#000000] text-white font-medium'
+                        : isDarkMode
+                          ? 'text-[#A8A49C] hover:bg-[#242826] hover:text-[#FAF8F5]'
+                          : 'text-[#2b2d2c] hover:bg-[#efeeec]'
                     }`}
                   >
                     <span>{cat.label}</span>
@@ -182,7 +201,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
             )}
           </div>
 
-          {/* In Stock Toggle Button with Visual Active State & ARIA */}
+          {/* In Stock Toggle Button */}
           <button
             type="button"
             id="filter-in-stock-btn"
@@ -191,13 +210,17 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
             aria-label="Toggle In Stock products only"
             className={`min-h-[44px] px-4 py-2.5 text-body-sm transition-all duration-200 cursor-pointer flex items-center gap-2 font-medium border ${
               onlyInStock
-                ? 'bg-[#000000] text-white border-[#000000] shadow-xs'
-                : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
+                ? isDarkMode
+                  ? 'bg-[#C5A059] text-black border-[#C5A059] shadow-xs'
+                  : 'bg-[#000000] text-white border-[#000000] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#1A1D1C] text-[#A8A49C] border-[#383D3A] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                  : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
             }`}
           >
             <span
               className={`w-2 h-2 rounded-full transition-colors ${
-                onlyInStock ? 'bg-white' : 'bg-[#1b6b3e]'
+                onlyInStock ? (isDarkMode ? 'bg-black' : 'bg-white') : 'bg-[#1b6b3e]'
               }`}
             />
             <span>In Stock</span>
@@ -206,7 +229,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
             )}
           </button>
 
-          {/* On Sale Toggle Button with Visual Active State & ARIA */}
+          {/* On Sale Toggle Button */}
           <button
             type="button"
             id="filter-on-sale-btn"
@@ -215,13 +238,17 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
             aria-label="Toggle On Sale products only"
             className={`min-h-[44px] px-4 py-2.5 text-body-sm transition-all duration-200 cursor-pointer flex items-center gap-2 font-medium border ${
               onlyOnSale
-                ? 'bg-[#000000] text-white border-[#000000] shadow-xs'
-                : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
+                ? isDarkMode
+                  ? 'bg-[#C5A059] text-black border-[#C5A059] shadow-xs'
+                  : 'bg-[#000000] text-white border-[#000000] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#1A1D1C] text-[#A8A49C] border-[#383D3A] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                  : 'bg-white text-[#2b2d2c] border-[#c4c7c7] hover:border-[#000000] hover:text-[#000000]'
             }`}
           >
             <span
               className={`material-symbols-outlined text-[14px] ${
-                onlyOnSale ? 'text-white' : 'text-[#c0392b]'
+                onlyOnSale ? (isDarkMode ? 'text-black' : 'text-white') : 'text-[#c0392b]'
               }`}
             >
               sell
@@ -232,7 +259,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
             )}
           </button>
 
-          {/* Clear Filters (visible if any filter active) */}
+          {/* Clear Filters */}
           {(onlyInStock || onlyOnSale || activeCategory !== 'all') && (
             <button
               onClick={() => {
@@ -240,7 +267,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
                 setOnlyInStock(false);
                 setOnlyOnSale(false);
               }}
-              className="text-body-sm text-[#383838] hover:text-[#000000] underline ml-1 cursor-pointer py-2"
+              className={`text-body-sm underline ml-1 cursor-pointer py-2 ${
+                isDarkMode ? 'text-[#C5A059] hover:text-white' : 'text-[#383838] hover:text-[#000000]'
+              }`}
               aria-label="Reset all product filters"
             >
               Reset
@@ -250,7 +279,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
 
         {/* Sort & Count Section */}
         <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-          <span className="text-body-sm text-[#2b2d2c] font-medium">
+          <span className={`text-body-sm font-medium ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
             {filteredProducts.length} {filteredProducts.length === 1 ? 'Piece' : 'Pieces'}
           </span>
 
@@ -266,7 +295,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
               aria-haspopup="listbox"
               aria-expanded={isSortDropdownOpen}
               aria-label={`Sort by: ${SORT_OPTIONS.find((s) => s.id === sort)?.label || 'Featured'}`}
-              className="min-h-[44px] px-3.5 py-2.5 border border-transparent text-body-sm text-[#000000] hover:border-[#c4c7c7] transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent"
+              className={`min-h-[44px] px-3.5 py-2.5 border text-body-sm transition-colors flex items-center gap-1.5 cursor-pointer bg-transparent ${
+                isDarkMode
+                  ? 'border-transparent text-[#FAF8F5] hover:border-[#383D3A]'
+                  : 'border-transparent text-[#000000] hover:border-[#c4c7c7]'
+              }`}
             >
               <span>Sort:</span>
               <span className="font-semibold underline underline-offset-4">
@@ -279,7 +312,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
 
             {isSortDropdownOpen && (
               <div
-                className="absolute top-full right-0 mt-1 bg-[#faf9f7] border border-[#c4c7c7] shadow-xl z-30 py-1.5 min-w-[200px] animate-fadeIn normal-case"
+                className={`absolute top-full right-0 mt-1 border shadow-xl z-30 py-1.5 min-w-[200px] animate-fadeIn normal-case ${
+                  isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A]' : 'bg-[#faf9f7] border-[#c4c7c7]'
+                }`}
                 role="listbox"
                 aria-label="Sort options"
               >
@@ -294,8 +329,12 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
                     }}
                     className={`block w-full text-left px-4 py-2.5 text-body-sm transition-colors cursor-pointer flex items-center justify-between ${
                       sort === opt.id
-                        ? 'bg-[#000000] text-white font-medium'
-                        : 'text-[#2b2d2c] hover:bg-[#efeeec]'
+                        ? isDarkMode
+                          ? 'bg-[#C5A059] text-black font-semibold'
+                          : 'bg-[#000000] text-white font-medium'
+                        : isDarkMode
+                          ? 'text-[#A8A49C] hover:bg-[#242826] hover:text-[#FAF8F5]'
+                          : 'text-[#2b2d2c] hover:bg-[#efeeec]'
                     }`}
                   >
                     <span>{opt.label}</span>
@@ -310,16 +349,20 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
         </div>
       </div>
 
-      {/* Product Grid — Fully Responsive across Mobile, Tablet, Desktop */}
+      {/* Product Grid */}
       {filteredProducts.length === 0 ? (
-        <div className="text-center py-20 sm:py-28 bg-[#faf9f7] border border-[#c4c7c7] px-6">
-          <span className="material-symbols-outlined text-[44px] text-[#2b2d2c] mb-3 block">
+        <div className={`text-center py-20 sm:py-28 border px-6 ${
+          isDarkMode ? 'bg-[#161817] border-[#2A2E2C]' : 'bg-[#faf9f7] border-[#c4c7c7]'
+        }`}>
+          <span className={`material-symbols-outlined text-[44px] mb-3 block ${
+            isDarkMode ? 'text-[#C5A059]' : 'text-[#2b2d2c]'
+          }`}>
             search_off
           </span>
-          <p className="text-headline-sm text-[#000000] mb-2" style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}>
+          <p className={`text-headline-sm mb-2 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`} style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}>
             No Matching Archive Pieces
           </p>
-          <p className="text-body-md text-[#2b2d2c] max-w-md mx-auto mb-6">
+          <p className={`text-body-md max-w-md mx-auto mb-6 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
             We couldn't find items matching your current filters. Try resetting the filters or exploring our full catalog.
           </p>
           <button
@@ -328,7 +371,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
               setOnlyInStock(false);
               setOnlyOnSale(false);
             }}
-            className="px-8 py-4 bg-[#000000] text-white text-label-caps uppercase tracking-widest hover:bg-[#252726] transition-colors cursor-pointer"
+            className={`px-8 py-4 text-label-caps uppercase tracking-widest transition-colors cursor-pointer ${
+              isDarkMode
+                ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                : 'bg-[#000000] text-white hover:bg-[#252726]'
+            }`}
           >
             View All Collections
           </button>
@@ -347,7 +394,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ activeCategory, 
           <button
             id="load-more-products-btn"
             onClick={() => setVisibleCount((prev) => prev + 8)}
-            className="min-h-[48px] bg-[#000000] text-white text-label-caps px-10 py-4 uppercase tracking-[0.18em] hover:bg-[#252726] transition-colors cursor-pointer font-medium shadow-sm"
+            className={`min-h-[48px] text-label-caps px-10 py-4 uppercase tracking-[0.18em] transition-colors cursor-pointer font-medium shadow-sm border ${
+              isDarkMode
+                ? 'bg-[#1A1D1C] border-[#383D3A] text-[#FAF8F5] hover:border-[#C5A059] hover:bg-[#242826]'
+                : 'bg-[#000000] border-[#000000] text-white hover:bg-[#252726]'
+            }`}
             aria-label="Load more archival products"
           >
             Load More Pieces ({filteredProducts.length - visibleCount} Remaining)

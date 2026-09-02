@@ -10,7 +10,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { setSelectedProductForQuickView, toggleWishlist, isInWishlist, formatPrice, addToCart, showToast, openARView } = useShop();
+  const { setSelectedProductForQuickView, toggleWishlist, isInWishlist, formatPrice, addToCart, showToast, openARView, isDarkMode } = useShop();
   const inWishlist = isInWishlist(product.id);
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   // Generate responsive srcSet from image URL
-  const primaryImage = product.images[0] || product.colors[0]?.image || '';
+  const primaryImage = product.images[0] || product.colors[0]?.image || FALLBACK_IMAGE;
   const generateSrcSet = (url: string) => {
     if (!url || !url.includes('unsplash.com')) return undefined;
     const base = url.split('?')[0];
@@ -56,7 +56,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       aria-label={`${product.name} - ${formatPrice(product.price)}`}
     >
       {/* Image Container with Exact Aspect Ratio and Dimensions to Prevent CLS */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-[#f4f3f1] mb-4">
+      <div className={`relative aspect-[3/4] overflow-hidden mb-4 transition-colors ${
+        isDarkMode ? 'bg-[#161817]' : 'bg-[#f4f3f1]'
+      }`}>
         <img
           src={primaryImage}
           srcSet={srcSet}
@@ -76,15 +78,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
         {/* NEW / SALE Badge */}
         {product.isNew && (
-          <div className="absolute top-3 left-3 z-10 bg-[#ffffff] px-2.5 py-1 border border-[#c4c7c7] shadow-xs">
-            <span className="text-label-caps text-[#000000] uppercase font-semibold text-[10.5px] tracking-wider">
+          <div className={`absolute top-3 left-3 z-10 px-2.5 py-1 border shadow-xs ${
+            isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A] text-[#FAF8F5]' : 'bg-[#ffffff] border-[#c4c7c7] text-[#000000]'
+          }`}>
+            <span className="text-label-caps uppercase font-semibold text-[10.5px] tracking-wider">
               New
             </span>
           </div>
         )}
         {product.isSale && !product.isNew && product.discountPercent && (
-          <div className="absolute top-3 left-3 z-10 bg-[#000000] px-2.5 py-1 shadow-xs">
-            <span className="text-label-caps text-white uppercase font-semibold text-[10.5px] tracking-wider">
+          <div className={`absolute top-3 left-3 z-10 px-2.5 py-1 shadow-xs ${
+            isDarkMode ? 'bg-[#C5A059] text-black' : 'bg-[#000000] text-white'
+          }`}>
+            <span className="text-label-caps uppercase font-semibold text-[10.5px] tracking-wider">
               &minus;{product.discountPercent}%
             </span>
           </div>
@@ -97,7 +103,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             e.stopPropagation();
             toggleWishlist(product.id);
           }}
-          className="w-11 h-11 min-w-[44px] min-h-[44px] absolute top-2 right-2 z-20 flex items-center justify-center text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black shadow-xs"
+          className={`w-11 h-11 min-w-[44px] min-h-[44px] absolute top-2 right-2 z-20 flex items-center justify-center backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black shadow-xs border ${
+            isDarkMode
+              ? 'bg-[#1A1D1C]/85 text-[#FAF8F5] hover:bg-[#242826] border-[#383D3A]'
+              : 'text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white border-[#c4c7c7]/40'
+          }`}
           aria-label={inWishlist ? `Remove ${product.name} from wishlist` : `Add ${product.name} to wishlist`}
           aria-pressed={inWishlist}
         >
@@ -116,7 +126,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             e.stopPropagation();
             openARView(product);
           }}
-          className="w-11 h-11 min-w-[44px] min-h-[44px] absolute top-14 right-2 z-20 flex items-center justify-center text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-xs"
+          className={`w-11 h-11 min-w-[44px] min-h-[44px] absolute top-14 right-2 z-20 flex items-center justify-center backdrop-blur-sm transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-black opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-xs border ${
+            isDarkMode
+              ? 'bg-[#1A1D1C]/85 text-[#FAF8F5] hover:bg-[#242826] border-[#383D3A]'
+              : 'text-[#000000] hover:text-[#252726] bg-white/80 hover:bg-white border-[#c4c7c7]/40'
+          }`}
           aria-label={`Preview ${product.name} in 3D AR room`}
           title="View in Room (AR)"
         >
@@ -136,12 +150,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {/* Functional Size Selection Dropdown Overlay */}
           {isSizeDropdownOpen && product.sizes.length > 1 && (
             <div
-              className="bg-[#faf9f7] border-t border-x border-[#c4c7c7] p-3 shadow-2xl animate-fadeIn normal-case"
+              className={`border-t border-x p-3 shadow-2xl animate-fadeIn normal-case transition-colors ${
+                isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A] text-[#FAF8F5]' : 'bg-[#faf9f7] border-[#c4c7c7] text-[#000000]'
+              }`}
               role="listbox"
               aria-label={`Select size for ${product.name}`}
             >
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#c4c7c7]/60">
-                <span className="text-label-caps text-[#000000] uppercase font-semibold text-[10.5px]">
+              <div className={`flex items-center justify-between pb-2 mb-2 border-b ${
+                isDarkMode ? 'border-[#383D3A]' : 'border-[#c4c7c7]/60'
+              }`}>
+                <span className={`text-label-caps uppercase font-semibold text-[10.5px] ${
+                  isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                }`}>
                   Select Dimension / Size:
                 </span>
                 <button
@@ -150,7 +170,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     e.stopPropagation();
                     setIsSizeDropdownOpen(false);
                   }}
-                  className="text-[#000000] hover:opacity-60 text-xs px-1"
+                  className={`hover:opacity-60 text-xs px-1 cursor-pointer ${
+                    isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                  }`}
                   aria-label="Close size options"
                 >
                   <span className="material-symbols-outlined text-[16px]">close</span>
@@ -165,7 +187,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     role="option"
                     aria-selected={false}
                     onClick={(e) => handleSelectSizeAndAdd(sz, e)}
-                    className="py-2 px-2 text-center text-[11.5px] border border-[#c4c7c7] bg-white text-[#000000] font-medium hover:bg-[#000000] hover:text-white hover:border-[#000000] focus:bg-[#000000] focus:text-white transition-all cursor-pointer active:scale-95"
+                    className={`py-2 px-2 text-center text-[11.5px] border font-medium transition-all cursor-pointer active:scale-95 ${
+                      isDarkMode
+                        ? 'border-[#383D3A] bg-[#141615] text-[#FAF8F5] hover:bg-[#C5A059] hover:text-black hover:border-[#C5A059] focus:bg-[#C5A059] focus:text-black'
+                        : 'border-[#c4c7c7] bg-white text-[#000000] hover:bg-[#000000] hover:text-white hover:border-[#000000] focus:bg-[#000000] focus:text-white'
+                    }`}
                   >
                     {sz}
                   </button>
@@ -193,8 +219,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 ? `Select size for ${product.name}`
                 : `Quick add ${product.name} to shopping bag`
             }
-            className={`w-full bg-[#000000] text-white text-label-caps uppercase tracking-wider py-3.5 hover:bg-[#252726] transition-colors duration-200 cursor-pointer shadow-md flex items-center justify-center gap-1.5 ${
-              isSizeDropdownOpen ? 'bg-[#252726]' : 'opacity-90 group-hover:opacity-100'
+            className={`w-full text-label-caps uppercase tracking-wider py-3.5 transition-colors duration-200 cursor-pointer shadow-md flex items-center justify-center gap-1.5 ${
+              isDarkMode
+                ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                : isSizeDropdownOpen ? 'bg-[#252726] text-white' : 'bg-[#000000] text-white hover:bg-[#252726]'
             }`}
           >
             <span>{product.sizes.length > 1 ? (isSizeDropdownOpen ? 'Close Sizes' : 'Select Size') : 'Quick Add'}</span>
@@ -210,25 +238,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Information Card with Proper H3 Architecture */}
       <div className="flex flex-col gap-1.5 pt-1" onClick={handleCardClick}>
         <h3
-          className="text-[17px] font-normal text-[#000000] leading-snug group-hover:underline underline-offset-2 transition-colors"
+          className={`text-[17px] font-normal leading-snug group-hover:underline underline-offset-2 transition-colors ${
+            isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+          }`}
           style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
         >
           {product.name}
         </h3>
 
         {/* High Contrast Body Description */}
-        <p className="text-body-sm text-[#2b2d2c] font-light">
+        <p className={`text-body-sm font-light ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
           {product.colors[0]?.name || product.category}
           {product.sizes[0] && ` · ${product.sizes[0]}`}
         </p>
 
         {/* Price Row with WCAG AAA Contrast */}
         <div className="flex items-center gap-2.5 mt-1">
-          <p className="text-body-sm text-[#000000] font-semibold tracking-wide">
+          <p className={`text-body-sm font-semibold tracking-wide ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
             {formatPrice(product.price)}
           </p>
           {product.originalPrice && product.originalPrice > product.price && (
-            <p className="text-body-sm text-[#383838] line-through font-normal">
+            <p className={`text-body-sm line-through font-normal ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#383838]'}`}>
               {formatPrice(product.originalPrice)}
             </p>
           )}
@@ -237,7 +267,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Rating Stars */}
         {product.rating && (
           <div
-            className="flex items-center gap-1 mt-1 text-[#000000]"
+            className={`flex items-center gap-1 mt-1 ${isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'}`}
             aria-label={`Rated ${product.rating} out of 5 stars`}
           >
             {[1, 2, 3, 4, 5].map((star) => (
@@ -249,7 +279,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 star
               </span>
             ))}
-            <span className="text-[11.5px] text-[#2b2d2c] ml-1 font-medium">
+            <span className={`text-[11.5px] ml-1 font-medium ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
               ({product.reviewsCount ?? product.ratingCount ?? 48})
             </span>
           </div>

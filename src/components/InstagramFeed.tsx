@@ -51,7 +51,7 @@ const UGC_POSTS = [
 ];
 
 export const InstagramFeed: React.FC = () => {
-  const { setSelectedProductForQuickView } = useShop();
+  const { setSelectedProductForQuickView, isDarkMode } = useShop();
 
   const handlePostClick = (productId: string) => {
     const prod = PRODUCTS.find((p) => p.id === productId);
@@ -61,22 +61,30 @@ export const InstagramFeed: React.FC = () => {
   };
 
   return (
-    <section id="ugc-community-section" className="py-20 bg-[#faf9f7] border-t border-[#c4c7c7]">
+    <section id="ugc-community-section" className={`py-20 border-t transition-colors ${
+      isDarkMode ? 'bg-[#111312] border-[#2A2E2C]' : 'bg-[#faf9f7] border-[#c4c7c7]'
+    }`}>
       <div className="max-w-[1440px] mx-auto px-5 md:px-12 lg:px-16">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 text-label-caps uppercase tracking-[0.2em] text-[#505252] font-semibold">
-            <Instagram className="w-4 h-4 text-[#1a1c1b]" />
+          <div className={`inline-flex items-center gap-2 text-label-caps uppercase tracking-[0.2em] font-semibold ${
+            isDarkMode ? 'text-[#C5A059]' : 'text-[#505252]'
+          }`}>
+            <Instagram className={`w-4 h-4 ${isDarkMode ? 'text-[#C5A059]' : 'text-[#1a1c1b]'}`} />
             <span>Curated Living &amp; Sanctuaries</span>
           </div>
           <h2
-            className="text-[32px] sm:text-[42px] leading-tight text-[#000000] font-normal"
+            className={`text-[32px] sm:text-[42px] leading-tight font-normal ${
+              isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+            }`}
             style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
           >
             Styled in Thoughtful Sanctuaries
           </h2>
-          <p className="text-body-sm text-[#444748] font-light leading-relaxed">
-            Tag <strong className="text-[#000000] font-medium">@BoskiLimited</strong> or <strong className="text-[#000000] font-medium">#BoskiLimited</strong> on Instagram to be featured in our seasonal bedroom galleries.
+          <p className={`text-body-sm font-light leading-relaxed ${
+            isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'
+          }`}>
+            Tag <strong className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>@BoskiLimited</strong> or <strong className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>#BoskiLimited</strong> on Instagram to be featured in our seasonal bedroom galleries.
           </p>
         </div>
 
@@ -86,7 +94,9 @@ export const InstagramFeed: React.FC = () => {
             <div
               key={post.id}
               onClick={() => handlePostClick(post.productId)}
-              className="group relative rounded-none overflow-hidden aspect-square cursor-pointer bg-[#efeeec] border border-[#c4c7c7]/60 card-hover-lift"
+              className={`group relative rounded-none overflow-hidden aspect-square cursor-pointer border card-hover-lift ${
+                isDarkMode ? 'bg-[#181B1A] border-[#2A2E2C]' : 'bg-[#efeeec] border-[#c4c7c7]/60'
+              }`}
             >
               <img
                 src={post.image}

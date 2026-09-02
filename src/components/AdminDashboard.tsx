@@ -34,31 +34,24 @@ import { api, ConsolidatedInquiry, MediaFile } from '../services/api';
 import { Product } from '../types';
 
 export const AdminDashboard: React.FC = () => {
-  const { currentUser, setCurrentUser, login, logout, showToast, setActivePage, refreshCategories, refreshProducts } = useShop();
+  const {
+    currentUser,
+    setCurrentUser,
+    login,
+    logout,
+    showToast,
+    setActivePage,
+    refreshCategories,
+    refreshProducts,
+    isDarkMode,
+    toggleTheme,
+  } = useShop();
 
   // Hydration guard to prevent SSR mismatch
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Theme Mode: Bright (Light) vs Dark with persistent localStorage
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('boski_admin_theme');
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => {
-      const next = !prev;
-      localStorage.setItem('boski_admin_theme', next ? 'dark' : 'light');
-      return next;
-    });
-  };
 
   // Admin Authentication State
   const isAdmin = currentUser?.role === 'admin' || (currentUser?.role as string) === 'superadmin';

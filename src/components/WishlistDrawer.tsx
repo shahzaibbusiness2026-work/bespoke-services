@@ -13,6 +13,7 @@ export const WishlistDrawer: React.FC = () => {
     addToCart,
     setSelectedProductForQuickView,
     formatPrice,
+    isDarkMode,
   } = useShop();
 
   const wishlistProducts = PRODUCTS.filter((p) => wishlist.includes(p.id));
@@ -25,7 +26,7 @@ export const WishlistDrawer: React.FC = () => {
     >
       {/* Smooth Backdrop Overlay */}
       <div
-        className={`fixed inset-0 bg-black/40 transition-opacity duration-300 ease-out ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ease-out ${
           isWishlistOpen ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={() => setIsWishlistOpen(false)}
@@ -34,27 +35,35 @@ export const WishlistDrawer: React.FC = () => {
       {/* Drawer Panel */}
       <div
         id="wishlist-drawer"
-        className={`fixed inset-y-0 right-0 z-10 w-full max-w-[480px] bg-[#faf9f7] flex flex-col border-l border-[#c4c7c7]/40 shadow-2xl transition-transform duration-300 ease-out will-change-transform ${
+        className={`fixed inset-y-0 right-0 z-10 w-full max-w-[480px] flex flex-col shadow-2xl transition-transform duration-300 ease-out will-change-transform border-l ${
+          isDarkMode
+            ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
+            : 'bg-[#faf9f7] border-[#c4c7c7]/40 text-[#000000]'
+        } ${
           isWishlistOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex justify-between items-start p-6 sm:p-8 border-b border-[#e3e2e0] shrink-0">
+        <div className={`flex justify-between items-start p-6 sm:p-8 border-b shrink-0 ${
+          isDarkMode ? 'border-[#2A2E2C]' : 'border-[#e3e2e0]'
+        }`}>
           <div>
             <h2
-              className="text-headline-sm text-[#000000]"
+              className={`text-headline-sm ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               My Wishlist
             </h2>
-            <p className="text-body-sm text-[#444748] mt-1">
+            <p className={`text-body-sm mt-1 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
               {wishlistProducts.length} {wishlistProducts.length === 1 ? 'item' : 'items'} saved
             </p>
           </div>
           <button
             id="close-wishlist-btn"
             onClick={() => setIsWishlistOpen(false)}
-            className="p-2 -mr-2 text-[#444748] hover:text-[#000000] transition-colors"
+            className={`p-2 -mr-2 transition-colors cursor-pointer ${
+              isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#444748] hover:text-[#000000]'
+            }`}
             aria-label="Close wishlist"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'wght' 300" }}>close</span>
@@ -66,37 +75,45 @@ export const WishlistDrawer: React.FC = () => {
           {wishlistProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full px-8 py-16 text-center">
               <span
-                className="material-symbols-outlined text-6xl text-[#c4c7c7] mb-6"
+                className={`material-symbols-outlined text-6xl mb-6 ${isDarkMode ? 'text-[#383D3A]' : 'text-[#c4c7c7]'}`}
                 style={{ fontVariationSettings: "'wght' 200" }}
               >
                 favorite_border
               </span>
               <h3
-                className="text-headline-sm text-[#1a1c1b] mb-3"
+                className={`text-headline-sm mb-3 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'}`}
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 Your wishlist is empty
               </h3>
-              <p className="text-body-sm text-[#444748] mb-8">
+              <p className={`text-body-sm mb-8 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                 Discover our curated collection and save your favourites.
               </p>
               <button
                 onClick={() => setIsWishlistOpen(false)}
-                className="px-8 py-4 border border-[#c4c7c7] text-label-caps text-[#000000] hover:bg-[#f4f3f1] transition-colors"
+                className={`px-8 py-4 border text-label-caps transition-colors cursor-pointer ${
+                  isDarkMode
+                    ? 'border-[#383D3A] text-[#FAF8F5] hover:bg-[#1A1D1C]'
+                    : 'border-[#c4c7c7] text-[#000000] hover:bg-[#f4f3f1]'
+                }`}
               >
                 Browse Collection
               </button>
             </div>
           ) : (
-            <div className="divide-y divide-[#e3e2e0]">
+            <div className={`divide-y ${isDarkMode ? 'divide-[#2A2E2C]' : 'divide-[#e3e2e0]'}`}>
               {wishlistProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="flex gap-5 p-6 hover:bg-[#f4f3f1]/50 transition-colors group"
+                  className={`flex gap-5 p-6 transition-colors group ${
+                    isDarkMode ? 'hover:bg-[#1A1D1C]/60' : 'hover:bg-[#f4f3f1]/50'
+                  }`}
                 >
                   {/* Product Image */}
                   <div
-                    className="w-20 h-24 sm:w-24 sm:h-28 bg-[#efeeec] overflow-hidden shrink-0 cursor-pointer"
+                    className={`w-20 h-24 sm:w-24 sm:h-28 overflow-hidden shrink-0 cursor-pointer ${
+                      isDarkMode ? 'bg-[#181B1A]' : 'bg-[#efeeec]'
+                    }`}
                     onClick={() => {
                       setSelectedProductForQuickView(product);
                       setIsWishlistOpen(false);
@@ -120,20 +137,22 @@ export const WishlistDrawer: React.FC = () => {
                           setSelectedProductForQuickView(product);
                           setIsWishlistOpen(false);
                         }}
-                        className="text-left w-full"
+                        className="text-left w-full cursor-pointer"
                       >
-                        <h3 className="text-body-md text-[#000000] hover:underline underline-offset-2 leading-snug truncate">
+                        <h3 className={`text-body-md hover:underline underline-offset-2 leading-snug truncate ${
+                          isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                        }`}>
                           {product.name}
                         </h3>
-                        <p className="text-body-sm text-[#444748] mt-1 truncate">{product.subtitle}</p>
+                        <p className={`text-body-sm mt-1 truncate ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>{product.subtitle}</p>
                       </button>
 
                       <div className="flex items-center gap-3 mt-2">
-                        <span className="text-body-md text-[#000000] font-semibold">
+                        <span className={`text-body-md font-semibold ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
                           {formatPrice(product.price)}
                         </span>
                         {product.originalPrice && (
-                          <span className="text-body-sm text-[#444748] line-through">
+                          <span className={`text-body-sm line-through ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#444748]'}`}>
                             {formatPrice(product.originalPrice)}
                           </span>
                         )}
@@ -162,14 +181,22 @@ export const WishlistDrawer: React.FC = () => {
                           addToCart(product, product.colors[0], product.sizes[0], 1);
                           toggleWishlist(product.id);
                         }}
-                        className="flex-grow py-2.5 bg-[#000000] text-white text-label-caps hover:bg-[#2f3130] transition-colors"
+                        className={`flex-grow py-2.5 text-label-caps transition-colors cursor-pointer font-medium ${
+                          isDarkMode
+                            ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                            : 'bg-[#000000] text-white hover:bg-[#2f3130]'
+                        }`}
                       >
                         Add to Bag
                       </button>
                       <button
                         id={`wishlist-remove-${product.id}`}
                         onClick={() => toggleWishlist(product.id)}
-                        className="p-2 border border-[#c4c7c7] text-[#444748] hover:text-[#ba1a1a] hover:border-[#ba1a1a] transition-colors"
+                        className={`p-2 border transition-colors cursor-pointer ${
+                          isDarkMode
+                            ? 'border-[#383D3A] text-[#A8A49C] hover:text-[#f87171] hover:border-[#f87171]'
+                            : 'border-[#c4c7c7] text-[#444748] hover:text-[#ba1a1a] hover:border-[#ba1a1a]'
+                        }`}
                         aria-label="Remove from wishlist"
                       >
                         <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'wght' 300" }}>delete</span>

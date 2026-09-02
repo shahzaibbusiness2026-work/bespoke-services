@@ -390,6 +390,12 @@ a:hover .btn-cta-arrow {
   color: #1a1c1b;
 }
 
+html.dark ::selection,
+[data-theme="dark"] ::selection {
+  background-color: #C5A059;
+  color: #000000;
+}
+
 /* Quiet luxury typography helpers */
 .font-serif-luxury {
   font-family: "Cormorant Garamond", "Libre Caslon Text", Georgia, serif;
@@ -417,4 +423,56 @@ a:hover .btn-cta-arrow {
   background: rgba(250, 249, 247, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+html.dark .luxury-glass,
+[data-theme="dark"] .luxury-glass {
+  background: rgba(17, 19, 18, 0.92);
+  border-color: #2A2E2C;
+}
+
+/* =====================================================
+   GLOBAL ATELIER DARK THEME STYLING RULES
+   Ensures complete alignment for cards, inputs, text, & modals
+   ===================================================== */
+html.dark {
+  background-color: #111312;
+  color: #FAF8F5;
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #111312;
+  color: #FAF8F5;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #111312;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2A2E2C;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #C5A059;
+}
+
+/* Minimal input in dark mode */
+html.dark .input-minimal {
+  color: #FAF8F5;
+  border-bottom: 1px solid #383D3A;
+}
+
+html.dark .input-minimal:focus {
+  border-bottom-color: #C5A059;
+}
+
+html.dark .input-minimal::placeholder {
+  color: #6E6B65;
+}
+
+/* Smooth transition when switching themes */
+html, body {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }

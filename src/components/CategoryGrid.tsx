@@ -97,7 +97,7 @@ const DEFAULT_CATEGORIES = [
 ];
 
 export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) => {
-  const { categories } = useShop();
+  const { categories, isDarkMode } = useShop();
 
   // Dynamically resolve category cards merging live context with visual styling
   const displayCategories = useMemo(() => {
@@ -138,15 +138,21 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) 
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
         <div>
-          <p className="text-label-caps text-[#505252] mb-3 uppercase tracking-wider font-semibold">Our Collections</p>
+          <p className={`text-label-caps mb-3 uppercase tracking-wider font-semibold ${
+            isDarkMode ? 'text-[#C5A059]' : 'text-[#505252]'
+          }`}>Our Collections</p>
           <h2
-            className="text-headline-lg text-[#000000] max-w-lg font-normal"
+            className={`text-headline-lg max-w-lg font-normal ${
+              isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+            }`}
             style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
           >
             The Textile Sanctuary
           </h2>
         </div>
-        <p className="text-body-md text-[#2b2d2c] max-w-sm font-light">
+        <p className={`text-body-md max-w-sm font-light ${
+          isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'
+        }`}>
           Explore thoughtfully crafted natural fiber textiles, rooted in generational European loom heritage.
         </p>
       </div>
@@ -158,7 +164,9 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) 
             key={cat.id}
             id={`cat-card-${cat.key}`}
             onClick={() => handleClick(cat.key)}
-            className={`group relative overflow-hidden cursor-pointer bg-[#efeeec] card-hover-lift ${cat.colSpan} ${cat.rowSpan}`}
+            className={`group relative overflow-hidden cursor-pointer card-hover-lift ${cat.colSpan} ${cat.rowSpan} ${
+              isDarkMode ? 'bg-[#181B1A]' : 'bg-[#efeeec]'
+            }`}
           >
             {/* Background Image with 60fps Smooth Scale */}
             <img

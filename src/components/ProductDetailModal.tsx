@@ -15,6 +15,7 @@ export const ProductDetailModal: React.FC = () => {
     isInWishlist,
     setIsSizeGuideOpen,
     openARView,
+    isDarkMode,
   } = useShop();
 
   const product = selectedProductForQuickView;
@@ -58,17 +59,25 @@ export const ProductDetailModal: React.FC = () => {
     >
       <div
         id="product-detail-modal-content"
-        className="bg-[#faf9f7] w-full max-w-5xl shadow-2xl border border-[#c4c7c7] overflow-hidden flex flex-col my-auto max-h-[96vh] md:max-h-[90vh] text-[#1a1c1b] animate-fadeIn"
+        className={`w-full max-w-5xl shadow-2xl border overflow-hidden flex flex-col my-auto max-h-[96vh] md:max-h-[90vh] animate-fadeIn ${
+          isDarkMode
+            ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
+            : 'bg-[#faf9f7] border-[#c4c7c7] text-[#1a1c1b]'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Bar for Close */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-[#e3e2e0] bg-[#faf9f7] shrink-0">
-          <span className="text-label-caps text-[#444748] uppercase tracking-widest">
+        <div className={`flex justify-between items-center px-6 py-4 border-b shrink-0 ${
+          isDarkMode ? 'bg-[#161817] border-[#2A2E2C]' : 'bg-[#faf9f7] border-[#e3e2e0]'
+        }`}>
+          <span className={`text-label-caps uppercase tracking-widest ${isDarkMode ? 'text-[#C5A059]' : 'text-[#444748]'}`}>
             {product.category}
           </span>
           <button
             onClick={() => setSelectedProductForQuickView(null)}
-            className="p-1 text-[#444748] hover:text-[#000000] transition-colors"
+            className={`p-1 transition-colors cursor-pointer ${
+              isDarkMode ? 'text-[#A8A49C] hover:text-[#FAF8F5]' : 'text-[#444748] hover:text-[#000000]'
+            }`}
             aria-label="Close modal"
           >
             <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'wght' 300" }}>close</span>
@@ -86,8 +95,10 @@ export const ProductDetailModal: React.FC = () => {
                   <button
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`w-16 h-20 md:w-full md:h-24 shrink-0 border relative overflow-hidden transition-all ${
-                      selectedImageIndex === idx ? 'border-[#000000]' : 'border-transparent hover:border-[#c4c7c7]'
+                    className={`w-16 h-20 md:w-full md:h-24 shrink-0 border relative overflow-hidden transition-all cursor-pointer ${
+                      selectedImageIndex === idx
+                        ? (isDarkMode ? 'border-[#C5A059]' : 'border-[#000000]')
+                        : (isDarkMode ? 'border-transparent hover:border-[#383D3A]' : 'border-transparent hover:border-[#c4c7c7]')
                     }`}
                   >
                     <img
@@ -103,7 +114,9 @@ export const ProductDetailModal: React.FC = () => {
               </div>
 
               {/* Main Image */}
-              <div className="order-1 md:order-2 w-full h-[360px] md:h-[480px] bg-[#efeeec] relative overflow-hidden">
+              <div className={`order-1 md:order-2 w-full h-[360px] md:h-[480px] relative overflow-hidden ${
+                isDarkMode ? 'bg-[#161817]' : 'bg-[#efeeec]'
+              }`}>
                 <img
                   src={imagesToDisplay[selectedImageIndex] || product.images[0]}
                   alt={product.name}
@@ -113,8 +126,10 @@ export const ProductDetailModal: React.FC = () => {
                   }}
                 />
                 {product.isNew && (
-                  <div className="absolute top-4 left-4 z-10 bg-[#ffffff] px-2.5 py-1 border border-[#c4c7c7]">
-                    <span className="text-label-caps text-[#000000] uppercase">New</span>
+                  <div className={`absolute top-4 left-4 z-10 px-2.5 py-1 border ${
+                    isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A] text-[#C5A059]' : 'bg-[#ffffff] border-[#c4c7c7] text-[#000000]'
+                  }`}>
+                    <span className="text-label-caps uppercase">New</span>
                   </div>
                 )}
               </div>
@@ -123,7 +138,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Right: Product Info (5 cols) */}
             <div className="lg:col-span-5 flex flex-col">
               <h1
-                className="text-headline-md text-[#000000] mb-2 leading-tight"
+                className={`text-headline-md mb-2 leading-tight ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >
                 {product.name}
@@ -131,24 +146,24 @@ export const ProductDetailModal: React.FC = () => {
 
               {/* Price & Rating */}
               <div className="flex items-center gap-4 mb-4">
-                <span className="text-body-lg text-[#000000] font-semibold">
+                <span className={`text-body-lg font-semibold ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
                   {formatPrice(product.price)}
                 </span>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <span className="text-body-sm text-[#444748] line-through">
+                  <span className={`text-body-sm line-through ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#444748]'}`}>
                     {formatPrice(product.originalPrice)}
                   </span>
                 )}
                 {product.rating && (
-                  <div className="flex items-center gap-1 text-[#675d50] text-body-sm ml-auto">
+                  <div className={`flex items-center gap-1 text-body-sm ml-auto ${isDarkMode ? 'text-[#C5A059]' : 'text-[#675d50]'}`}>
                     <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1, 'wght' 400" }}>star</span>
-                    <span>{product.rating}</span>
-                    <span className="text-[#444748]">({product.reviewsCount})</span>
+                    <span className={isDarkMode ? 'text-[#FAF8F5]' : ''}>{product.rating}</span>
+                    <span className={isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}>({product.reviewsCount})</span>
                   </div>
                 )}
               </div>
 
-              <p className="text-body-md text-[#444748] mb-6 leading-relaxed">
+              <p className={`text-body-md mb-6 leading-relaxed ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                 {product.description}
               </p>
 
@@ -156,7 +171,7 @@ export const ProductDetailModal: React.FC = () => {
               {product.colors.length > 0 && (
                 <div className="mb-6">
                   <div className="flex justify-between items-end mb-3">
-                    <span className="text-label-caps text-[#000000] uppercase tracking-widest">
+                    <span className={`text-label-caps uppercase tracking-widest ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
                       Color: {selectedColor?.name}
                     </span>
                   </div>
@@ -168,10 +183,10 @@ export const ProductDetailModal: React.FC = () => {
                           setSelectedColor(color);
                           setSelectedImageIndex(0);
                         }}
-                        className={`w-8 h-8 rounded-full border p-[2px] transition-all ${
+                        className={`w-8 h-8 rounded-full border p-[2px] transition-all cursor-pointer ${
                           selectedColor?.name === color.name
-                            ? 'border-[#000000] scale-105'
-                            : 'border-transparent hover:border-[#c4c7c7]'
+                            ? (isDarkMode ? 'border-[#C5A059] scale-105' : 'border-[#000000] scale-105')
+                            : (isDarkMode ? 'border-transparent hover:border-[#383D3A]' : 'border-transparent hover:border-[#c4c7c7]')
                         }`}
                         title={color.name}
                       >
@@ -189,12 +204,14 @@ export const ProductDetailModal: React.FC = () => {
               {product.sizes.length > 0 && (
                 <div className="mb-6">
                   <div className="flex justify-between items-end mb-3">
-                    <span className="text-label-caps text-[#000000] uppercase tracking-widest">
+                    <span className={`text-label-caps uppercase tracking-widest ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}>
                       Size: {selectedSize}
                     </span>
                     <button
                       onClick={() => setIsSizeGuideOpen(true)}
-                      className="text-body-sm text-[#444748] underline hover:text-[#000000] transition-colors"
+                      className={`text-body-sm underline transition-colors cursor-pointer ${
+                        isDarkMode ? 'text-[#A8A49C] hover:text-[#C5A059]' : 'text-[#444748] hover:text-[#000000]'
+                      }`}
                     >
                       Size Guide
                     </button>
@@ -204,10 +221,14 @@ export const ProductDetailModal: React.FC = () => {
                       <button
                         key={size}
                         onClick={() => setSelectedSize(size)}
-                        className={`py-2.5 border text-label-caps uppercase transition-all ${
+                        className={`py-2.5 border text-label-caps uppercase transition-all cursor-pointer ${
                           selectedSize === size
-                            ? 'border-[#000000] bg-[#000000] text-white'
-                            : 'border-[#c4c7c7] text-[#444748] hover:border-[#000000] hover:text-[#000000]'
+                            ? isDarkMode
+                              ? 'border-[#C5A059] bg-[#C5A059] text-black font-bold'
+                              : 'border-[#000000] bg-[#000000] text-white'
+                            : isDarkMode
+                              ? 'border-[#383D3A] text-[#A8A49C] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                              : 'border-[#c4c7c7] text-[#444748] hover:border-[#000000] hover:text-[#000000]'
                         }`}
                       >
                         {size}
@@ -219,30 +240,40 @@ export const ProductDetailModal: React.FC = () => {
 
               {/* Actions */}
               <div className="flex gap-3 mb-3">
-                <div className="flex items-center border border-[#c4c7c7] px-3 py-2 shrink-0">
+                <div className={`flex items-center border px-3 py-2 shrink-0 ${
+                  isDarkMode ? 'border-[#383D3A] bg-[#161817] text-[#FAF8F5]' : 'border-[#c4c7c7] text-[#000000]'
+                }`}>
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-[#000000] hover:opacity-70 transition-opacity px-1 cursor-pointer"
+                    className={`transition-opacity px-1 cursor-pointer hover:opacity-70 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                   >
                     <span className="material-symbols-outlined text-[16px]">remove</span>
                   </button>
                   <span className="text-body-md px-3 text-center">{quantity}</span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="text-[#000000] hover:opacity-70 transition-opacity px-1 cursor-pointer"
+                    className={`transition-opacity px-1 cursor-pointer hover:opacity-70 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                   >
                     <span className="material-symbols-outlined text-[16px]">add</span>
                   </button>
                 </div>
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 bg-[#000000] text-white text-label-caps tracking-widest uppercase hover:bg-[#2f3130] transition-colors py-3.5 cursor-pointer"
+                  className={`flex-1 text-label-caps tracking-widest uppercase transition-colors py-3.5 cursor-pointer font-medium ${
+                    isDarkMode
+                      ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                      : 'bg-[#000000] text-white hover:bg-[#2f3130]'
+                  }`}
                 >
                   Add to Bag
                 </button>
                 <button
                   onClick={() => toggleWishlist(product.id)}
-                  className="px-4 border border-[#c4c7c7] hover:border-[#000000] text-[#000000] transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                  className={`px-4 border transition-colors flex items-center justify-center shrink-0 cursor-pointer ${
+                    isDarkMode
+                      ? 'border-[#383D3A] hover:border-[#C5A059] text-[#C5A059]'
+                      : 'border-[#c4c7c7] hover:border-[#000000] text-[#000000]'
+                  }`}
                   aria-label="Save to Wishlist"
                 >
                   <span
@@ -261,18 +292,26 @@ export const ProductDetailModal: React.FC = () => {
                   setSelectedProductForQuickView(null);
                   openARView(product);
                 }}
-                className="w-full py-3 mb-6 border border-[#000000] bg-transparent text-[#000000] hover:bg-[#000000] hover:text-white transition-colors flex items-center justify-center gap-2 text-label-caps uppercase tracking-wider cursor-pointer font-medium"
+                className={`w-full py-3 mb-6 border transition-colors flex items-center justify-center gap-2 text-label-caps uppercase tracking-wider cursor-pointer font-medium ${
+                  isDarkMode
+                    ? 'border-[#C5A059] text-[#C5A059] hover:bg-[#C5A059] hover:text-black'
+                    : 'border-[#000000] bg-transparent text-[#000000] hover:bg-[#000000] hover:text-white'
+                }`}
               >
                 <span className="material-symbols-outlined text-[18px]">view_in_ar</span>
                 <span>Experience In Room (3D / AR)</span>
               </button>
 
               {/* Accordions */}
-              <div className="border-t border-[#e3e2e0] text-body-sm divide-y divide-[#e3e2e0]">
+              <div className={`border-t text-body-sm divide-y ${
+                isDarkMode ? 'border-[#2A2E2C] divide-[#2A2E2C]' : 'border-[#e3e2e0] divide-[#e3e2e0]'
+              }`}>
                 <div className="py-3">
                   <button
                     onClick={() => setOpenAccordion(openAccordion === 'details' ? '' : 'details')}
-                    className="flex justify-between items-center w-full text-left font-medium text-[#000000]"
+                    className={`flex justify-between items-center w-full text-left font-medium cursor-pointer ${
+                      isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                    }`}
                   >
                     <span>Product Details</span>
                     <span
@@ -284,7 +323,7 @@ export const ProductDetailModal: React.FC = () => {
                     </span>
                   </button>
                   {openAccordion === 'details' && (
-                    <ul className="pt-2 pl-4 list-disc text-[#444748] space-y-1">
+                    <ul className={`pt-2 pl-4 list-disc space-y-1 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                       {product.details?.map((det, i) => (
                         <li key={i}>{det}</li>
                       )) || (
@@ -301,7 +340,9 @@ export const ProductDetailModal: React.FC = () => {
                 <div className="py-3">
                   <button
                     onClick={() => setOpenAccordion(openAccordion === 'care' ? '' : 'care')}
-                    className="flex justify-between items-center w-full text-left font-medium text-[#000000]"
+                    className={`flex justify-between items-center w-full text-left font-medium cursor-pointer ${
+                      isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
+                    }`}
                   >
                     <span>Care Instructions</span>
                     <span
@@ -313,7 +354,7 @@ export const ProductDetailModal: React.FC = () => {
                     </span>
                   </button>
                   {openAccordion === 'care' && (
-                    <p className="pt-2 text-[#444748] leading-relaxed">
+                    <p className={`pt-2 leading-relaxed ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#444748]'}`}>
                       {product.careInstructions || 'Machine wash cold on gentle cycle. Tumble dry low or line dry.'}
                     </p>
                   )}

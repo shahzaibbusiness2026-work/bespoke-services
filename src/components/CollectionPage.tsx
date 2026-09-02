@@ -149,7 +149,7 @@ const PAGE_CONFIG: Record<
 };
 
 export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initialCategory }) => {
-  const { products, categories, setActivePage } = useShop();
+  const { products, categories, setActivePage, isDarkMode } = useShop();
   const config = PAGE_CONFIG[pageType] || PAGE_CONFIG.shop;
 
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>(initialCategory || 'all');
@@ -208,12 +208,16 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
     }
 
     return list;
-  }, [pageType, selectedSubCategory, selectedSort, onlyInStock, onlyOnSale]);
+  }, [pageType, selectedSubCategory, selectedSort, onlyInStock, onlyOnSale, products]);
 
   return (
-    <main className="flex-grow bg-[#faf9f7] animate-fadeIn pb-24">
+    <main className={`flex-grow animate-fadeIn pb-24 transition-colors ${
+      isDarkMode ? 'bg-[#111312] text-[#FAF8F5]' : 'bg-[#faf9f7] text-[#1a1c1b]'
+    }`}>
       {/* Editorial Collection Hero Banner */}
-      <section className="relative w-full h-[48vh] min-h-[380px] flex items-end justify-start overflow-hidden bg-[#efeeec]">
+      <section className={`relative w-full h-[48vh] min-h-[380px] flex items-end justify-start overflow-hidden ${
+        isDarkMode ? 'bg-[#161817]' : 'bg-[#efeeec]'
+      }`}>
         <img
           src={config.bannerImage}
           alt={config.title}
@@ -226,7 +230,7 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
           <nav className="text-label-caps tracking-widest text-white/70 mb-4 uppercase flex items-center gap-2 text-xs">
             <button
               onClick={() => { setActivePage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-              className="hover:text-white transition-colors"
+              className="hover:text-white transition-colors cursor-pointer"
             >
               Home
             </button>
@@ -251,19 +255,27 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
 
       {/* Filter and Controls Toolbar */}
       <section className="w-full max-w-[1440px] mx-auto px-5 md:px-12 lg:px-16 pt-10 pb-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center py-5 border-y border-[#c4c7c7] gap-4">
+        <div className={`flex flex-col md:flex-row justify-between items-start md:items-center py-5 border-y gap-4 ${
+          isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
+        }`}>
 
           {/* Subcategory Pills */}
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="text-label-caps text-[#000000] uppercase tracking-wider mr-2 font-semibold">Filter:</span>
+            <span className={`text-label-caps uppercase tracking-wider mr-2 font-semibold ${
+              isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+            }`}>Filter:</span>
             {config.filterCategories.map((sub) => (
               <button
                 key={sub.id}
                 onClick={() => setSelectedSubCategory(sub.id)}
                 className={`px-4 py-2 border text-label-caps uppercase transition-all duration-200 cursor-pointer ${
                   selectedSubCategory === sub.id
-                    ? 'border-[#000000] bg-[#000000] text-white shadow-sm'
-                    : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000] bg-transparent'
+                    ? isDarkMode
+                      ? 'border-[#C5A059] bg-[#C5A059] text-black font-bold shadow-sm'
+                      : 'border-[#000000] bg-[#000000] text-white shadow-sm'
+                    : isDarkMode
+                      ? 'border-[#383D3A] text-[#A8A49C] hover:border-[#C5A059] hover:text-[#FAF8F5] bg-transparent'
+                      : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000] bg-transparent'
                 }`}
               >
                 {sub.label}
@@ -274,8 +286,12 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
               onClick={() => setOnlyInStock(!onlyInStock)}
               className={`px-4 py-2 border text-label-caps uppercase transition-all duration-200 cursor-pointer ${
                 onlyInStock
-                  ? 'border-[#000000] bg-[#000000] text-white'
-                  : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000]'
+                  ? isDarkMode
+                    ? 'border-[#C5A059] bg-[#C5A059] text-black font-bold'
+                    : 'border-[#000000] bg-[#000000] text-white'
+                  : isDarkMode
+                    ? 'border-[#383D3A] text-[#A8A49C] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                    : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000]'
               }`}
             >
               In Stock Only
@@ -285,8 +301,12 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
               onClick={() => setOnlyOnSale(!onlyOnSale)}
               className={`px-4 py-2 border text-label-caps uppercase transition-all duration-200 cursor-pointer ${
                 onlyOnSale
-                  ? 'border-[#000000] bg-[#000000] text-white'
-                  : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000]'
+                  ? isDarkMode
+                    ? 'border-[#C5A059] bg-[#C5A059] text-black font-bold'
+                    : 'border-[#000000] bg-[#000000] text-white'
+                  : isDarkMode
+                    ? 'border-[#383D3A] text-[#A8A49C] hover:border-[#C5A059] hover:text-[#FAF8F5]'
+                    : 'border-[#c4c7c7] text-[#2b2d2c] hover:border-[#000000] hover:text-[#000000]'
               }`}
             >
               On Sale
@@ -295,21 +315,25 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
 
           {/* Count & Sorting Dropdown */}
           <div className="flex items-center gap-5 w-full md:w-auto justify-between md:justify-end">
-            <span className="text-body-sm text-[#2b2d2c] tracking-wide font-medium">
+            <span className={`text-body-sm tracking-wide font-medium ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
               {filteredProducts.length} Pieces
             </span>
 
             <div className="flex items-center gap-2">
-              <span className="text-label-caps text-[#2b2d2c]">Sort:</span>
+              <span className={`text-label-caps ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>Sort:</span>
               <select
                 value={selectedSort}
                 onChange={(e) => setSelectedSort(e.target.value as any)}
-                className="bg-transparent border-0 border-b border-[#000000] text-body-sm text-[#000000] font-medium py-1 px-1 outline-none cursor-pointer"
+                className={`bg-transparent border-0 border-b text-body-sm font-medium py-1 px-1 outline-none cursor-pointer ${
+                  isDarkMode
+                    ? 'border-[#C5A059] text-[#FAF8F5]'
+                    : 'border-[#000000] text-[#000000]'
+                }`}
               >
-                <option value="featured">Featured Selection</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="rating">Highest Rated</option>
+                <option value="featured" className={isDarkMode ? 'bg-[#141615] text-[#FAF8F5]' : 'bg-white text-black'}>Featured Selection</option>
+                <option value="price-asc" className={isDarkMode ? 'bg-[#141615] text-[#FAF8F5]' : 'bg-white text-black'}>Price: Low to High</option>
+                <option value="price-desc" className={isDarkMode ? 'bg-[#141615] text-[#FAF8F5]' : 'bg-white text-black'}>Price: High to Low</option>
+                <option value="rating" className={isDarkMode ? 'bg-[#141615] text-[#FAF8F5]' : 'bg-white text-black'}>Highest Rated</option>
               </select>
             </div>
           </div>
@@ -319,20 +343,22 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
       {/* Product Grid */}
       <section className="w-full max-w-[1440px] mx-auto px-5 md:px-12 lg:px-16">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-24 border border-dashed border-[#c4c7c7] p-12">
+          <div className={`text-center py-24 border border-dashed p-12 ${
+            isDarkMode ? 'border-[#383D3A] bg-[#141615]' : 'border-[#c4c7c7]'
+          }`}>
             <span
-              className="material-symbols-outlined text-5xl text-[#c4c7c7] mb-3"
+              className={`material-symbols-outlined text-5xl mb-3 ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#c4c7c7]'}`}
               style={{ fontVariationSettings: "'wght' 200" }}
             >
               inventory_2
             </span>
             <p
-              className="text-headline-sm text-[#000000] mb-2"
+              className={`text-headline-sm mb-2 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
               No matching pieces in this view
             </p>
-            <p className="text-body-md text-[#2b2d2c] mb-6">
+            <p className={`text-body-md mb-6 ${isDarkMode ? 'text-[#A8A49C]' : 'text-[#2b2d2c]'}`}>
               Try adjusting your filters or explore all collections.
             </p>
             <button
@@ -341,7 +367,11 @@ export const CollectionPage: React.FC<CollectionPageProps> = ({ pageType, initia
                 setOnlyInStock(false);
                 setOnlyOnSale(false);
               }}
-              className="px-8 py-3 bg-[#000000] text-white text-label-caps hover:bg-[#252726] transition-colors"
+              className={`px-8 py-3 text-label-caps transition-colors cursor-pointer font-medium ${
+                isDarkMode
+                  ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
+                  : 'bg-[#000000] text-white hover:bg-[#252726]'
+              }`}
             >
               Reset Filters
             </button>
