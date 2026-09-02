@@ -4,6 +4,7 @@ import React from 'react';
 import { useShop, PageView } from '../context/ShopContext';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface CategoryGridProps {
   onSelectCategory: (category: string) => void;
@@ -25,7 +26,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: '480TC Long-Staple Sateen',
     categoryKey: 'sheets',
     page: 'bedding',
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.bedding,
   },
   {
     id: 'cat-duvets',
@@ -33,7 +34,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: 'Stonewashed French Linen',
     categoryKey: 'duvets',
     page: 'bedding',
-    image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.cushions,
   },
   {
     id: 'cat-blankets',
@@ -41,7 +42,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: 'Waffle Weave & Baby Alpaca',
     categoryKey: 'blankets',
     page: 'throws-blankets',
-    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.throws,
   },
   {
     id: 'cat-curtains',
@@ -49,7 +50,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: 'Belgian Architectural Drops',
     categoryKey: 'curtains',
     page: 'curtains',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.fabrics,
   },
   {
     id: 'cat-throws',
@@ -57,7 +58,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: 'Hand-Fringed Pure Linen',
     categoryKey: 'throws',
     page: 'throws-blankets',
-    image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.bespoke,
   },
   {
     id: 'cat-pillows',
@@ -65,7 +66,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: '22 Momme Mulberry Silk',
     categoryKey: 'pillows',
     page: 'bedding',
-    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.tableware,
   },
   {
     id: 'cat-towels',
@@ -73,7 +74,7 @@ const SANCTUARY_CATEGORIES: SanctuaryCategory[] = [
     subtitle: '700 GSM Aegean Spun Cotton',
     categoryKey: 'towels',
     page: 'towels',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.categories.accessories,
   },
 ];
 
@@ -136,7 +137,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ onSelectCategory }) 
             {/* Featured Image Canvas with Hardware Acceleration */}
             <div className="lg:col-span-8 aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/11] overflow-hidden relative bg-black/40">
               <img
-                src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=2000&q=90"
+                src={ASSETS.hero.coutureLinen}
                 alt="Bedding Collection"
                 className="w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 will-change-transform"
               />

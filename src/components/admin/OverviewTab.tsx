@@ -47,19 +47,19 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   onOpenUploadModal,
 }) => {
   // Computed metrics
-  const totalProducts = products.length > 0 ? products.length : 128;
+  const totalProducts = products.length;
   const inStockProducts = products.filter((p) => p.inStock).length;
   const lowStockProducts = products.filter((p) => p.stockCount > 0 && p.stockCount <= 10).length;
-  const stockAvailableRate = totalProducts > 0 ? Math.round((inStockProducts / totalProducts) * 100) : 92;
+  const stockAvailableRate = totalProducts > 0 ? Math.round((inStockProducts / totalProducts) * 100) : 100;
 
-  const totalCollections = collections.length > 0 ? collections.length : 14;
+  const totalCollections = collections.length;
   const upcomingCollections = collections.filter((c) => c.status === 'upcoming').length;
   const activeCollections = collections.filter((c) => c.status === 'active').length;
 
-  const totalInquiries = inquiries.length > 0 ? inquiries.length : 24;
-  const pendingInquiries = inquiries.filter((i) => i.status === 'pending').length || 8;
+  const totalInquiries = inquiries.length;
+  const pendingInquiries = inquiries.filter((i) => i.status === 'pending').length;
 
-  const totalAssets = mediaList.length > 0 ? mediaList.length : 540;
+  const totalAssets = mediaList.length;
 
   // Dynamic time greeting
   const getGreeting = () => {

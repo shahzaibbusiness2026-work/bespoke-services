@@ -20,7 +20,7 @@ export const LookbookHotspots: React.FC = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <span className="text-label-caps uppercase tracking-[0.25em] text-[#efe0cf] font-semibold mb-3 block">
-              Editorial Curation &bull; Season 2025
+              Editorial Curation &bull; Season 2026
             </span>
             <h2
               className="text-[34px] sm:text-[46px] leading-[42px] sm:leading-[54px] font-normal text-white"

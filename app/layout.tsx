@@ -50,8 +50,60 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('boski_theme')||localStorage.getItem('boski_admin_theme');if(t==='dark'){document.documentElement.classList.add('dark');document.documentElement.setAttribute('data-theme','dark');}else if(t==='bright'||t==='light'){document.documentElement.classList.remove('dark');document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'Organization',
+                  '@id': 'https://boskilimited.com/#organization',
+                  name: 'BOSKI LIMITED',
+                  url: 'https://boskilimited.com',
+                  logo: 'https://boskilimited.com/images/brand/logo-monogram.svg',
+                  description:
+                    'Master-loom luxury linens, pure organic flax bedding, and bespoke architectural textile services.',
+                  address: {
+                    '@type': 'PostalAddress',
+                    streetAddress: 'Unit 4, Balmoral Trading Estate, 113 River Road',
+                    addressLocality: 'Barking',
+                    postalCode: 'IG11 0EG',
+                    addressCountry: 'GB',
+                  },
+                  contactPoint: {
+                    '@type': 'ContactPoint',
+                    telephone: '+44-7738-761016',
+                    contactType: 'customer service',
+                    email: 'boskilimited@boskilimited.info',
+                    availableLanguage: ['English'],
+                  },
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://boskilimited.com/#website',
+                  url: 'https://boskilimited.com',
+                  name: 'BOSKI LIMITED',
+                  publisher: {
+                    '@id': 'https://boskilimited.com/#organization',
+                  },
+                  potentialAction: {
+                    '@type': 'SearchAction',
+                    target: 'https://boskilimited.com/?s={search_term_string}',
+                    'query-input': 'required name=search_term_string',
+                  },
+                },
+              ],
+            }),
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

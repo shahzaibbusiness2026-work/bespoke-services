@@ -1,4 +1,5 @@
 import { Product, LookbookItem, Review, Currency, PromoCode } from '../types';
+import { ASSETS } from '../constants/assets';
 
 export const CURRENCIES: Record<string, Currency> = {
   GBP: { code: 'GBP', symbol: '£', rate: 0.79, label: 'GBP (£)' },
@@ -532,7 +533,7 @@ export const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: 'The Serene Master Suite',
     season: 'Autumn / Winter Collection',
     subtitle: 'Layering warm ivory sateen sheets with stonewashed French linen and waffle weave textures.',
-    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=85',
+    image: ASSETS.editorial.lookbookMasterSuite,
     hotspots: [
       {
         id: 'hs-1',
@@ -565,7 +566,7 @@ export const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: 'Sunlit Coastal Sanctuary',
     season: 'Spring / Summer Light',
     subtitle: 'Airy organic percale and custom Belgian linen drapery framing floor-to-ceiling garden light.',
-    image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
+    image: ASSETS.editorial.lookbookCoastalSanctuary,
     hotspots: [
       {
         id: 'hs-4',
@@ -600,7 +601,7 @@ export const REVIEWS: Review[] = [
     comment: 'The Signature Sateen in Warm Ivory is genuinely the softest bedding I have ever owned. After multiple gentle washes, it has only become silkier with no pilling whatsoever. The deep pockets never slip off the mattress.',
     verified: true,
     productName: 'Signature Sateen Core Sheet Set',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+    avatar: ASSETS.avatars.eleanorVance,
     fitRating: 'True to size',
   },
   {
@@ -613,7 +614,7 @@ export const REVIEWS: Review[] = [
     comment: 'BOSKI LIMITED’s bespoke drapery service is second to none. The Belgian linen filters afternoon daylight into our bedroom like a Renaissance painting. Heavyweight, beautifully weighted at the hem.',
     verified: true,
     productName: 'Bespoke Belgian Linen Drapery Panels',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+    avatar: ASSETS.avatars.julianMontgomery,
     fitRating: 'True to size',
   },
   {
@@ -626,7 +627,7 @@ export const REVIEWS: Review[] = [
     comment: 'Having grown up around French flax weavers, I am notoriously picky about linen. This duvet cover is exceptional—breathable, beautifully relaxed, and the coconut river shell buttons are a gorgeous touch.',
     verified: true,
     productName: 'Stonewashed French Linen Duvet Cover',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
+    avatar: ASSETS.avatars.camilleLaurent,
     fitRating: 'True to size',
   },
 ];

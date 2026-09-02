@@ -187,7 +187,7 @@ export const Footer: React.FC = () => {
             isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]/60'
           }`}>
             <p className={`text-body-sm text-xs ${isDarkMode ? 'text-[#6E6B65]' : 'text-[#505252]'}`}>
-              &copy; 2025 BOSKI LIMITED. All rights reserved.
+              &copy; {new Date().getFullYear()} BOSKI LIMITED. All rights reserved.
             </p>
           </div>
         </div>

@@ -57,40 +57,39 @@
 
 ```
 boski-limited/
+├── docs/
+│   └── reference-designs/       # Archived design specifications & tokens
 ├── public/
-│   ├── assets/
-│   │   └── reference-designs/       # Curated high-resolution design specifications
-│   └── favicon.svg                  # Bespoke luxury serif vector monogram
+│   ├── favicon.svg              # Bespoke luxury serif vector monogram
+│   ├── uploads/                 # Dynamic atelier and user media uploads
+│   └── images/                  # Structured domain-driven static image assets
+│       ├── brand/               # Favicons, vector monograms, marks
+│       ├── hero/                # Atmospheric hero banners & editorial drops
+│       ├── categories/          # Category tiles & curated foundations
+│       ├── products/            # High-resolution textile & collection photography
+│       ├── editorial/           # Lookbook canvas & craftsmanship archives
+│       ├── bespoke/             # Loom texture swatches & tailoring imagery
+│       ├── rooms/               # Spatial room visualizer background plates
+│       ├── hospitality/         # Trade & contract procurement photography
+│       ├── social/              # Curated community UGC & editorial feeds
+│       ├── avatars/             # Verified client testimonial portraits
+│       └── reference-designs/   # Web-optimized reference design screenshots
 ├── src/
-│   ├── components/
-│   │   ├── AuthModal.tsx            # Client authentication & registration modal
-│   │   ├── BespokePage.tsx          # Custom measurement & quote calculation engine
-│   │   ├── CheckoutModal.tsx        # Multi-step 0px PCI-compliant checkout workflow
-│   │   ├── Header.tsx               # Responsive navigation with sticky elevation
-│   │   ├── HeroSlider.tsx           # Accessible 6s hero carousel with motion transitions
-│   │   ├── InstagramFeed.tsx        # Community UGC gallery with sharp aspect grid
-│   │   ├── LookbookHotspots.tsx     # Runway curation with interactive product pins
-│   │   ├── MyAccountPage.tsx        # Client account dashboard & order histories
-│   │   ├── ProductCard.tsx          # Card with quick-add & 3D AR trigger buttons
-│   │   ├── ProductCatalog.tsx       # Filterable catalog with search & pagination
-│   │   ├── ProductDetailModal.tsx   # Detailed product view with 3D room launcher
-│   │   ├── SizeGuideModal.tsx       # Imperial/metric bedding dimension reference
-│   │   ├── Toast.tsx                # Sharp luxury notification feedback system
-│   │   ├── TradeHospitalityPage.tsx # B2B & hotel procurement portal
-│   │   └── ViewInRoomModal.tsx      # 3D AR spatial room visualizer engine
+│   ├── components/              # Atomic & composite luxury UI components
+│   ├── constants/
+│   │   └── assets.ts            # Strongly-typed centralized asset manifest
 │   ├── context/
-│   │   └── ShopContext.tsx          # Global unified e-commerce state machine
+│   │   └── ShopContext.tsx      # Global unified e-commerce state machine
 │   ├── data/
-│   │   └── products.ts              # Master product catalog & room presets
+│   │   └── products.ts          # Master product catalog, lookbooks & presets
 │   ├── types/
-│   │   └── index.ts                 # Type definitions for products, cart, & orders
-│   ├── App.tsx                      # Root application router & view manager
-│   ├── index.css                    # Tailwind v4 theme definitions & custom utility classes
-│   └── main.tsx                     # React DOM root entrypoint
-├── index.html                       # HTML5 entry with luxury typography preconnects
-├── package.json                     # Project manifest, dependencies, and build scripts
-├── tsconfig.json                    # Strict TypeScript configuration
-└── vite.config.ts                   # Production Rollup chunk-splitting configuration
+│   │   └── index.ts             # Type definitions for products, cart, & orders
+│   ├── App.tsx                  # Root application router & view manager
+│   ├── index.css                # Luxury theme definitions & typography utilities
+│   └── main.tsx                 # React DOM root entrypoint
+├── package.json                 # Project manifest, dependencies, and build scripts
+├── tsconfig.json                # Strict TypeScript configuration
+└── next.config.mjs              # Next.js production build configuration
 ```
 
 ---

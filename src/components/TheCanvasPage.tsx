@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { ASSETS } from '@/src/constants/assets';
 
 interface Article {
   id: string;
@@ -27,8 +28,7 @@ export const TheCanvasPage: React.FC = () => {
       'Why the sanctuary of sleep demands the same intentionality as structural design. An exploration into natural fiber physics, breathability gradients, and how organic flax fundamentally alters nighttime body temperature regulation.',
     date: 'November 14, 2024',
     readTime: '8 min read',
-    image:
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1400&q=85',
+    image: ASSETS.editorial.canvas01,
     featured: true,
   };
 
@@ -41,8 +41,7 @@ export const TheCanvasPage: React.FC = () => {
         'From northern Normandy fields to our generational mill in Guimarães, trace the intricate harvesting, dew-retting, and shuttle-loom weaving that gives Boski linen its distinctive hand-feel.',
       date: 'October 28, 2024',
       readTime: '6 min read',
-      image:
-        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas02,
     },
     {
       id: 'art-2',
@@ -52,8 +51,7 @@ export const TheCanvasPage: React.FC = () => {
         'Every single spool of yarn entering our atelier is verified zero-toxic. Learn why pure European flax requires zero synthetic irrigation and leaves behind zero chemical footprint in your bedroom.',
       date: 'September 19, 2024',
       readTime: '5 min read',
-      image:
-        'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas03,
     },
     {
       id: 'art-3',
@@ -63,8 +61,7 @@ export const TheCanvasPage: React.FC = () => {
         'Architectural designer Amélie Renaud dissects how combining matte 280 GSM drapery with luminous 480TC Egyptian sateen creates acoustic calm and natural light diffusion without visual noise.',
       date: 'August 12, 2024',
       readTime: '7 min read',
-      image:
-        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas04,
     },
     {
       id: 'art-4',
@@ -74,8 +71,7 @@ export const TheCanvasPage: React.FC = () => {
         'Why true luxury curtains hang differently. The mathematical balance of hand-stitched lead weights and custom drop measurements that frame expansive residential windows perfectly.',
       date: 'July 30, 2024',
       readTime: '4 min read',
-      image:
-        'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas05,
     },
     {
       id: 'art-5',
@@ -85,8 +81,7 @@ export const TheCanvasPage: React.FC = () => {
         'The molecular structure of cellulose fibers in flax becomes smoother, more pliable, and increasingly supple over decades. The science behind generational heirlooms.',
       date: 'June 18, 2024',
       readTime: '5 min read',
-      image:
-        'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas06,
     },
     {
       id: 'art-6',
@@ -96,8 +91,7 @@ export const TheCanvasPage: React.FC = () => {
         'Tactile environments shape circadian rhythms. How cool-to-touch percale sheets and low-ambient lighting signal the nervous system to decelerate into deep delta rest.',
       date: 'May 04, 2024',
       readTime: '6 min read',
-      image:
-        'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1000&q=85',
+      image: ASSETS.editorial.canvas07,
     },
   ];
 

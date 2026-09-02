@@ -24,6 +24,7 @@ import {
   Eye
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface RoomPreset {
   id: string;
@@ -39,7 +40,7 @@ const ROOM_PRESETS: RoomPreset[] = [
     id: 'paris-salon',
     name: 'Haussmann Salon',
     category: 'Classic Parisian',
-    bgImage: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80',
+    bgImage: ASSETS.rooms.minimalPenthouse,
     lightingTone: 'daylight',
     description: 'Chevron oak parquet with French wainscoting and natural window light.',
   },
@@ -47,7 +48,7 @@ const ROOM_PRESETS: RoomPreset[] = [
     id: 'penthouse-lounge',
     name: 'Manhattan Penthouse',
     category: 'Modern Living',
-    bgImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
+    bgImage: ASSETS.rooms.modernLoft,
     lightingTone: 'golden',
     description: 'Double-height ceiling, marble accents, and golden hour ambient warmth.',
   },
@@ -55,7 +56,7 @@ const ROOM_PRESETS: RoomPreset[] = [
     id: 'minimalist-studio',
     name: 'Minimalist Suite',
     category: 'Architectural',
-    bgImage: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=80',
+    bgImage: ASSETS.rooms.classicalSalon,
     lightingTone: 'gallery',
     description: 'Polished concrete, lime-wash textures, and directional gallery spotlights.',
   },
@@ -63,7 +64,7 @@ const ROOM_PRESETS: RoomPreset[] = [
     id: 'atelier-dressing',
     name: 'Atelier Dressing Room',
     category: 'Private Chamber',
-    bgImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80',
+    bgImage: ASSETS.rooms.atelierSuite,
     lightingTone: 'evening',
     description: 'Bronze mirrors, custom walnut cabinetry, and soft velvet twilight tones.',
   },
@@ -219,6 +220,9 @@ export const ViewInRoomModal: React.FC = () => {
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.25 }}
           id="ar-view-modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="ar-modal-title"
           className="relative w-full max-w-6xl h-[92vh] max-h-[850px] bg-[#121313] rounded-none border border-[#383838] shadow-2xl overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
@@ -242,6 +246,7 @@ export const ViewInRoomModal: React.FC = () => {
                   <span className="text-[10px] text-white/50 font-mono">1:1 SCALE TRUE MATRIX</span>
                 </div>
                 <h3
+                  id="ar-modal-title"
                   className="text-[17px] text-white font-normal"
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >

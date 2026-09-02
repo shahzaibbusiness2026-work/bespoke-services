@@ -45,6 +45,9 @@ export const SizeGuideModal: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 15 }}
           id="size-guide-modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="size-guide-modal-title"
           className={`w-full max-w-2xl rounded-none shadow-2xl border overflow-hidden flex flex-col max-h-[90vh] ${
             isDarkMode
               ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
@@ -62,6 +65,7 @@ export const SizeGuideModal: React.FC = () => {
               </div>
               <div>
                 <h3
+                  id="size-guide-modal-title"
                   className={`text-headline-sm font-normal ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                   style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
                 >

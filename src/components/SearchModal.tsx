@@ -61,6 +61,9 @@ export const SearchModal: React.FC = () => {
     >
       <div
         id="search-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search Catalog Archive"
         className={`w-full max-w-3xl shadow-2xl border overflow-hidden flex flex-col max-h-[82vh] will-change-transform ${
           isDarkMode
             ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'

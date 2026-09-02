@@ -82,28 +82,30 @@ export const CheckoutModal: React.FC = () => {
     if (currentUser) {
       const defAddr = currentUser.addresses.find((a) => a.isDefault) || currentUser.addresses[0];
       setFormData({
-        firstName: currentUser.firstName || defAddr?.firstName || 'Eleanor',
-        lastName: currentUser.lastName || defAddr?.lastName || 'Vance',
-        email: currentUser.email || 'eleanor.vance@boski-limited.com',
-        phone: currentUser.phone || defAddr?.phone || '+1 (617) 555-0192',
-        address: defAddr ? `${defAddr.addressLine1}${defAddr.addressLine2 ? ', ' + defAddr.addressLine2 : ''}` : '142 Hill House Lane, Apt 3B',
-        city: defAddr?.city || 'Boston',
-        state: defAddr?.state || 'MA',
-        zipCode: defAddr?.zipCode || '02116',
-        country: defAddr?.country || 'United States',
+        firstName: currentUser.firstName || defAddr?.firstName || '',
+        lastName: currentUser.lastName || defAddr?.lastName || '',
+        email: currentUser.email || '',
+        phone: currentUser.phone || defAddr?.phone || '',
+        address: defAddr ? `${defAddr.addressLine1}${defAddr.addressLine2 ? ', ' + defAddr.addressLine2 : ''}` : '',
+        city: defAddr?.city || '',
+        state: defAddr?.state || '',
+        zipCode: defAddr?.zipCode || '',
+        country: defAddr?.country || '',
       });
-      setCardHolder(`${(currentUser.firstName || 'ELEANOR').toUpperCase()} ${(currentUser.lastName || 'VANCE').toUpperCase()}`);
+      if (currentUser.firstName || currentUser.lastName) {
+        setCardHolder(`${(currentUser.firstName || '').toUpperCase()} ${(currentUser.lastName || '').toUpperCase()}`.trim());
+      }
     }
   }, [currentUser]);
 
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(SHIPPING_METHODS[0]);
 
-  // Payment Form State
+  // Payment Form State — starts completely empty
   const [paymentType, setPaymentType] = useState<'card' | 'applepay' | 'paypal'>('card');
-  const [cardNumber, setCardNumber] = useState('4532 8920 1192 4892');
-  const [cardHolder, setCardHolder] = useState('VICTORIA KENSINGTON');
-  const [cardExpiry, setCardExpiry] = useState('08/28');
-  const [cardCvc, setCardCvc] = useState('482');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardHolder, setCardHolder] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvc, setCardCvc] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
   if (!isCheckoutOpen) return null;
@@ -131,16 +133,28 @@ export const CheckoutModal: React.FC = () => {
   };
 
   const handleSubmitOrder = () => {
+    if (paymentType === 'card') {
+      if (!cardNumber.trim() || !cardHolder.trim() || !cardExpiry.trim() || !cardCvc.trim()) {
+        showToast('Payment details required', 'Please complete your card number, expiration, and security code', 'info');
+        return;
+      }
+    }
+
     setIsProcessing(true);
     setTimeout(() => {
       setIsProcessing(false);
-      const newOrder = placeOrder(
-        formData,
-        selectedShippingMethod,
-        paymentType === 'card' ? 'Visa ending in 4892' : paymentType === 'applepay' ? 'Apple Pay' : 'PayPal'
-      );
+      const cleanDigits = cardNumber.replace(/\s+/g, '');
+      const last4 = cleanDigits.length >= 4 ? cleanDigits.slice(-4) : '••••';
+      const paymentMethodLabel =
+        paymentType === 'card'
+          ? `Card ending in ${last4}`
+          : paymentType === 'applepay'
+          ? 'Apple Pay'
+          : 'PayPal';
+
+      placeOrder(formData, selectedShippingMethod, paymentMethodLabel);
       setCurrentStep(4);
-    }, 1500);
+    }, 1200);
   };
 
   const handleClose = () => {
@@ -168,6 +182,9 @@ export const CheckoutModal: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 15 }}
           id="checkout-modal-content"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="checkout-modal-title"
           className={`w-full max-w-4xl rounded-none shadow-2xl border overflow-hidden flex flex-col my-auto max-h-[92vh] ${
             isDarkMode ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]' : 'bg-[#faf9f7] border-[#c4c7c7] text-[#000000]'
           }`}
@@ -178,6 +195,7 @@ export const CheckoutModal: React.FC = () => {
           }`}>
             <div className="flex items-center gap-3">
               <span
+                id="checkout-modal-title"
                 className={`text-[20px] sm:text-[22px] tracking-[0.14em] font-normal uppercase ${
                   isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'
                 }`}

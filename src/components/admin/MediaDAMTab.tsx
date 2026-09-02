@@ -20,6 +20,7 @@ import {
   HardDrive,
 } from 'lucide-react';
 import { MediaFile } from '../../services/api';
+import { ASSETS } from '@/src/constants/assets';
 
 interface MediaDAMTabProps {
   mediaList: MediaFile[];
@@ -48,37 +49,37 @@ export const MediaDAMTab: React.FC<MediaDAMTabProps> = ({
   const defaultAssets: MediaFile[] = [
     {
       filename: 'Normandy_Flax_Sunset_Campaign_4K.webp',
-      url: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.editorial.canvas01,
       size: 1840000,
       createdAt: '2026-08-28T14:30:00Z',
     },
     {
       filename: 'Signature_Sateen_MasterSuite_Detail.webp',
-      url: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.products.sateenIvory,
       size: 2150000,
       createdAt: '2026-08-25T11:20:00Z',
     },
     {
       filename: 'Belgian_Weighted_Drapery_Parquet.webp',
-      url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.hero.atelierEditorialDrape,
       size: 2420000,
       createdAt: '2026-08-20T09:15:00Z',
     },
     {
       filename: 'Aegean_LongStaple_Towels_Spa_Ritual.webp',
-      url: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.categories.fabrics,
       size: 1980000,
       createdAt: '2026-08-18T16:40:00Z',
     },
     {
       filename: 'Waffle_Weave_Alpaca_Bedspread_Raw.webp',
-      url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.editorial.lookbookMasterSuite,
       size: 1670000,
       createdAt: '2026-08-15T13:10:00Z',
     },
     {
       filename: 'Mulberry_Silk_Pillowcases_Champagne.webp',
-      url: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1600&q=85',
+      url: ASSETS.products.sateenCloud,
       size: 1450000,
       createdAt: '2026-08-10T10:00:00Z',
     },

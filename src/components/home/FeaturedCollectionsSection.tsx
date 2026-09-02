@@ -5,6 +5,7 @@ import { useShop } from '../../context/ShopContext';
 import { ArrowRight, Layers, Calendar, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Collection } from '../../types';
+import { ASSETS } from '@/src/constants/assets';
 
 export const FeaturedCollectionsSection: React.FC = () => {
   const { collections, setActivePage, isDarkMode } = useShop();
@@ -23,7 +24,7 @@ export const FeaturedCollectionsSection: React.FC = () => {
       year: 2026,
       productCount: 24,
       description: 'Generational heavyweight French flax, double-brushed flannel, and thermal sateen weaves engineered for restorative winter sanctuaries.',
-      coverImage: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=85',
+      coverImage: ASSETS.editorial.lookbookMasterSuite,
       launchDate: 'Autumn / Winter 2026',
     },
     {
@@ -33,7 +34,7 @@ export const FeaturedCollectionsSection: React.FC = () => {
       year: 2026,
       productCount: 16,
       description: 'Custom drop architectural window treatments in heavy 280 GSM Belgian flax, framing panoramic vistas with quiet acoustic gravity.',
-      coverImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=85',
+      coverImage: ASSETS.hero.atelierEditorialDrape,
       launchDate: 'Bespoke Made-to-Measure',
     },
     {
@@ -43,7 +44,7 @@ export const FeaturedCollectionsSection: React.FC = () => {
       year: 2026,
       productCount: 18,
       description: 'Crisp, airy 165 GSM stonewashed linen sheets and gossamer throws that exhale heat during warmer solstices.',
-      coverImage: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=85',
+      coverImage: ASSETS.editorial.lookbookCoastalSanctuary,
       launchDate: 'Spring / Summer 2026',
     },
   ];

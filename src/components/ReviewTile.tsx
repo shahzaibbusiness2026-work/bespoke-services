@@ -14,7 +14,7 @@ export const ReviewTile: React.FC<ReviewTileProps> = ({ review }) => {
   return (
     <article
       id={`review-card-${review.id}`}
-      className={`p-6 sm:p-8 border flex flex-col justify-between space-y-5 transition-all duration-300 hover:shadow-md ${
+      className={`p-6 sm:p-8 border flex flex-col justify-between space-y-5 transition-all duration-300 hover:shadow-lg card-hover-lift hover:border-[#C9A227] ${
         isDarkMode
           ? 'bg-[#1A1D1C] border-[#2A2E2C]'
           : 'bg-white border-[#c4c7c7]'

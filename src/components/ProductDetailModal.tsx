@@ -59,6 +59,9 @@ export const ProductDetailModal: React.FC = () => {
     >
       <div
         id="product-detail-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="product-detail-modal-title"
         className={`w-full max-w-5xl shadow-2xl border overflow-hidden flex flex-col my-auto max-h-[96vh] md:max-h-[90vh] animate-fadeIn ${
           isDarkMode
             ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
@@ -138,6 +141,7 @@ export const ProductDetailModal: React.FC = () => {
             {/* Right: Product Info (5 cols) */}
             <div className="lg:col-span-5 flex flex-col">
               <h1
+                id="product-detail-modal-title"
                 className={`text-headline-md mb-2 leading-tight ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
                 style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
               >

@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { ASSETS } from '@/src/constants/assets';
 
 export const AuthModal: React.FC = () => {
   const { isAuthOpen, setIsAuthOpen, authMode, setAuthMode, login, signup, showToast, isDarkMode } = useShop();
@@ -10,25 +12,54 @@ export const AuthModal: React.FC = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isAuthOpen) return null;
 
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
       showToast('Email Required', 'Please enter your email address', 'info');
       return;
     }
-    login(email, password);
-  };
-
-  const handleSignupSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || !firstName.trim()) {
-      showToast('Missing details', 'Please provide your name and email', 'info');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      showToast('Invalid Email', 'Please enter a valid email address format', 'info');
       return;
     }
-    signup(firstName, lastName, email, password);
+    setIsSubmitting(true);
+    try {
+      await login(cleanEmail, password);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSignupSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanEmail = email.trim();
+    const cleanFirst = firstName.trim();
+    if (!cleanEmail || !cleanFirst) {
+      showToast('Missing details', 'Please provide your first name and email address', 'info');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
+      showToast('Invalid Email', 'Please enter a valid email address format', 'info');
+      return;
+    }
+    if (password.length < 6) {
+      showToast('Password Length', 'Passphrase must be at least 6 characters long', 'info');
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await signup(cleanFirst, lastName.trim(), cleanEmail, password);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const inputClass = isDarkMode
@@ -47,6 +78,9 @@ export const AuthModal: React.FC = () => {
     >
       <div
         id="auth-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Client Sign In & Registry"
         className={`w-full max-w-4xl shadow-2xl border overflow-hidden grid grid-cols-1 md:grid-cols-2 relative my-auto will-change-transform ${
           isDarkMode
             ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
@@ -57,7 +91,7 @@ export const AuthModal: React.FC = () => {
         {/* Left Column: Bedroom Image */}
         <div className="relative hidden md:block w-full h-full min-h-[580px] bg-[#efeeec]">
           <img
-            src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+            src={ASSETS.editorial.lookbookCoastalSanctuary}
             alt="BOSKI LIMITED premium bedding editorial"
             className="w-full h-full object-cover object-center"
           />
@@ -137,7 +171,8 @@ export const AuthModal: React.FC = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="email@example.com"
+                    placeholder="Enter your email address"
+                    autoComplete="email"
                     required
                     className={inputClass}
                   />
@@ -150,24 +185,45 @@ export const AuthModal: React.FC = () => {
                       Forgot?
                     </a>
                   </div>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className={inputClass}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      autoComplete="current-password"
+                      className={`${inputClass} pr-9`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className={`absolute right-0 bottom-2.5 p-1 transition-colors cursor-pointer ${
+                        isDarkMode ? 'text-[#A8A49C] hover:text-white' : 'text-[#444748] hover:text-black'
+                      }`}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-8 cursor-pointer font-medium ${
+                  disabled={isSubmitting}
+                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-8 cursor-pointer font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                     isDarkMode
                       ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
                       : 'bg-[#000000] text-white hover:bg-[#2f3130]'
                   }`}
                 >
-                  Sign In
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                      <span>SIGNING IN…</span>
+                    </>
+                  ) : (
+                    <span>Sign In</span>
+                  )}
                 </button>
               </form>
             ) : (
@@ -179,7 +235,8 @@ export const AuthModal: React.FC = () => {
                       type="text"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Jane"
+                      placeholder="First name"
+                      autoComplete="given-name"
                       required
                       className={inputClass}
                     />
@@ -190,7 +247,8 @@ export const AuthModal: React.FC = () => {
                       type="text"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Doe"
+                      placeholder="Last name"
+                      autoComplete="family-name"
                       className={inputClass}
                     />
                   </div>
@@ -202,7 +260,8 @@ export const AuthModal: React.FC = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="jane@example.com"
+                    placeholder="Enter your email address"
+                    autoComplete="email"
                     required
                     className={inputClass}
                   />
@@ -210,25 +269,46 @@ export const AuthModal: React.FC = () => {
 
                 <div className="space-y-1 group">
                   <label className={labelClass}>Password</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    required
-                    className={inputClass}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Create a password (min. 6 characters)"
+                      autoComplete="new-password"
+                      required
+                      className={`${inputClass} pr-9`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className={`absolute right-0 bottom-2.5 p-1 transition-colors cursor-pointer ${
+                        isDarkMode ? 'text-[#A8A49C] hover:text-white' : 'text-[#444748] hover:text-black'
+                      }`}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
                 </div>
 
                 <button
                   type="submit"
-                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-6 cursor-pointer font-medium ${
+                  disabled={isSubmitting}
+                  className={`w-full py-4 text-label-caps uppercase tracking-widest transition-colors mt-6 cursor-pointer font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${
                     isDarkMode
                       ? 'bg-[#C5A059] text-black hover:bg-[#D8B468]'
                       : 'bg-[#000000] text-white hover:bg-[#2f3130]'
                   }`}
                 >
-                  Create Account
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                      <span>CREATING ACCOUNT…</span>
+                    </>
+                  ) : (
+                    <span>Create Account</span>
+                  )}
                 </button>
               </form>
             )}

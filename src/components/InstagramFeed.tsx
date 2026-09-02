@@ -4,47 +4,49 @@ import React from 'react';
 import { Instagram, ArrowUpRight } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { FALLBACK_IMAGE, PRODUCTS } from '../data/products';
+import { ASSETS } from '@/src/constants/assets';
+import { motion } from 'motion/react';
 
 const UGC_POSTS = [
   {
     id: 'ugc-1',
     user: '@eleanor_interiors',
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.loomDetail,
     productId: 'prod-1',
     caption: 'Morning sunlight on the Signature Sateen Core Sheet Set in Warm Ivory.',
   },
   {
     id: 'ugc-2',
     user: '@cotswolds_sanctuary',
-    image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.linenSheets,
     productId: 'prod-2',
     caption: 'Stonewashed French Normandy flax duvet cover. Lived-in luxury.',
   },
   {
     id: 'ugc-3',
     user: '@nordic_linen',
-    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.fabricSwatch,
     productId: 'prod-4',
     caption: 'Honeycomb waffle weave bedspread layered for cozy autumn mornings.',
   },
   {
     id: 'ugc-4',
     user: '@belgian_drapery',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.morningLight,
     productId: 'prod-5',
     caption: 'Weighted Belgian linen curtains filtering natural afternoon light.',
   },
   {
     id: 'ugc-5',
     user: '@camille_bedding',
-    image: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.minimalBedroom,
     productId: 'prod-7',
     caption: 'Mulberry silk pillowcases in Champagne Ivory for restorative sleep.',
   },
   {
     id: 'ugc-6',
     user: '@savoy_residence',
-    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=600&q=80',
+    image: ASSETS.social.curatedInterior,
     productId: 'prod-towel-1',
     caption: '700 GSM Aegean long-staple bath sheets. Quiet hotel spa rituals.',
   },
@@ -90,11 +92,15 @@ export const InstagramFeed: React.FC = () => {
 
         {/* Grid of UGC Posts with 0px Sharp Corners and Smooth Scale */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {UGC_POSTS.map((post) => (
-            <div
+          {UGC_POSTS.map((post, idx) => (
+            <motion.div
               key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
               onClick={() => handlePostClick(post.productId)}
-              className={`group relative rounded-none overflow-hidden aspect-square cursor-pointer border card-hover-lift ${
+              className={`group relative rounded-none overflow-hidden aspect-square cursor-pointer border card-hover-lift hover:border-[#C9A227] transition-colors ${
                 isDarkMode ? 'bg-[#181B1A] border-[#2A2E2C]' : 'bg-[#efeeec] border-[#c4c7c7]/60'
               }`}
             >
@@ -116,7 +122,7 @@ export const InstagramFeed: React.FC = () => {
                   {post.caption}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

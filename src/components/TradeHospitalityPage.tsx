@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { ASSETS } from '@/src/constants/assets';
 
 export const TradeHospitalityPage: React.FC = () => {
   const { submitTradeApplication, showToast, isDarkMode } = useShop();
@@ -82,7 +83,7 @@ export const TradeHospitalityPage: React.FC = () => {
         </div>
         <div className="w-full md:w-7/12 h-[400px] md:h-[600px] relative">
           <img
-            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=85"
+            src={ASSETS.hospitality.suiteInterior}
             alt="Luxury boutique hotel room with Boski Limited premium textiles"
             className="w-full h-full object-cover absolute inset-0"
           />
@@ -226,22 +227,22 @@ export const TradeHospitalityPage: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col relative pt-4">
                   <label className={labelClass} htmlFor="companyName">Company Name *</label>
-                  <input id="companyName" name="companyName" type="text" required value={formData.companyName} onChange={handleChange} className={inputClass} placeholder="Company" />
+                  <input id="companyName" name="companyName" type="text" required value={formData.companyName} onChange={handleChange} className={inputClass} placeholder="Enter company or studio name" />
                 </div>
                 <div className="flex flex-col relative pt-4">
                   <label className={labelClass} htmlFor="contactPerson">Contact Person *</label>
-                  <input id="contactPerson" name="contactPerson" type="text" required value={formData.contactPerson} onChange={handleChange} className={inputClass} placeholder="Name" />
+                  <input id="contactPerson" name="contactPerson" type="text" required value={formData.contactPerson} onChange={handleChange} className={inputClass} placeholder="Enter full contact name" />
                 </div>
               </div>
               {/* Row 2 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col relative pt-4">
                   <label className={labelClass} htmlFor="email">Business Email *</label>
-                  <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="email@company.com" />
+                  <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="Enter business email address" />
                 </div>
                 <div className="flex flex-col relative pt-4">
                   <label className={labelClass} htmlFor="phone">Phone Number</label>
-                  <input id="phone" name="phone" type="text" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="+1 (555) 000-0000" />
+                  <input id="phone" name="phone" type="text" value={formData.phone} onChange={handleChange} className={inputClass} placeholder="Enter business phone number" />
                 </div>
               </div>
               {/* Row 3 */}

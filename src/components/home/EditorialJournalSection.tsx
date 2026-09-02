@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useShop } from '../../context/ShopContext';
 import { ArrowRight, BookOpen, Clock, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface JournalArticle {
   id: string;
@@ -30,7 +31,7 @@ const ARTICLES: JournalArticle[] = [
       'Unlike warm inland valleys where flax desiccates quickly, Normandy flax stalks grow with tight, uniform cellular walls. When harvested, the plants are pulled rather than cut, preserving the entire root-to-tip filament.',
       'The stalks undergo "dew-retting" directly on the earth for forty days. Natural soil microorganisms digest the cementing pectins that bind the fibers, requiring zero caustic acids or petroleum catalysts. The resulting yarn is naturally hollow, regulating body heat during summer solstices and insulating during winter midnights.',
     ],
-    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.editorial.canvas01,
   },
   {
     id: 'article-2',
@@ -45,7 +46,7 @@ const ARTICLES: JournalArticle[] = [
       'By weaving 280 GSM pure Belgian flax and lining each panel with unbleached organic cotton flannel, drapery transitions from mere decoration to architectural sound dampening.',
       'Our master tailors sew lead-weighted discs into each lower hem. This continuous vertical tension prevents flaring, ensuring the linen falls in perfect, sculptural folds that swallow ambient reverberation and gently soften bright southern sunlight.',
     ],
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.hero.atelierEditorialDrape,
   },
   {
     id: 'article-3',
@@ -60,7 +61,7 @@ const ARTICLES: JournalArticle[] = [
       'Synthetic poly-blends trap heat and moisture against the dermis, triggering micro-arousals throughout the night. In contrast, layering 480TC Egyptian sateen directly against the skin provides initial silky cooling, while an unwashed French linen duvet cover continuously transpires vapor.',
       'To finish the sanctuary, a hand-fringed baby alpaca throw provides calibrated warmth at the foot of the bed without crushing the feet under heavy weight.',
     ],
-    image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85',
+    image: ASSETS.editorial.canvas03,
   },
 ];
 

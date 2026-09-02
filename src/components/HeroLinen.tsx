@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, ArrowDown } from 'lucide-react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface HeroLinenProps {
   onSelectCategory?: (category: string) => void;
@@ -33,7 +34,7 @@ export const HeroLinen: React.FC<HeroLinenProps> = ({ onSelectCategory }) => {
       {/* High-Resolution Bedroom Background Image matching screen1.png */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=2400&q=90"
+          src={ASSETS.hero.atelierEditorialDrape}
           alt="Elevate Your Everyday - BOSKI LIMITED"
           className="w-full h-full object-cover object-center scale-105 animate-in fade-in duration-1000"
         />

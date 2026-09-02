@@ -19,6 +19,7 @@ export const CartDrawer: React.FC = () => {
     appliedPromo,
     appliedGiftWrap,
     setAppliedGiftWrap,
+    showToast,
     isDarkMode,
   } = useShop();
 
@@ -55,6 +56,9 @@ export const CartDrawer: React.FC = () => {
       {/* Drawer Panel */}
       <div
         id="cart-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cart-drawer-heading"
         className={`fixed inset-y-0 right-0 z-10 flex flex-col p-6 sm:p-8 h-full w-full max-w-[480px] shadow-2xl transition-transform duration-300 ease-out will-change-transform border-l ${
           isDarkMode
             ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
@@ -67,6 +71,7 @@ export const CartDrawer: React.FC = () => {
         <div className="flex justify-between items-start mb-6 shrink-0">
           <div>
             <h2
+              id="cart-drawer-heading"
               className={`text-headline-sm ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
@@ -227,32 +232,55 @@ export const CartDrawer: React.FC = () => {
                 isDarkMode ? 'bg-[#1A1D1C] border-[#383D3A]' : 'bg-[#f4f3f1] border-[#e3e2e0]'
               }`}>
                 <span className={`text-body-sm font-medium ${isDarkMode ? 'text-[#C5A059]' : 'text-[#675d50]'}`}>
-                  {appliedPromo.code} — {appliedPromo.discountPercent}% off
+                  {appliedPromo.code} — {appliedPromo.discountPercent}% off applied
                 </span>
                 <button onClick={removePromoCode} className="text-label-caps text-[#ba1a1a] hover:opacity-70 cursor-pointer">
                   Remove
                 </button>
               </div>
             ) : (
-              <div className={`flex border-b pb-1 gap-2 ${isDarkMode ? 'border-[#383D3A]' : 'border-[#c4c7c7]'}`}>
-                <input
-                  type="text"
-                  placeholder="Promo Code (try LUXE20)"
-                  value={promoInput}
-                  onChange={(e) => setPromoInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handlePromoApply()}
-                  className={`flex-grow bg-transparent text-body-sm py-1 focus:outline-none ${
-                    isDarkMode ? 'text-[#FAF8F5] placeholder-[#6E6B65]' : 'text-[#000000] placeholder-[#444748]/50'
-                  }`}
-                />
-                <button
-                  onClick={handlePromoApply}
-                  className={`text-label-caps hover:opacity-70 font-semibold cursor-pointer ${
-                    isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
-                  }`}
-                >
-                  Apply
-                </button>
+              <div className="space-y-2">
+                <div className={`flex border-b pb-1 gap-2 ${isDarkMode ? 'border-[#383D3A]' : 'border-[#c4c7c7]'}`}>
+                  <input
+                    type="text"
+                    placeholder="Enter promotion or vault code"
+                    value={promoInput}
+                    onChange={(e) => setPromoInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handlePromoApply()}
+                    className={`flex-grow bg-transparent text-body-sm py-1 focus:outline-none ${
+                      isDarkMode ? 'text-[#FAF8F5] placeholder-[#6E6B65]' : 'text-[#000000] placeholder-[#444748]/50'
+                    }`}
+                  />
+                  <button
+                    onClick={handlePromoApply}
+                    className={`text-label-caps hover:opacity-70 font-semibold cursor-pointer ${
+                      isDarkMode ? 'text-[#C5A059]' : 'text-[#000000]'
+                    }`}
+                  >
+                    Apply
+                  </button>
+                </div>
+
+                {/* Relocated Private Vault Privilege Banner */}
+                <div className={`p-2.5 border flex items-center justify-between text-xs transition-colors ${
+                  isDarkMode ? 'bg-[#181B1A] border-[#2A2E2C] text-[#FAF8F5]' : 'bg-[#faf9f7] border-[#e3e2e0] text-[#1a1c1b]'
+                }`}>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A059] shrink-0" />
+                    <span className="truncate">Private Vault Privilege: <strong>LUXE20</strong> (20% off)</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPromoInput('LUXE20');
+                      applyPromoCode('LUXE20');
+                      showToast('Vault Privilege Applied', 'Code LUXE20 applied (20% off ready-to-wear)', 'success');
+                    }}
+                    className="ml-2 text-label-caps uppercase font-semibold text-[#C5A059] hover:underline cursor-pointer shrink-0"
+                  >
+                    Apply
+                  </button>
+                </div>
               </div>
             )}
             {promoError && <p className="text-label-caps text-[#ba1a1a]">{promoError}</p>}

@@ -47,15 +47,15 @@ export const MyAccountPage: React.FC = () => {
   const [isEditingAddress, setIsEditingAddress] = useState(false);
   const defaultAddress = currentUser?.addresses.find((a) => a.isDefault) || currentUser?.addresses[0];
   const [addressForm, setAddressForm] = useState({
-    firstName: defaultAddress?.firstName || 'Eleanor',
-    lastName: defaultAddress?.lastName || 'Vance',
-    addressLine1: defaultAddress?.addressLine1 || '142 Hill House Lane',
-    addressLine2: defaultAddress?.addressLine2 || 'Apt 3B',
-    city: defaultAddress?.city || 'Boston',
-    state: defaultAddress?.state || 'MA',
-    zipCode: defaultAddress?.zipCode || '02116',
-    country: defaultAddress?.country || 'United States',
-    phone: defaultAddress?.phone || '+1 (617) 555-0192',
+    firstName: defaultAddress?.firstName || currentUser?.firstName || '',
+    lastName: defaultAddress?.lastName || currentUser?.lastName || '',
+    addressLine1: defaultAddress?.addressLine1 || '',
+    addressLine2: defaultAddress?.addressLine2 || '',
+    city: defaultAddress?.city || '',
+    state: defaultAddress?.state || '',
+    zipCode: defaultAddress?.zipCode || '',
+    country: defaultAddress?.country || '',
+    phone: defaultAddress?.phone || currentUser?.phone || '',
   });
 
   const handleSaveAddress = (e: React.FormEvent) => {
@@ -131,7 +131,7 @@ export const MyAccountPage: React.FC = () => {
             {/* Greeting Header matching new sec.png */}
             <div className="space-y-3">
               <h1 className={`font-serif text-3xl sm:text-5xl font-normal tracking-tight ${isDarkMode ? 'text-[#FAF8F5]' : 'text-neutral-950'}`}>
-                Welcome Back, {currentUser?.firstName || 'Eleanor'}
+                Welcome Back, {currentUser?.firstName || 'Valued Patron'}
               </h1>
               <p className={`text-sm sm:text-base font-light leading-relaxed ${isDarkMode ? 'text-[#A8A49C]' : 'text-neutral-600'}`}>
                 Manage your orders, update your details, and curate your space with our premium linens.
@@ -207,17 +207,53 @@ export const MyAccountPage: React.FC = () => {
                   <div className={`pt-2 text-xs sm:text-sm font-light space-y-1 leading-relaxed ${
                     isDarkMode ? 'text-[#A8A49C]' : 'text-neutral-700'
                   }`}>
-                    <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-neutral-900'}`}>
-                      {defaultAddress?.firstName || 'Eleanor'} {defaultAddress?.lastName || 'Vance'}
-                    </p>
-                    <p>{defaultAddress?.addressLine1 || '142 Hill House Lane'}</p>
-                    {defaultAddress?.addressLine2 && <p>{defaultAddress.addressLine2}</p>}
-                    <p>
-                      {defaultAddress?.city || 'Boston'}, {defaultAddress?.state || 'MA'}{' '}
-                      {defaultAddress?.zipCode || '02116'}
-                    </p>
-                    <p>{defaultAddress?.country || 'United States'}</p>
+                    {defaultAddress ? (
+                      <>
+                        <p className={`font-medium ${isDarkMode ? 'text-[#FAF8F5]' : 'text-neutral-900'}`}>
+                          {defaultAddress.firstName} {defaultAddress.lastName}
+                        </p>
+                        <p>{defaultAddress.addressLine1}</p>
+                        {defaultAddress.addressLine2 && <p>{defaultAddress.addressLine2}</p>}
+                        <p>
+                          {defaultAddress.city}, {defaultAddress.state} {defaultAddress.zipCode}
+                        </p>
+                        <p>{defaultAddress.country}</p>
+                      </>
+                    ) : (
+                      <p className="italic opacity-60">No default shipping residence saved. Click &ldquo;Edit Default&rdquo; to add your address.</p>
+                    )}
                   </div>
+                </div>
+
+                {/* Relocated Private Vault Privilege Card */}
+                <div className={`md:col-span-2 border p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-colors ${
+                  isDarkMode ? 'bg-[#181B1A] border-[#2A2E2C]' : 'bg-[#fcfbf9] border-[#e8e4dc]'
+                }`}>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C9A227]" />
+                      <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-[#C9A227]">
+                        Private Vault Privilege
+                      </span>
+                    </div>
+                    <p className={`text-sm font-light ${isDarkMode ? 'text-[#FAF8F5]' : 'text-neutral-900'}`}>
+                      Exclusive Patron Access: Use code <strong className="font-semibold text-[#C9A227]">LUXE20</strong> for 20% off all ready-to-wear collections.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (navigator.clipboard) navigator.clipboard.writeText('LUXE20');
+                      showToast('Code Copied', 'LUXE20 copied to clipboard (20% off ready-to-wear)', 'success');
+                    }}
+                    className={`px-5 py-2 text-xs uppercase tracking-widest font-semibold border transition-colors shrink-0 cursor-pointer ${
+                      isDarkMode
+                        ? 'border-[#C9A227] text-[#C9A227] hover:bg-[#C9A227] hover:text-black'
+                        : 'border-black text-black hover:bg-black hover:text-white'
+                    }`}
+                  >
+                    Copy LUXE20
+                  </button>
                 </div>
               </div>
             )}

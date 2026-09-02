@@ -69,6 +69,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
       onClick={onClose}
     >
       <div
+        id="contact-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-modal-title"
         className={`w-full max-w-3xl shadow-2xl border overflow-hidden grid grid-cols-1 md:grid-cols-5 relative my-auto will-change-transform ${
           isDarkMode ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]' : 'bg-[#faf9f7] border-[#c4c7c7] text-[#000000]'
         }`}
@@ -81,6 +85,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
               Concierge Services
             </span>
             <h2
+              id="contact-modal-title"
               className="text-2xl text-white font-normal uppercase tracking-wider mb-6"
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >
@@ -167,7 +172,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. Lady Victoria Kensington"
+                  placeholder="Your full name"
                   className={`w-full px-3 py-2 text-body-sm outline-none transition-colors border ${
                     isDarkMode
                       ? 'bg-[#141615] border-[#383D3A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'
@@ -184,7 +189,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@domain.com"
+                    placeholder="Your email address"
                     className={`w-full px-3 py-2 text-body-sm outline-none transition-colors border ${
                       isDarkMode
                         ? 'bg-[#141615] border-[#383D3A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'
@@ -199,7 +204,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+44 7738 761016"
+                    placeholder="Your telephone number"
                     className={`w-full px-3 py-2 text-body-sm outline-none transition-colors border ${
                       isDarkMode
                         ? 'bg-[#141615] border-[#383D3A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'

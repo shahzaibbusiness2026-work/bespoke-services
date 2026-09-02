@@ -7,7 +7,6 @@ import { HeroSlider } from './components/HeroSlider';
 import { CategoryGrid } from './components/CategoryGrid';
 import { ProductCatalog } from './components/ProductCatalog';
 import { LookbookHotspots } from './components/LookbookHotspots';
-import { CountdownBanner } from './components/CountdownBanner';
 import { CustomerReviews } from './components/CustomerReviews';
 import { InstagramFeed } from './components/InstagramFeed';
 import { Footer } from './components/Footer';
@@ -94,10 +93,7 @@ export const MainLayout: React.FC = () => {
           {/* 8. Editorial Journal — Magazine-grade essays on restful living */}
           <EditorialJournalSection />
 
-          {/* 9. Limited Drop Countdown Banner */}
-          <CountdownBanner />
-
-          {/* 10. Customer Reviews */}
+          {/* 9. Customer Reviews */}
           <CustomerReviews />
 
           {/* 11. Instagram / UGC Visual Diary */}

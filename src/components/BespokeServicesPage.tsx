@@ -14,6 +14,7 @@ import {
   Upload,
   Check,
 } from 'lucide-react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface FabricOption {
   id: string;
@@ -33,7 +34,7 @@ const FABRICS: FabricOption[] = [
     origin: 'Flanders, Belgium',
     basePricePerUnit: 1.45,
     description: 'Heavyweight pure flax with architectural acoustic dampening and natural light diffusion.',
-    textureImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80',
+    textureImage: ASSETS.bespoke.belgianFlax,
   },
   {
     id: 'french-flax',
@@ -42,7 +43,7 @@ const FABRICS: FabricOption[] = [
     origin: 'Normandy, France',
     basePricePerUnit: 1.25,
     description: 'Stonewashed with organic mineral water for an effortless, supple lived-in drape.',
-    textureImage: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80',
+    textureImage: ASSETS.bespoke.rawMulberrySilk,
   },
   {
     id: 'egyptian-sateen',
@@ -51,7 +52,7 @@ const FABRICS: FabricOption[] = [
     origin: 'Nile Delta, Egypt',
     basePricePerUnit: 1.15,
     description: 'Single-ply long-staple cotton woven in a luminous four-over-one sateen with quiet luster.',
-    textureImage: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=600&q=80',
+    textureImage: ASSETS.bespoke.cashmereBlend,
   },
   {
     id: 'silk-cashmere',
@@ -60,7 +61,7 @@ const FABRICS: FabricOption[] = [
     origin: 'Scottish & Andean Mills',
     basePricePerUnit: 2.10,
     description: 'Ultra-luxurious textured slub with supreme thermal regulation and whisper-soft weight.',
-    textureImage: 'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?auto=format&fit=crop&w=600&q=80',
+    textureImage: ASSETS.bespoke.organicCotton,
   },
 ];
 
@@ -684,7 +685,7 @@ export const BespokeServicesPage: React.FC = () => {
                     required
                     value={formData.fullName}
                     onChange={handleChange}
-                    placeholder="Victoria Kensington"
+                    placeholder="Enter your full name"
                     className={`w-full px-3.5 py-3 border text-body-sm outline-none rounded-none ${
                       isDarkMode
                         ? 'border-[#383D3A] bg-[#181B1A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'
@@ -704,7 +705,7 @@ export const BespokeServicesPage: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="victoria@residence.com"
+                    placeholder="Enter your email address"
                     className={`w-full px-3.5 py-3 border text-body-sm outline-none rounded-none ${
                       isDarkMode
                         ? 'border-[#383D3A] bg-[#181B1A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'
@@ -725,7 +726,7 @@ export const BespokeServicesPage: React.FC = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="+1 (555) 234-8921"
+                  placeholder="Enter your telephone number"
                   className={`w-full px-3.5 py-3 border text-body-sm outline-none rounded-none ${
                     isDarkMode
                       ? 'border-[#383D3A] bg-[#181B1A] text-[#FAF8F5] placeholder-[#6E6B65] focus:border-[#C5A059]'
@@ -823,7 +824,7 @@ export const BespokeServicesPage: React.FC = () => {
           isDarkMode ? 'border-[#2A2E2C]' : 'border-[#c4c7c7]'
         }`}>
           <img
-            src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1920&q=80"
+            src={ASSETS.bespoke.atelierArtisan}
             alt="Atelier loom textile craft"
             className="w-full h-full object-cover"
           />

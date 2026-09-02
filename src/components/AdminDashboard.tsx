@@ -31,6 +31,8 @@ import {
   ChevronDown,
   Sliders,
   Folder,
+  Eye,
+  EyeOff,
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 import { api, ConsolidatedInquiry, MediaFile } from '../services/api';
@@ -73,6 +75,9 @@ export const AdminDashboard: React.FC = () => {
   const isAdmin = currentUser?.role === 'admin' || (currentUser?.role as string) === 'superadmin';
   const [adminEmail, setAdminEmail] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -158,42 +163,48 @@ export const AdminDashboard: React.FC = () => {
   // Login handler
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoggingIn(true);
     setLoginError('');
+    setEmailError('');
+    setPasswordError('');
+
+    const trimmedEmail = adminEmail.trim();
+    const trimmedPass = adminPassword.trim();
+
+    let hasValidationError = false;
+
+    if (!trimmedEmail) {
+      setEmailError('Director email is required.');
+      hasValidationError = true;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(trimmedEmail)) {
+        setEmailError('Enter a valid email address.');
+        hasValidationError = true;
+      }
+    }
+
+    if (!trimmedPass) {
+      setPasswordError('Security passphrase is required.');
+      hasValidationError = true;
+    }
+
+    if (hasValidationError) {
+      return;
+    }
+
+    setIsLoggingIn(true);
 
     try {
-      const trimmedEmail = adminEmail.trim().toLowerCase();
-      const trimmedPass = adminPassword.trim();
-
-      if (trimmedEmail === 'boskilimited@boskilimited.info' && trimmedPass === 'Barking12345@') {
-        const masterAdmin = {
-          id: 'admin-master',
-          email: 'boskilimited@boskilimited.info',
-          firstName: 'BOSKI',
-          lastName: 'Director',
-          name: 'BOSKI Director',
-          role: 'admin' as const,
-          vipTier: 'Diamond Concierge' as const,
-          pointsBalance: 50000,
-          joinedDate: '2026-01-01',
-          addresses: [],
-        };
-        setCurrentUser(masterAdmin);
-        localStorage.setItem('boski_user', JSON.stringify(masterAdmin));
-        showToast('Atelier Access Granted', 'Welcome to the Master Atelier Management Console', 'success');
-        refreshData();
-        return;
-      }
-
-      const isSuccess = await login(adminEmail, adminPassword);
+      const normalizedEmail = trimmedEmail.toLowerCase();
+      const isSuccess = await login(normalizedEmail, adminPassword);
       if (isSuccess) {
         showToast('Atelier Access Granted', 'Welcome to the Atelier Console', 'success');
         refreshData();
       } else {
-        setLoginError('Authentication failed. Please verify credentials.');
+        setLoginError('Authentication failed. Verify your director credentials and try again.');
       }
     } catch (err: any) {
-      setLoginError(err.message || 'Atelier Vault connection error.');
+      setLoginError(err.message || 'Authentication failed. Verify your director credentials and try again.');
     } finally {
       setIsLoggingIn(false);
     }
@@ -509,99 +520,200 @@ export const AdminDashboard: React.FC = () => {
   // --- ACCESS GATE (When Not Authenticated) ---
   if (!isAdmin) {
     return (
-      <div className={`min-h-screen ${consoleBg} flex items-center justify-center p-4 sm:p-6 transition-colors duration-300`}>
-        <div className="w-full max-w-md space-y-8 animate-fadeIn">
-          {/* Brand Atelier Logo */}
+      <div
+        className={`min-h-screen flex items-center justify-center p-4 sm:p-6 pb-12 transition-colors duration-300 ${
+          isDarkMode ? 'bg-[#151412] text-[#F3EFE7]' : 'bg-[#FAF9F6] text-[#292722]'
+        }`}
+        style={{ fontFamily: "'Inter', 'Manrope', system-ui, -apple-system, sans-serif" }}
+      >
+        <div className="w-full max-w-[430px] space-y-7 animate-fadeIn">
+          {/* Brand Header */}
           <div className="text-center space-y-2">
-            <span className="text-[10px] uppercase font-mono tracking-[0.3em] font-bold text-[#C9A227]">
-              Atelier Management Console
+            <span className="inline-block text-[10.5px] uppercase tracking-[3.5px] font-medium text-[#C9A227]">
+              ATELIER MANAGEMENT CONSOLE
             </span>
             <h1
-              className="text-xl sm:text-2xl font-medium tracking-[0.20em]"
-              style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
+              className="text-2xl sm:text-[28px] font-normal tracking-[0.22em] text-[#171511] dark:text-[#F3EFE7]"
+              style={{ fontFamily: "'Libre Caslon Text', 'Playfair Display', Georgia, serif" }}
             >
               BOSKI LIMITED
             </h1>
-            <p className="text-xs opacity-70 font-light tracking-wide">
+            <p className="text-xs text-[#65615A] dark:text-[#A7A197] font-normal tracking-wide max-w-sm mx-auto leading-relaxed">
               Restricted administrative portal for atelier direction &amp; curation.
             </p>
           </div>
 
-          {/* Login Card */}
-          <div className={`border p-8 shadow-2xl space-y-6 ${headerBg}`}>
-            <div className="flex items-center justify-between pb-4 border-b border-inherit">
-              <span className="text-xs uppercase tracking-wider font-semibold">Atelier Credentials</span>
+          {/* Authentication Card */}
+          <div
+            className={`border p-6 sm:p-[32px] transition-colors duration-200 ${
+              isDarkMode
+                ? 'bg-[#1D1B18] border-[#39352E] shadow-[0_20px_45px_rgba(0,0,0,0.45)]'
+                : 'bg-[#FCFBF8] border-[#DDD8CE] shadow-[0_20px_45px_rgba(30,25,15,0.08)]'
+            }`}
+          >
+            {/* Card Header: Title & Accessible Theme Toggle */}
+            <div
+              className={`flex items-center justify-between pb-3.5 border-b ${
+                isDarkMode ? 'border-[#2C2923]' : 'border-[#E2DED5]'
+              }`}
+            >
+              <span className="text-[11.5px] uppercase tracking-[1.2px] font-semibold text-[#292722] dark:text-[#F3EFE7]">
+                ATELIER CREDENTIALS
+              </span>
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="p-1.5 bg-transparent hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+                className={`p-1.5 rounded-none transition-colors duration-150 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A227] flex items-center justify-center ${
+                  isDarkMode
+                    ? 'text-[#C9A227] hover:bg-[#2A2620]'
+                    : 'text-[#65615A] hover:bg-[#EFECE6] hover:text-[#171511]'
+                }`}
                 aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
               >
-                {isDarkMode ? <Sun className="w-4 h-4 text-[#C9A227]" /> : <Moon className="w-4 h-4 text-[#171717]" />}
+                {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
               </button>
             </div>
 
+            {/* General Authentication Failure Banner */}
             {loginError && (
-              <div className="p-3 border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-mono">
+              <div
+                role="alert"
+                className="mt-4 p-3 border border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-normal leading-relaxed"
+              >
                 {loginError}
               </div>
             )}
 
-            <form onSubmit={handleAdminLogin} className="space-y-4">
+            {/* Form */}
+            <form onSubmit={handleAdminLogin} className="mt-5 space-y-4" noValidate>
+              {/* Director Email Field */}
               <div>
-                <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1 opacity-70">
-                  Director Email
+                <label
+                  htmlFor="director-email"
+                  className="block text-[10.5px] uppercase tracking-[1px] font-semibold mb-2 text-[#65615A] dark:text-[#A7A197]"
+                >
+                  DIRECTOR EMAIL
                 </label>
                 <input
+                  id="director-email"
                   type="email"
-                  required
                   value={adminEmail}
-                  onChange={(e) => setAdminEmail(e.target.value)}
-                  placeholder="boskilimited@boskilimited.info"
-                  className={`w-full px-4 py-3 border outline-none text-xs font-mono transition-colors rounded-none ${
+                  onChange={(e) => {
+                    setAdminEmail(e.target.value);
+                    if (emailError) setEmailError('');
+                    if (loginError) setLoginError('');
+                  }}
+                  placeholder="Enter director email"
+                  autoComplete="email"
+                  aria-invalid={!!emailError}
+                  aria-describedby={emailError ? 'director-email-error' : undefined}
+                  className={`w-full h-12 px-3.5 border outline-none text-[13.5px] transition-all duration-150 rounded-none placeholder:text-[#9A958C] dark:placeholder:text-[#746E65] ${
                     isDarkMode
-                      ? 'bg-[#181B1A] border-[#2E3330] text-white focus:border-[#C9A227]'
-                      : 'bg-[#FAF8F3] border-[#DCD6CA] text-black focus:border-black'
+                      ? 'bg-[#201E1A] text-[#F3EFE7]'
+                      : 'bg-[#FAF9F6] text-[#292722]'
+                  } ${
+                    emailError
+                      ? 'border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
+                      : isDarkMode
+                      ? 'border-[#39352E] focus:border-[#C9A227] focus:ring-2 focus:ring-[#C9A227]/20'
+                      : 'border-[#D9D4CA] focus:border-[#C9A227] focus:ring-2 focus:ring-[#C9A227]/15'
                   }`}
                 />
+                {emailError && (
+                  <p id="director-email-error" className="mt-1.5 text-[11.5px] text-red-500 dark:text-red-400 font-normal">
+                    {emailError}
+                  </p>
+                )}
               </div>
 
+              {/* Security Passphrase Field */}
               <div>
-                <label className="block text-[10px] uppercase tracking-widest font-semibold mb-1 opacity-70">
-                  Security Passphrase
+                <label
+                  htmlFor="security-passphrase"
+                  className="block text-[10.5px] uppercase tracking-[1px] font-semibold mb-2 text-[#65615A] dark:text-[#A7A197]"
+                >
+                  SECURITY PASSPHRASE
                 </label>
-                <input
-                  type="password"
-                  required
-                  value={adminPassword}
-                  onChange={(e) => setAdminPassword(e.target.value)}
-                  placeholder="••••••••••••"
-                  className={`w-full px-4 py-3 border outline-none text-xs font-mono transition-colors rounded-none ${
-                    isDarkMode
-                      ? 'bg-[#181B1A] border-[#2E3330] text-white focus:border-[#C9A227]'
-                      : 'bg-[#FAF8F3] border-[#DCD6CA] text-black focus:border-black'
-                  }`}
-                />
+                <div className="relative">
+                  <input
+                    id="security-passphrase"
+                    type={showPassword ? 'text' : 'password'}
+                    value={adminPassword}
+                    onChange={(e) => {
+                      setAdminPassword(e.target.value);
+                      if (passwordError) setPasswordError('');
+                      if (loginError) setLoginError('');
+                    }}
+                    placeholder="Enter security passphrase"
+                    autoComplete="current-password"
+                    aria-invalid={!!passwordError}
+                    aria-describedby={passwordError ? 'security-passphrase-error' : undefined}
+                    className={`w-full h-12 pl-3.5 pr-11 border outline-none text-[13.5px] transition-all duration-150 rounded-none placeholder:text-[#9A958C] dark:placeholder:text-[#746E65] ${
+                      isDarkMode
+                        ? 'bg-[#201E1A] text-[#F3EFE7]'
+                        : 'bg-[#FAF9F6] text-[#292722]'
+                    } ${
+                      passwordError
+                        ? 'border-red-500/60 focus:border-red-500 focus:ring-2 focus:ring-red-500/15'
+                        : isDarkMode
+                        ? 'border-[#39352E] focus:border-[#C9A227] focus:ring-2 focus:ring-[#C9A227]/20'
+                        : 'border-[#D9D4CA] focus:border-[#C9A227] focus:ring-2 focus:ring-[#C9A227]/15'
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-0 top-0 bottom-0 px-3.5 flex items-center justify-center text-[#65615A] hover:text-[#292722] dark:text-[#A7A197] dark:hover:text-[#F3EFE7] transition-colors focus:outline-none focus-visible:text-[#C9A227] cursor-pointer"
+                    aria-label={showPassword ? 'Hide security passphrase' : 'Show security passphrase'}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+                {passwordError && (
+                  <p id="security-passphrase-error" className="mt-1.5 text-[11.5px] text-red-500 dark:text-red-400 font-normal">
+                    {passwordError}
+                  </p>
+                )}
               </div>
 
+              {/* Authenticate Button */}
               <button
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full py-3.5 text-xs uppercase tracking-[0.16em] font-bold transition-all duration-200 cursor-pointer shadow-md disabled:opacity-50 mt-2"
-                style={{ backgroundColor: gold, color: '#0B0D0C' }}
+                className="w-full h-12 mt-2 text-[11px] sm:text-[11.5px] uppercase tracking-[1.5px] font-bold transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#C9A227]"
+                style={{ backgroundColor: '#C9A227', color: '#171511' }}
               >
-                {isLoggingIn ? 'Verifying Atelier Credentials...' : 'Authenticate Director Access'}
+                {isLoggingIn ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-[#171511] border-t-transparent animate-spin rounded-full" />
+                    <span>AUTHENTICATING…</span>
+                  </>
+                ) : (
+                  <span>AUTHENTICATE DIRECTOR ACCESS</span>
+                )}
               </button>
             </form>
 
-            <div className="pt-4 border-t border-inherit flex items-center justify-between text-[11px] opacity-70">
+            {/* Card Footer */}
+            <div
+              className={`mt-6 pt-4 border-t flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#65615A] dark:text-[#A7A197] ${
+                isDarkMode ? 'border-[#2C2923]' : 'border-[#E2DED5]'
+              }`}
+            >
               <button
+                type="button"
                 onClick={() => setActivePage('home')}
-                className="hover:underline flex items-center gap-1 cursor-pointer"
+                className="hover:text-[#171511] dark:hover:text-[#F3EFE7] hover:underline flex items-center gap-1 cursor-pointer transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#C9A227]"
               >
                 &larr; Return to Storefront
               </button>
-              <span className="font-mono text-[10px]">Unit 4, Balmoral Estate</span>
+              <span className="font-mono text-[10px] tracking-wider opacity-75">
+                Unit 4, Balmoral Estate
+              </span>
             </div>
           </div>
         </div>

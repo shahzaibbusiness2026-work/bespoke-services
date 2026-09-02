@@ -35,6 +35,9 @@ export const WishlistDrawer: React.FC = () => {
       {/* Drawer Panel */}
       <div
         id="wishlist-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="wishlist-drawer-heading"
         className={`fixed inset-y-0 right-0 z-10 w-full max-w-[480px] flex flex-col shadow-2xl transition-transform duration-300 ease-out will-change-transform border-l ${
           isDarkMode
             ? 'bg-[#141615] border-[#2A2E2C] text-[#FAF8F5]'
@@ -49,6 +52,7 @@ export const WishlistDrawer: React.FC = () => {
         }`}>
           <div>
             <h2
+              id="wishlist-drawer-heading"
               className={`text-headline-sm ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#000000]'}`}
               style={{ fontFamily: "'Libre Caslon Text', Georgia, serif" }}
             >

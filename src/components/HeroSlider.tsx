@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useShop, PageView } from '../context/ShopContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { ASSETS } from '@/src/constants/assets';
 
 interface Slide {
   id: string;
@@ -22,8 +23,7 @@ const SLIDES: Slide[] = [
     headline: 'Stonewashed French Linen',
     subtitle:
       'Cultivated in the misty coastal fields of Normandy. Woven on generational shuttle looms to breathe with quiet gravity and soften with every laundering cycle for decades of restorative sleep.',
-    image:
-      'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=2400&q=90',
+    image: ASSETS.hero.coutureLinen,
     primaryCta: { label: 'Discover Collection', page: 'bedding' },
     secondaryCta: { label: 'Explore Craftsmanship', page: 'canvas' },
   },
@@ -33,8 +33,7 @@ const SLIDES: Slide[] = [
     headline: 'Belgian Weighted Drapery',
     subtitle:
       'Heavyweight 280 GSM pure Flanders flax tailored with lead-weighted perimeter hems that sculpt daylight into quiet, acoustic calm.',
-    image:
-      'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=90',
+    image: ASSETS.hero.rawSilkLoom,
     primaryCta: { label: 'Discover Collection', page: 'curtains' },
     secondaryCta: { label: 'Explore Craftsmanship', page: 'bespoke' },
   },
@@ -44,8 +43,7 @@ const SLIDES: Slide[] = [
     headline: 'Signature Core Sheet Suite',
     subtitle:
       'Silky single-ply combed staple yarns pre-washed in organic mountain water. A luminous touch designed to elevate your everyday sanctuary.',
-    image:
-      'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=2400&q=90',
+    image: ASSETS.hero.handcraftedBedding,
     primaryCta: { label: 'Discover Collection', page: 'bedding' },
     secondaryCta: { label: 'Explore Craftsmanship', page: 'canvas' },
   },

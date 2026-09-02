@@ -483,6 +483,46 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [orderHistory]);
 
+  // Global Accessible Escape Key Listener across all modals and drawers (WCAG 2.2)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (selectedProductForQuickView) {
+          setSelectedProductForQuickView(null);
+        } else if (isCheckoutOpen) {
+          setIsCheckoutOpen(false);
+        } else if (isAuthOpen) {
+          setIsAuthOpen(false);
+        } else if (isContactOpen) {
+          setIsContactOpen(false);
+        } else if (isSizeGuideOpen) {
+          setIsSizeGuideOpen(false);
+        } else if (isAROpen) {
+          setIsAROpen(false);
+        } else if (isSearchOpen) {
+          setIsSearchOpen(false);
+        } else if (isCartOpen) {
+          setIsCartOpen(false);
+        } else if (isWishlistOpen) {
+          setIsWishlistOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    selectedProductForQuickView,
+    isCheckoutOpen,
+    isAuthOpen,
+    isContactOpen,
+    isSizeGuideOpen,
+    isAROpen,
+    isSearchOpen,
+    isCartOpen,
+    isWishlistOpen,
+  ]);
+
   const showToast = (title: string, subtitle?: string, type: 'cart' | 'wishlist' | 'info' | 'success' = 'info') => {
     const id = Date.now().toString();
     setToast({ id, title, subtitle, type });
@@ -633,26 +673,9 @@ export const ShopProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         showToast('Sign In Error', res.error || 'Invalid email or password credentials', 'info');
         return false;
       }
-    } catch {
-      // Local optimistic fallback
-      if (email.toLowerCase().includes('eleanor') || email.toLowerCase().includes('victoria')) {
-        setCurrentUser(DEFAULT_VIP_USER);
-      } else {
-        setCurrentUser({
-          id: `usr-${Date.now()}`,
-          firstName: email.toLowerCase().includes('concierge') ? 'Master' : (email.split('@')[0] || 'Client'),
-          lastName: email.toLowerCase().includes('concierge') ? 'Concierge' : 'Member',
-          email,
-          role: (email.toLowerCase().includes('concierge') || email.toLowerCase().includes('admin')) ? 'admin' : 'client',
-          vipTier: email.toLowerCase().includes('concierge') ? 'Diamond Concierge' : 'Member',
-          pointsBalance: 500,
-          joinedDate: 'Recently',
-          addresses: DEFAULT_VIP_USER.addresses,
-        });
-      }
-      setIsAuthOpen(false);
-      showToast('Welcome back', 'Signed into your BOSKI LIMITED account', 'success');
-      return true;
+    } catch (err: any) {
+      showToast('Authentication Error', err.message || 'Unable to connect to authentication service', 'info');
+      return false;
     }
   };
 

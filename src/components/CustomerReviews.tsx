@@ -5,6 +5,7 @@ import { REVIEWS, PRODUCTS } from '../data/products';
 import { Review } from '../types';
 import { useShop } from '../context/ShopContext';
 import { ReviewTile } from './ReviewTile';
+import { motion } from 'motion/react';
 
 export const CustomerReviews: React.FC = () => {
   const { showToast, isDarkMode } = useShop();
@@ -237,8 +238,16 @@ export const CustomerReviews: React.FC = () => {
 
       {/* Modular Reviews Grid using ReviewTile */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {filteredReviews.map((rev) => (
-          <ReviewTile key={rev.id} review={rev} />
+        {filteredReviews.map((rev, idx) => (
+          <motion.div
+            key={rev.id}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, delay: (idx % 2) * 0.1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <ReviewTile review={rev} />
+          </motion.div>
         ))}
       </div>
 

@@ -4,6 +4,7 @@ import React from 'react';
 import { useShop } from '../../context/ShopContext';
 import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Feather, Layers } from 'lucide-react';
 import { motion } from 'motion/react';
+import { ASSETS } from '@/src/constants/assets';
 
 export const CraftsmanshipSection: React.FC = () => {
   const { isDarkMode, setActivePage } = useShop();
@@ -47,7 +48,7 @@ export const CraftsmanshipSection: React.FC = () => {
           >
             <div className="aspect-[4/5] border overflow-hidden relative border-inherit group">
               <img
-                src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=1600&q=90"
+                src={ASSETS.hero.coutureLinen}
                 alt="Master Loom Textile Weave Macro"
                 className="w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 will-change-transform"
               />
