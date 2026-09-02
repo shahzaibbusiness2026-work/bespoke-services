@@ -372,13 +372,13 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
           </nav>
 
           {/* RIGHT: Luxury Utilities Cluster (Search, Wishlist, Theme Toggle, User Profile with Currency, Shopping Bag) */}
-          <div className={`flex items-center gap-1 sm:gap-1.5 lg:gap-2 ml-6 xl:ml-8 shrink-0 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'}`}>
+          <div className={`flex items-center gap-1 ml-6 xl:ml-8 shrink-0 ${isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'}`}>
             
             {/* 1. Quick Search (Desktop >=1024px) */}
             <button
               id="search-btn"
               onClick={() => setIsSearchOpen(true)}
-              className={`hidden lg:flex w-8 h-9 sm:w-9 sm:h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
+              className={`hidden lg:flex w-[30px] h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
                 isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
               }`}
               aria-label="Search collection"
@@ -392,7 +392,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             <button
               id="wishlist-btn"
               onClick={() => setIsWishlistOpen(true)}
-              className={`hidden lg:flex relative w-8 h-9 sm:w-9 sm:h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
+              className={`hidden lg:flex relative w-[30px] h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
                 isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
               }`}
               aria-label={wishlistCount > 0 ? `My Wishlist, ${wishlistCount} items saved` : "My Wishlist, empty"}
@@ -401,7 +401,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                 favorite
               </span>
               {wishlistCount > 0 && (
-                <span className={`absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none ${
+                <span className={`absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full text-[8.5px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none ${
                   isDarkMode ? 'bg-[#C5A059] text-black' : 'bg-[#000000] text-white'
                 }`}>
                   {wishlistCount}
@@ -413,14 +413,14 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             <button
               id="theme-toggle-btn"
               onClick={toggleTheme}
-              className="w-8 h-9 sm:w-9 sm:h-10 min-h-[40px] bg-transparent text-inherit hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
+              className="w-[30px] h-10 min-h-[40px] bg-transparent text-inherit hover:opacity-70 transition-opacity cursor-pointer focus:outline-none flex items-center justify-center"
               aria-label={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
               title={isDarkMode ? 'Switch to Bright Mode' : 'Switch to Dark Mode'}
             >
               {isDarkMode ? (
-                <Sun className="w-[18px] h-[18px] sm:w-[19px] sm:h-[19px] text-[#C9A227]" />
+                <Sun className="w-[18px] h-[18px] text-[#C9A227]" />
               ) : (
-                <Moon className="w-[18px] h-[18px] sm:w-[19px] sm:h-[19px] text-[#171717]" />
+                <Moon className="w-[18px] h-[18px] text-[#171717]" />
               )}
             </button>
 
@@ -440,7 +440,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
                     handleNavClick('account');
                   }
                 }}
-                className={`w-8 h-9 sm:w-9 sm:h-10 min-h-[40px] flex items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
+                className={`w-[30px] h-10 min-h-[40px] flex items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
                   isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
                 }`}
                 aria-label={
@@ -616,7 +616,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
             <button
               id="cart-btn"
               onClick={() => setIsCartOpen(true)}
-              className={`hidden lg:flex relative w-8 h-9 sm:w-9 sm:h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
+              className={`hidden lg:flex relative w-[30px] h-10 min-h-[40px] items-center justify-center hover:opacity-60 transition-opacity cursor-pointer focus:outline-none ${
                 isDarkMode ? 'text-[#FAF8F5]' : 'text-[#1a1c1b]'
               }`}
               aria-label={
@@ -631,7 +631,7 @@ export const Header: React.FC<HeaderProps> = ({ onSelectCategory }) => {
               </span>
               {cartCount > 0 && (
                 <span
-                  className={`absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-[9px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none ${
+                  className={`absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full text-[8.5px] font-semibold flex items-center justify-center animate-scaleIn pointer-events-none ${
                     isDarkMode ? 'bg-[#C5A059] text-black' : 'bg-[#000000] text-white'
                   }`}
                   suppressHydrationWarning
