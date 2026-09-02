@@ -5,7 +5,6 @@ import { ShopProvider, useShop } from './context/ShopContext';
 import { Header } from './components/Header';
 import { HeroSlider } from './components/HeroSlider';
 import { CategoryGrid } from './components/CategoryGrid';
-import { ProductCatalog } from './components/ProductCatalog';
 import { LookbookHotspots } from './components/LookbookHotspots';
 import { CustomerReviews } from './components/CustomerReviews';
 import { InstagramFeed } from './components/InstagramFeed';
@@ -79,13 +78,7 @@ export const MainLayout: React.FC = () => {
           {/* 4. Craftsmanship Storytelling — Loom techniques & fiber honesty */}
           <CraftsmanshipSection />
 
-          {/* 5. Product Catalog — filterable 4-column grid */}
-          <ProductCatalog
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-
-          {/* 6. Lookbook Hotspots — Interactive room view */}
+          {/* 5. Lookbook Hotspots — Interactive room view */}
           <LookbookHotspots />
 
           {/* 7. Editorial Journal — Magazine-grade essays on restful living */}

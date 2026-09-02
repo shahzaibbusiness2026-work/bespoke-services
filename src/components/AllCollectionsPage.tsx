@@ -5,6 +5,7 @@ import { useShop } from '../context/ShopContext';
 import { ArrowRight, Sparkles, Filter, Check, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ASSETS } from '@/src/constants/assets';
+import { ProductCatalog } from './ProductCatalog';
 
 interface CollectionItem {
   id: string;
@@ -117,6 +118,7 @@ const ALL_COLLECTIONS: CollectionItem[] = [
 export const AllCollectionsPage: React.FC = () => {
   const { setActivePage, isDarkMode, setIsContactOpen } = useShop();
   const [selectedSeason, setSelectedSeason] = useState<string>('All');
+  const [activeCatalogCategory, setActiveCatalogCategory] = useState<string>('all');
 
   const gold = '#C9A227';
   const pageBg = isDarkMode ? 'bg-[#0B0D0C] text-[#FAF8F5]' : 'bg-[#FAF8F5] text-[#171717]';
@@ -292,6 +294,14 @@ export const AllCollectionsPage: React.FC = () => {
             </AnimatePresence>
           </div>
         </div>
+      </section>
+
+      {/* Complete Pieces & Product Catalog Section */}
+      <section className="border-t border-inherit">
+        <ProductCatalog
+          activeCategory={activeCatalogCategory}
+          onCategoryChange={setActiveCatalogCategory}
+        />
       </section>
     </div>
   );
